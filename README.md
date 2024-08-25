@@ -1,2 +1,1 @@
-# Fire-Emblem
-Tarea diseño detallado de software
+# Dise-o-Software

@@ -1,0 +1,22 @@
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.deps.json
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.dll
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.pdb
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.AssemblyInfoInputs.cache
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.AssemblyInfo.cs
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.csproj.CoreCompileInputs.cache
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.dll
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\refint\Fire-Emblem-View.dll
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.pdb
+C:\Users\nicoa\Downloads\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\ref\Fire-Emblem-View.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.deps.json
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\bin\Debug\net8.0\Fire-Emblem-View.pdb
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.AssemblyInfoInputs.cache
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.AssemblyInfo.cs
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.csproj.CoreCompileInputs.cache
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\refint\Fire-Emblem-View.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.pdb
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\ref\Fire-Emblem-View.dll
