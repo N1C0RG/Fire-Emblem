@@ -20,3 +20,4 @@ C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semes
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\refint\Fire-Emblem-View.dll
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.pdb
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\ref\Fire-Emblem-View.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem-View\obj\Debug\net8.0\Fire-Emblem-View.sourcelink.json

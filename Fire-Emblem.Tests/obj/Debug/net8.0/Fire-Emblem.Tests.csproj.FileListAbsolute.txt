@@ -212,3 +212,4 @@ C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semes
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem.Tests\obj\Debug\net8.0\Fire-Emblem.Tests.pdb
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem.Tests\obj\Debug\net8.0\Fire-Emblem.Tests.genruntimeconfig.cache
 C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem.Tests\obj\Debug\net8.0\ref\Fire-Emblem.Tests.dll
+C:\Users\nicoa\OneDrive - Universidad Católica de Chile\Ingenieria UC\6to Semestre\Diseño detallado de software\Fire-Emblem\Fire-Emblem.Tests\obj\Debug\net8.0\Fire-Emblem.Tests.sourcelink.json

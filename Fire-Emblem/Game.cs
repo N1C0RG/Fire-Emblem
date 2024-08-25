@@ -219,10 +219,7 @@ public class Game
     {
         for (int i = 0; i < player.equipo.Count; i++)
         {
-            if (player.equipo[i].HP > 0)
-            {
-                _view.WriteLine($"{i}: " + player.equipo[i].name);
-            }
+            _view.WriteLine($"{i}: " + player.equipo[i].name);
         }
     }
 
@@ -268,6 +265,85 @@ public class Game
         }
     }
 
+    public void PrintVida(Player jugador1, Player jugador2, int input1, int input2, int turno)
+    {
+    
+        _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
+                        $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
+        
+    }
+    public void Turno(Player jugador1, Player jugador2, int n1, int n2, int turno)
+    {
+        _view.WriteLine($"Player {n1} selecciona una opción");
+        ShowTeam(jugador1);
+        int input1 = Convert.ToInt32(_view.ReadLine());
+        _view.WriteLine($"Player {n2} selecciona una opción");
+        ShowTeam(jugador2);
+        int input2 = Convert.ToInt32(_view.ReadLine());
+        _view.WriteLine($"Round {turno}: {jugador1.equipo[input1].name} (Player {n1}) comienza");
+        bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
+        bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
+        printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
+        int d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
+        _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
+                        $" {jugador2.equipo[input2].name} con {d1} de daño");
+        jugador2.equipo[input2].HP -= d1;
+        if (jugador2.perdio())
+        {
+            _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
+                            $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
+            _view.WriteLine($"Player {n1} ganó");
+            return; 
+        }
+
+        if (jugador2.equipo[input2].HP == 0)
+        {
+            PrintVida(jugador1, jugador2, input1, input2, turno);
+            jugador2.equipo.RemoveAt(input2);
+        }
+        else
+        {
+            int d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
+            _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
+                            $" {jugador1.equipo[input1].name} con {d2} de daño");
+            jugador1.equipo[input1].HP -= d2;
+            if (jugador1.equipo[input1].HP == 0)
+            {
+                PrintVida(jugador1, jugador2, input1, input2, turno);
+                jugador1.equipo.RemoveAt(input1);
+            }
+            else
+            {
+                if (jugador1.equipo[input1].spd >= jugador2.equipo[input2].spd + 5)
+                {
+                    _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
+                                    $" {jugador2.equipo[input2].name} con {d1} de daño");
+                    jugador2.equipo[input2].HP -= d1;
+                }
+                else if (jugador1.equipo[input1].spd + 5 <= jugador2.equipo[input2].spd)
+                {
+                    _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
+                                    $" {jugador1.equipo[input1].name} con {d2} de daño");
+                    jugador1.equipo[input1].HP -= d2;
+                }
+
+                PrintVida(jugador1, jugador2, input1, input2, turno);
+                
+                if (jugador1.equipo[input1].HP == 0)
+                {
+                    
+                    jugador1.equipo.RemoveAt(input1);
+                }
+                else if (jugador2.equipo[input2].HP == 0)
+                {
+                    
+                    jugador2.equipo.RemoveAt(input2);
+                }
+            }
+        }
+    }
+    
+
     public void Play()
     {
         PrintTeams();
@@ -291,89 +367,108 @@ public class Game
             int turno = 1; 
             while (stop == false)
             {
-                int input1 = 0;
-                int input2 = 0;
-                int d1 = 0;
-                int d2 = 0; 
+                // int input1 = 0;
+                // int input2 = 0;
+                // int d1 = 0;
+                // int d2 = 0; 
                 if (turno % 2 != 0)
                 {
-                    _view.WriteLine("Player 1 selecciona una opción");
-                    ShowTeam(jugador1);
-                    input1 = Convert.ToInt32(_view.ReadLine());
-                    _view.WriteLine("Player 2 selecciona una opción");
-                    ShowTeam(jugador2);
-                    input2 = Convert.ToInt32(_view.ReadLine());
-                    _view.WriteLine($"Round {turno}: {jugador1.equipo[input1].name} (Player 1) comienza");
-                    bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
-                    bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
-                    printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
-                    d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
-                    _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                                    $" {jugador2.equipo[input2].name} con {d1} de daño");
-                    jugador2.equipo[input2].HP -= d1;
-                    if (jugador2.perdio())
-                    {
-                        _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
-                                $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
-                        _view.WriteLine("Player 1 ganó");
-                        return; 
-                    }
-                    d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
-                    _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                                    $" {jugador1.equipo[input1].name} con {d2} de daño");
-                    jugador1.equipo[input1].HP -= d2;
+                    Turno(jugador1, jugador2, 1, 2, turno);
                 }
                 else
                 {
-                    _view.WriteLine("Player 2 selecciona una opción");
-                    ShowTeam(jugador2);
-                    input2 = Convert.ToInt32(_view.ReadLine());
-                    _view.WriteLine("Player 1 selecciona una opción");
-                    ShowTeam(jugador1);
-                    input1 = Convert.ToInt32(_view.ReadLine());
-                    _view.WriteLine($"Round {turno}: {jugador2.equipo[input2].name} (Player 2) comienza");
-                    bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
-                    bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
-                    printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
-                    d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
-                    _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                                    $" {jugador1.equipo[input1].name} con {d2} de daño");
-                    jugador1.equipo[input1].HP -= d2;
-                    
-                    if (jugador1.perdio())
-                    {
-                        _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
-                                        $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
-                        _view.WriteLine("Player 2 ganó");
-                        return; 
-                    }
-                    d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
-                    _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                                    $" {jugador2.equipo[input2].name} con {d1} de daño");
-                    jugador2.equipo[input2].HP -= d1;
+                    Turno(jugador2, jugador1, 2, 1, turno);
                 }
-                if (jugador1.equipo[input1].spd >= jugador2.equipo[input2].spd + 5)
-                {
-                    _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                                    $" {jugador2.equipo[input2].name} con {d1} de daño");
-                    jugador2.equipo[input2].HP -= d1;
-                }
-                else if (jugador1.equipo[input1].spd + 5 <= jugador2.equipo[input2].spd)
-                {
-                    _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                                    $" {jugador1.equipo[input1].name} con {d2} de daño");
-                    jugador1.equipo[input1].HP -= d2;
-                }
-                if (turno % 2 != 0)
-                {
-                    _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
-                                    $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
-                }
-                else
-                {
-                    _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
-                                    $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
-                }
+                // if (turno % 2 != 0)
+                // {
+                //     _view.WriteLine("Player 1 selecciona una opción");
+                //     ShowTeam(jugador1);
+                //     input1 = Convert.ToInt32(_view.ReadLine());
+                //     _view.WriteLine("Player 2 selecciona una opción");
+                //     ShowTeam(jugador2);
+                //     input2 = Convert.ToInt32(_view.ReadLine());
+                //     _view.WriteLine($"Round {turno}: {jugador1.equipo[input1].name} (Player 1) comienza");
+                //     bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
+                //     bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
+                //     printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
+                //     d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
+                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
+                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
+                //     jugador2.equipo[input2].HP -= d1;
+                //     if (jugador2.perdio())
+                //     {
+                //         _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
+                //                 $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
+                //         _view.WriteLine("Player 1 ganó");
+                //         return; 
+                //     }
+                //     d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
+                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
+                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
+                //     jugador1.equipo[input1].HP -= d2;
+                // }
+                // else
+                // {
+                //     _view.WriteLine("Player 2 selecciona una opción");
+                //     ShowTeam(jugador2);
+                //     input2 = Convert.ToInt32(_view.ReadLine());
+                //     _view.WriteLine("Player 1 selecciona una opción");
+                //     ShowTeam(jugador1);
+                //     input1 = Convert.ToInt32(_view.ReadLine());
+                //     _view.WriteLine($"Round {turno}: {jugador2.equipo[input2].name} (Player 2) comienza");
+                //     bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
+                //     bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
+                //     printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
+                //     d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
+                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
+                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
+                //     jugador1.equipo[input1].HP -= d2;
+                //     
+                //     if (jugador1.perdio())
+                //     {
+                //         _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
+                //                         $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
+                //         _view.WriteLine("Player 2 ganó");
+                //         return; 
+                //     }
+                //     d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
+                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
+                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
+                //     jugador2.equipo[input2].HP -= d1;
+                // }
+
+
+                // if (turno % 2 != 0)
+                // {
+                //     Turno(jugador1, jugador2, 1, 2, turno);
+                // }
+                // else
+                // {
+                //     Turno(jugador2, jugador1, 2, 1, turno);
+                // }
+                //
+                // if (jugador1.equipo[input1].spd >= jugador2.equipo[input2].spd + 5)
+                // {
+                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
+                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
+                //     jugador2.equipo[input2].HP -= d1;
+                // }
+                // else if (jugador1.equipo[input1].spd + 5 <= jugador2.equipo[input2].spd)
+                // {
+                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
+                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
+                //     jugador1.equipo[input1].HP -= d2;
+                // }
+                // if (turno % 2 != 0)
+                // {
+                //     _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
+                //                     $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
+                // }
+                // else
+                // {
+                //     _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
+                //                     $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
+                // }
                 if (jugador1.perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
@@ -385,14 +480,14 @@ public class Game
                     return; 
                 }
 
-                if (jugador1.equipo[input1].HP == 0)
-                {
-                    jugador1.equipo.RemoveAt(input1);
-                }
-                else if (jugador2.equipo[input2].HP == 0)
-                {
-                    jugador2.equipo.RemoveAt(input2);
-                }
+                // if (jugador1.equipo[input1].HP == 0)
+                // {
+                //     jugador1.equipo.RemoveAt(input1);
+                // }
+                // else if (jugador2.equipo[input2].HP == 0)
+                // {
+                //     jugador2.equipo.RemoveAt(input2);
+                // }
                 turno += 1;
             }
 
