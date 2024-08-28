@@ -272,7 +272,7 @@ public class Game
                         $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
         
     }
-    public void Turno(Player jugador1, Player jugador2, int n1, int n2, int turno)
+    public bool Turno(Player jugador1, Player jugador2, int n1, int n2, int turno)
     {
         _view.WriteLine($"Player {n1} selecciona una opción");
         ShowTeam(jugador1);
@@ -293,7 +293,7 @@ public class Game
             _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
                             $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
             _view.WriteLine($"Player {n1} ganó");
-            return; 
+            return true; 
         }
 
         if (jugador2.equipo[input2].HP == 0)
@@ -326,6 +326,10 @@ public class Game
                                     $" {jugador1.equipo[input1].name} con {d2} de daño");
                     jugador1.equipo[input1].HP -= d2;
                 }
+                else
+                {
+                    _view.WriteLine("Ninguna unidad puede hacer un follow up");
+                }
 
                 PrintVida(jugador1, jugador2, input1, input2, turno);
                 
@@ -341,6 +345,8 @@ public class Game
                 }
             }
         }
+
+        return false; 
     }
     
 
@@ -363,9 +369,8 @@ public class Game
 
             Player jugador1 = new Player(completar_personaje(todos_los_personajes, player1));
             Player jugador2 = new Player(completar_personaje(todos_los_personajes, player2));
-            bool stop = false;
             int turno = 1; 
-            while (stop == false)
+            while (true)
             {
                 // int input1 = 0;
                 // int input2 = 0;
@@ -373,11 +378,19 @@ public class Game
                 // int d2 = 0; 
                 if (turno % 2 != 0)
                 {
-                    Turno(jugador1, jugador2, 1, 2, turno);
+                    bool c = Turno(jugador1, jugador2, 1, 2, turno);
+                    if (c == true)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
-                    Turno(jugador2, jugador1, 2, 1, turno);
+                    bool c = Turno(jugador2, jugador1, 2, 1, turno);
+                    if (c == true)
+                    {
+                        break;
+                    }
                 }
                 // if (turno % 2 != 0)
                 // {
@@ -472,12 +485,12 @@ public class Game
                 if (jugador1.perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
-                    return; 
+                    break; 
                 }
                 else if (jugador2.perdio())
                 {
                     _view.WriteLine("Player 1 ganó");
-                    return; 
+                    break; 
                 }
 
                 // if (jugador1.equipo[input1].HP == 0)

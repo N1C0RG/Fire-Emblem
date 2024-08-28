@@ -71,17 +71,27 @@ public class Personaje
     }
     public int atacar(Personaje p2, bool? multiplicador)
     {
+        int ataque = 0; 
         if (multiplicador == true)
         {
-            return (int)(Math.Round(Convert.ToDecimal(atk) * 1.2m) - defensa(p2)); 
+           ataque = (int)Math.Floor(Convert.ToDecimal(atk) * 1.2m) - defensa(p2); 
         }
         else if (multiplicador == false)
         {
-            return (int)(Math.Round(Convert.ToDecimal(atk) * 0.8m) - p2.def); 
+            ataque = (int)(Math.Floor(Convert.ToDecimal(atk) * 0.8m) - p2.def); 
         }
         else
         {
-            return atk - defensa(p2); 
+            ataque = atk - defensa(p2); 
+        }
+
+        if (ataque < 0)
+        {
+            return 0; 
+        }
+        else
+        {
+            return ataque; 
         }
     }
     
