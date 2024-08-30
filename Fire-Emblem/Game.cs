@@ -21,135 +21,13 @@ public class Game
     {
         _view.WriteLine(message:"Elige un archivo para cargar los equipos");
         string[] archivos_equipos = Directory.GetFiles(_teamsFolder, "*.txt");
-        int contador = 0;  
-        foreach (string nombre in archivos_equipos)
+        for (int numero = 0; numero < archivos_equipos.Length; numero++)
         {
-            contador ++; 
-        }
-        for (int numero = 0; numero < contador; numero++)
-        {
-            if (numero < 10)
-            {
-                string c = numero + ": 00" + numero + ".txt";  
-                _view.WriteLine(c);
-            }
-            else if (numero < 100)
-            {
-                string c = numero + ": 0"  + numero + ".txt";
-                _view.WriteLine(c);
-                
-            }
-            else
-            {
-                string c = numero + ": " + numero + ".txt";
-                _view.WriteLine(c);
-            }
+            string c = $"{numero}: {numero.ToString().PadLeft(3, '0')}.txt";
+            _view.WriteLine(c);
         }
     }
-    public (List<string>, List<string>) ReadTeam()
-    {
-        string filename = ""; 
-        string equipo_seleccionado = _view.ReadLine();
-        if (equipo_seleccionado.Length == 1)
-        {
-            filename = "00" + equipo_seleccionado + ".txt"; 
-        }
-        else if (equipo_seleccionado.Length == 2)
-        {
-            filename = "0" + equipo_seleccionado + ".txt";
-        }
-        else
-        {
-            filename = equipo_seleccionado + ".txt";
-        }
-        string fullPath = Path.Combine(_teamsFolder, filename);
-        string[] lines = File.ReadAllLines(fullPath);
-        List<string> p1 = new List<string>(); 
-        List<string> p2 = new List<string>();
-        bool cambiar_p2 = false;
-        foreach (string l in lines)
-        {
-            if (l == "Player 2 Team" || cambiar_p2 == true)
-            {
-                cambiar_p2 = true; 
-                p2.Add(l);
-            }
-            else
-            {
-                p1.Add(l);
-            }
-        }
-        p2.RemoveAt(0);
-        p1.RemoveAt(0);
-        return (p1, p2); 
-    }
-
-    public Boolean ValidacionLargo(List<string> p1, List<string> p2)
-    {
-        if (p1.Count > 3 || p1.Count < 1 || p2.Count > 3 || p2.Count < 1)
-        {
-            return false; 
-        }
-        else
-        {
-            return true; 
-        }
-    }
-
-    public Boolean ValidacionRepetidosH(List<List<string>> player) 
-    { 
-        foreach (List<string> l in player)
-        {
-            if (l.Count > 2 && l[1] == l[2])
-            {
-                return false; 
-            }
-        }
-        return true; 
-    }
-    
-    public Boolean ValidacionRepetidosN(List<string> player) //siempre es falso esta mal 
-    {
-        List<string> lista = new List<string>(); 
-        foreach (string i in player)
-        {
-            if (i.Contains("("))
-            {
-                int startIndex = i.IndexOf('(') + 1;
-                lista.Add(i.Substring(0, startIndex-2));
-            }
-            else
-            {
-                lista.Add(i);
-            }
-        }
-
-        List<string> prueba = new List<string>(); 
-        foreach (string s in lista) 
-        {
-            if (prueba.Contains(s))
-            {
-                return false; 
-            }
-            else
-            {
-                prueba.Add(s);
-            }
-        }
-        return true; 
-    }
-
-    public Boolean ValidacionHabilidades(List<List<string>> player)
-    {
-        if (player[0].Count > 3)
-        {
-            return false; 
-        }
-
-        return true; 
-    }
-
-    public List<List<string>> PersonajesHabilidades(List<string> player_team)
+    public List<List<string>> PersonajesHabilidades(List<string> player_team)//TODO: arreglar esto 
     {
         List<List<string>> player = new List<List<string>>();
         foreach (string i in player_team)
@@ -176,7 +54,7 @@ public class Game
         return player; 
     }
 
-    public List<Personaje> completar_personaje(List<JsonContent> todos_personajes, List<List<string>> player)
+    public List<Personaje> completar_personaje(List<JsonContent> todos_personajes, List<List<string>> player)//TODO: arreglar esto
     {
         List<Personaje> lista = new List<Personaje>(); 
         foreach (List<string> l in player)
@@ -193,29 +71,23 @@ public class Game
                     lista.Add(new Personaje(i.Name, i.Weapon, i.Gender, i.DeathQuote, Convert.ToInt32(i.HP),
                         Convert.ToInt32(i.Atk), Convert.ToInt32(i.Spd), Convert.ToInt32(i.Def), 
                         Convert.ToInt32(i.Res), hd));
-                    
                 }
-                    
             }
         }
         return lista; 
     }
     
+    // para hacer este metodo use stack overflow 
     public List<JsonContent> LoadJson()
     {
         string directorio_path = AppDomain.CurrentDomain.BaseDirectory; 
         string jsonFilePath = Path.Combine(directorio_path, "characters.json");
         string jsonString = File.ReadAllText(jsonFilePath);
-
         List<JsonContent> todos_personajes = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
-        // foreach (JsonContent i in todos_personajes)
-        // {
-        //     _view.WriteLine(i.Hp);
-        // }
         return todos_personajes; 
     }
 
-    public void ShowTeam(Player player)
+    public void ShowTeam(Player player)//TODO: arreglar esto
     {
         for (int i = 0; i < player.equipo.Count; i++)
         {
@@ -223,7 +95,7 @@ public class Game
         }
     }
 
-    public bool? Ventajas(Personaje player1, Personaje player2)
+    public bool? Ventajas(Personaje player1, Personaje player2)//TODO: arreglar esto
     {
         if (player1.weapon == "Sword" && player2.weapon == "Axe" ||
             player1.weapon == "Lance" && player2.weapon == "Sword" ||
@@ -245,7 +117,7 @@ public class Game
 
     }
 
-    public void printV(Personaje p1, Personaje p2, bool? v)
+    public void printV(Personaje p1, Personaje p2, bool? v)//TODO: arreglar esto
     {
         if (v == true)
         {
@@ -265,7 +137,7 @@ public class Game
         }
     }
 
-    public void PrintVida(Player jugador1, Player jugador2, int input1, int input2, int turno)
+    public void PrintVida(Player jugador1, Player jugador2, int input1, int input2, int turno)//TODO: arreglar esto
     {
     
         _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
@@ -353,13 +225,14 @@ public class Game
     public void Play()
     {
         PrintTeams();
-        var tupla= ReadTeam();
+        ManejoArchivos archivo = new ManejoArchivos(); 
+        var tupla= archivo.GuardarEquipo(_view.ReadLine(), _teamsFolder);
         List<string> p1 = tupla.Item1;
         List<string> p2 = tupla.Item2;
         List<List<string>> player1 = PersonajesHabilidades(p1);
         List<List<string>> player2 = PersonajesHabilidades(p2);
-        if (ValidacionLargo(p1, p2) == false || ValidacionRepetidosH(player1) == false || ValidacionRepetidosH(player2) == false
-            || ValidacionHabilidades(player1) == false || ValidacionHabilidades(player2) == false || ValidacionRepetidosN(p1) == false || ValidacionRepetidosN(p2) == false)
+        Validacion valido = new Validacion(); 
+        if (valido.EquipoValido(player1, player2, p1, p2) == false)
         {
             _view.WriteLine("Archivo de equipos no válido");
         }
@@ -372,10 +245,6 @@ public class Game
             int turno = 1; 
             while (true)
             {
-                // int input1 = 0;
-                // int input2 = 0;
-                // int d1 = 0;
-                // int d2 = 0; 
                 if (turno % 2 != 0)
                 {
                     bool c = Turno(jugador1, jugador2, 1, 2, turno);
@@ -392,96 +261,6 @@ public class Game
                         break;
                     }
                 }
-                // if (turno % 2 != 0)
-                // {
-                //     _view.WriteLine("Player 1 selecciona una opción");
-                //     ShowTeam(jugador1);
-                //     input1 = Convert.ToInt32(_view.ReadLine());
-                //     _view.WriteLine("Player 2 selecciona una opción");
-                //     ShowTeam(jugador2);
-                //     input2 = Convert.ToInt32(_view.ReadLine());
-                //     _view.WriteLine($"Round {turno}: {jugador1.equipo[input1].name} (Player 1) comienza");
-                //     bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
-                //     bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
-                //     printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
-                //     d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
-                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
-                //     jugador2.equipo[input2].HP -= d1;
-                //     if (jugador2.perdio())
-                //     {
-                //         _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
-                //                 $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
-                //         _view.WriteLine("Player 1 ganó");
-                //         return; 
-                //     }
-                //     d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
-                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
-                //     jugador1.equipo[input1].HP -= d2;
-                // }
-                // else
-                // {
-                //     _view.WriteLine("Player 2 selecciona una opción");
-                //     ShowTeam(jugador2);
-                //     input2 = Convert.ToInt32(_view.ReadLine());
-                //     _view.WriteLine("Player 1 selecciona una opción");
-                //     ShowTeam(jugador1);
-                //     input1 = Convert.ToInt32(_view.ReadLine());
-                //     _view.WriteLine($"Round {turno}: {jugador2.equipo[input2].name} (Player 2) comienza");
-                //     bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
-                //     bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
-                //     printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
-                //     d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
-                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
-                //     jugador1.equipo[input1].HP -= d2;
-                //     
-                //     if (jugador1.perdio())
-                //     {
-                //         _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
-                //                         $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
-                //         _view.WriteLine("Player 2 ganó");
-                //         return; 
-                //     }
-                //     d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
-                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
-                //     jugador2.equipo[input2].HP -= d1;
-                // }
-
-
-                // if (turno % 2 != 0)
-                // {
-                //     Turno(jugador1, jugador2, 1, 2, turno);
-                // }
-                // else
-                // {
-                //     Turno(jugador2, jugador1, 2, 1, turno);
-                // }
-                //
-                // if (jugador1.equipo[input1].spd >= jugador2.equipo[input2].spd + 5)
-                // {
-                //     _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
-                //                     $" {jugador2.equipo[input2].name} con {d1} de daño");
-                //     jugador2.equipo[input2].HP -= d1;
-                // }
-                // else if (jugador1.equipo[input1].spd + 5 <= jugador2.equipo[input2].spd)
-                // {
-                //     _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
-                //                     $" {jugador1.equipo[input1].name} con {d2} de daño");
-                //     jugador1.equipo[input1].HP -= d2;
-                // }
-                // if (turno % 2 != 0)
-                // {
-                //     _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
-                //                     $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
-                // }
-                // else
-                // {
-                //     _view.WriteLine($"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP}) : " +
-                //                     $"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP})");
-                // }
                 if (jugador1.perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
@@ -492,15 +271,6 @@ public class Game
                     _view.WriteLine("Player 1 ganó");
                     break; 
                 }
-
-                // if (jugador1.equipo[input1].HP == 0)
-                // {
-                //     jugador1.equipo.RemoveAt(input1);
-                // }
-                // else if (jugador2.equipo[input2].HP == 0)
-                // {
-                //     jugador2.equipo.RemoveAt(input2);
-                // }
                 turno += 1;
             }
 
