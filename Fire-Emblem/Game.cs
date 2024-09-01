@@ -9,14 +9,11 @@ public class Game
 {
     private View _view;
     private string _teamsFolder;
-    
     public Game(View view, string teamsFolder)
     {
         _view = view;
         _teamsFolder = teamsFolder;
     }
-
-
     public void PrintTeams()
     {
         _view.WriteLine(message:"Elige un archivo para cargar los equipos");
@@ -27,56 +24,6 @@ public class Game
             _view.WriteLine(c);
         }
     }
-    public List<List<string>> PersonajesHabilidades(List<string> player_team)//TODO: arreglar esto 
-    {
-        List<List<string>> player = new List<List<string>>();
-        foreach (string i in player_team)
-        {
-            List<string> lista = new List<string>(); 
-            if (i.Contains("("))
-            {
-                int startIndex = i.IndexOf('(') + 1;
-                int endIndex = i.IndexOf(')');
-                lista.Add(i.Substring(0, startIndex-2));
-                string subcadena = i.Substring(startIndex, endIndex - startIndex);
-                string[] habilidades = subcadena.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string s in habilidades)
-                {
-                    lista.Add(s.Trim());
-                }
-            }
-            else
-            {
-                lista.Add(i); 
-            }
-            player.Add(lista);
-        }
-        return player; 
-    }
-
-    public List<Personaje> completar_personaje(List<JsonContent> todos_personajes, List<List<string>> player)//TODO: arreglar esto
-    {
-        List<Personaje> lista = new List<Personaje>(); 
-        foreach (List<string> l in player)
-        {
-            foreach (JsonContent i in todos_personajes) 
-            {
-                List<string> hd = new List<string>();  
-                if (i.Name == l[0])
-                {
-                    if (l.Count > 1)
-                    {
-                        hd = l.GetRange(1, l.Count - 1); 
-                    }
-                    lista.Add(new Personaje(i.Name, i.Weapon, i.Gender, i.DeathQuote, Convert.ToInt32(i.HP),
-                        Convert.ToInt32(i.Atk), Convert.ToInt32(i.Spd), Convert.ToInt32(i.Def), 
-                        Convert.ToInt32(i.Res), hd));
-                }
-            }
-        }
-        return lista; 
-    }
-    
     // para hacer este metodo use stack overflow 
     public List<JsonContent> LoadJson()
     {
@@ -86,7 +33,6 @@ public class Game
         List<JsonContent> todos_personajes = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
         return todos_personajes; 
     }
-
     public void ShowTeam(Player player)//TODO: arreglar esto
     {
         for (int i = 0; i < player.equipo.Count; i++)
@@ -94,7 +40,6 @@ public class Game
             _view.WriteLine($"{i}: " + player.equipo[i].name);
         }
     }
-
     public bool? Ventajas(Personaje player1, Personaje player2)//TODO: arreglar esto
     {
         if (player1.weapon == "Sword" && player2.weapon == "Axe" ||
@@ -114,9 +59,7 @@ public class Game
         {
             return null;
         }
-
     }
-
     public void printV(Personaje p1, Personaje p2, bool? v)//TODO: arreglar esto
     {
         if (v == true)
@@ -220,28 +163,23 @@ public class Game
 
         return false; 
     }
-    
-
     public void Play()
     {
         PrintTeams();
         ManejoArchivos archivo = new ManejoArchivos(); 
+        ManejoArchivos archivo2 = new ManejoArchivos(); 
         var tupla= archivo.GuardarEquipo(_view.ReadLine(), _teamsFolder);
         List<string> p1 = tupla.Item1;
         List<string> p2 = tupla.Item2;
-        List<List<string>> player1 = PersonajesHabilidades(p1);
-        List<List<string>> player2 = PersonajesHabilidades(p2);
-        Validacion valido = new Validacion(); 
-        if (valido.EquipoValido(player1, player2, p1, p2) == false)
+        Player jugador1 = new Player(archivo.crear_equipo(LoadJson(), p1));
+        Player jugador2 = new Player(archivo2.crear_equipo(LoadJson(), p2));
+        Validacion valido = new Validacion(jugador1, jugador2); 
+        if (valido.EquipoValido() == false)
         {
             _view.WriteLine("Archivo de equipos no válido");
         }
         else
         {
-            List<JsonContent> todos_los_personajes = LoadJson();
-
-            Player jugador1 = new Player(completar_personaje(todos_los_personajes, player1));
-            Player jugador2 = new Player(completar_personaje(todos_los_personajes, player2));
             int turno = 1; 
             while (true)
             {

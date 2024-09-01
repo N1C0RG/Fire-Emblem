@@ -1,10 +1,19 @@
 namespace Fire_Emblem;
 
+using Fire_Emblem_View;
+
 public class Validacion
 {
-    public bool ValidacionLargo(List<string> p1, List<string> p2)
+    public Player player;
+    public Player rival;
+    public Validacion(Player player, Player rival)
     {
-        if (p1.Count > 3 || p1.Count < 1 || p2.Count > 3 || p2.Count < 1)
+        this.player = player;
+        this.rival = rival; 
+    }
+    public bool ValidacionLargo()
+    {
+        if (player.equipo.Count > 3 || player.equipo.Count < 1 || rival.equipo.Count > 3 || rival.equipo.Count < 1)
         {
             return false; 
         }
@@ -13,11 +22,15 @@ public class Validacion
             return true; 
         }
     }
-    public bool ValidacionRepetidosHabilidad(List<List<string>> player) 
+    public bool ValidacionRepetidosHabilidad(Player player) 
     { 
-        foreach (List<string> personaje in player)
+        foreach (Personaje personaje in player.equipo)
         {
-            if (personaje.Count > 2 && personaje[1] == personaje[2])
+            if (personaje.habilidades.Length > 2)
+            {
+                return false; 
+            }
+            if (personaje.habilidades.Length == 2 && personaje.habilidades[0] == personaje.habilidades[1])
             {
                 return false; 
             }
@@ -25,20 +38,12 @@ public class Validacion
         return true; 
     }
     
-    public bool ValidacionRepetidosNombre(List<string> player) 
+    public bool ValidacionRepetidosNombre(Player player) 
     {
         List<string> lista = new List<string>(); 
-        foreach (string i in player)
+        foreach (Personaje personaje in player.equipo)
         {
-            if (i.Contains("("))
-            {
-                int startIndex = i.IndexOf('(') + 1;
-                lista.Add(i.Substring(0, startIndex-2));
-            }
-            else
-            {
-                lista.Add(i);
-            }
+            lista.Add(personaje.name);
         }
 
         List<string> prueba = new List<string>(); 
@@ -55,25 +60,12 @@ public class Validacion
         }
         return true; 
     }
-    
-    public bool ValidacionHabilidades(List<List<string>> player)
+    public bool EquipoValido()
     {
-        if (player[0].Count > 3)
-        {
-            return false; 
-        }
-
-        return true; 
-    }
-
-    public bool EquipoValido(List<List<string>> player1, List<List<string>> player2, List<string> p1, List<string> p2)
-    {
-        if (ValidacionLargo(p1, p2) == false || ValidacionRepetidosHabilidad(player1) == false
-                                             || ValidacionRepetidosHabilidad(player2) == false
-                                             || ValidacionHabilidades(player1) == false
-                                             || ValidacionHabilidades(player2) == false
-                                             || ValidacionRepetidosNombre(p1) == false
-                                             || ValidacionRepetidosNombre(p2) == false)
+        if (ValidacionLargo() == false || ValidacionRepetidosHabilidad(player) == false 
+                                       || ValidacionRepetidosHabilidad(rival) == false
+                                             || ValidacionRepetidosNombre(player) == false
+                                             || ValidacionRepetidosNombre(rival) == false)
         {
             return false; 
         }

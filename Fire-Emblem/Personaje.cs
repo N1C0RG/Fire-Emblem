@@ -1,5 +1,4 @@
 namespace Fire_Emblem;
-
 public class JsonContent
 {
     public string Name { get; set; }
@@ -12,8 +11,6 @@ public class JsonContent
     public string Def { get; set; }
     public string Res { get; set; }
 }
-
-
 public class Personaje
 {
     public string name;
@@ -25,10 +22,10 @@ public class Personaje
     public int spd;
     public int def;
     public int res;
-    public List<string> habilidades; 
+    public string[] habilidades; 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
-        int def, int res, List<string> habilidades)
+        int def, int res, string[] habilidades)
     {
         this.name = name;
         this.weapon = weapon;
@@ -95,32 +92,8 @@ public class Personaje
         }
     }
     
+    
+    
 }
 
-public class Combate(Personaje player1, Personaje player2)
-{
-    public Personaje player1;
-    public Personaje player2;
 
-    // public Combate(Personaje player1, Personaje player2)
-    // {
-    //     this.player1 = player1;
-    //     this.player2 = player2; 
-    // }
-
-    public void Ventaja()
-    {
-        if (player1.weapon == "Sword" && player2.weapon == "Axe")
-        {
-            
-        }
-        else if (player1.weapon == "Sword" && player2.weapon == "Axe")
-        {
-            
-        }
-        else if (player1.weapon == "Sword" && player2.weapon == "Axe")
-        {
-            
-        }
-    }
-}
