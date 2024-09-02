@@ -40,53 +40,6 @@ public class Game
             _view.WriteLine($"{i}: " + player.equipo[i].name);
         }
     }
-    public bool? Ventajas(Personaje player1, Personaje player2)//TODO: arreglar esto
-    {
-        if (player1.weapon == "Sword" && player2.weapon == "Axe" ||
-            player1.weapon == "Lance" && player2.weapon == "Sword" ||
-            player1.weapon == "Axe" && player2.weapon == "Lance")
-        {
-            return true;
-
-        }
-        else if (player2.weapon == "Sword" && player1.weapon == "Axe" ||
-                 player2.weapon == "Lance" && player1.weapon == "Sword" ||
-                 player2.weapon == "Axe" && player1.weapon == "Lance")
-        {
-            return false;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    public void printV(Personaje p1, Personaje p2, bool? v)//TODO: arreglar esto
-    {
-        if (v == true)
-        {
-            _view.WriteLine($"{p1.name} ({p1.weapon})" +
-                            $" tiene ventaja con respecto a " +
-                            $"{p2.name} ({p2.weapon})");
-        }
-        else if (v == false)
-        {
-            _view.WriteLine($"{p2.name} ({p2.weapon}) " +
-                            $"tiene ventaja con respecto a " +
-                            $"{p1.name} ({p1.weapon})");
-        }
-        else
-        {
-            _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
-        }
-    }
-
-    public void PrintVida(Player jugador1, Player jugador2, int input1, int input2, int turno)//TODO: arreglar esto
-    {
-    
-        _view.WriteLine($"{jugador1.equipo[input1].name} ({jugador1.equipo[input1].HP}) : " +
-                        $"{jugador2.equipo[input2].name} ({jugador2.equipo[input2].HP})");
-        
-    }
     public bool Turno(Player jugador1, Player jugador2, int n1, int n2, int turno)
     {
         _view.WriteLine($"Player {n1} selecciona una opción");
@@ -96,10 +49,13 @@ public class Game
         ShowTeam(jugador2);
         int input2 = Convert.ToInt32(_view.ReadLine());
         _view.WriteLine($"Round {turno}: {jugador1.equipo[input1].name} (Player {n1}) comienza");
-        bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
-        bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
-        printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
-        int d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], v1);
+        // bool? v1 = Ventajas(jugador1.equipo[input1], jugador2.equipo[input2]);
+        // bool? v2 = Ventajas(jugador2.equipo[input2], jugador1.equipo[input1]);
+        // printV(jugador1.equipo[input1], jugador2.equipo[input2], v1);
+        Batalla batalla = new Batalla(jugador1.equipo[input1], jugador2.equipo[input2], _view);
+        batalla.ventajas();
+        batalla.print_vida();
+        int d1 = jugador1.equipo[input1].atacar(jugador2.equipo[input2], batalla.v_player);
         _view.WriteLine($"{jugador1.equipo[input1].name} ataca a" +
                         $" {jugador2.equipo[input2].name} con {d1} de daño");
         jugador2.equipo[input2].HP -= d1;
@@ -110,21 +66,22 @@ public class Game
             _view.WriteLine($"Player {n1} ganó");
             return true; 
         }
-
         if (jugador2.equipo[input2].HP == 0)
         {
-            PrintVida(jugador1, jugador2, input1, input2, turno);
+            //PrintVida(jugador1, jugador2, input1, input2, turno);
+            batalla.vida();
             jugador2.equipo.RemoveAt(input2);
         }
         else
         {
-            int d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], v2);
+            int d2 = jugador2.equipo[input2].atacar(jugador1.equipo[input1], batalla.v_rival);
             _view.WriteLine($"{jugador2.equipo[input2].name} ataca a" +
                             $" {jugador1.equipo[input1].name} con {d2} de daño");
             jugador1.equipo[input1].HP -= d2;
             if (jugador1.equipo[input1].HP == 0)
             {
-                PrintVida(jugador1, jugador2, input1, input2, turno);
+                //PrintVida(jugador1, jugador2, input1, input2, turno);
+                batalla.vida();
                 jugador1.equipo.RemoveAt(input1);
             }
             else
@@ -146,8 +103,8 @@ public class Game
                     _view.WriteLine("Ninguna unidad puede hacer un follow up");
                 }
 
-                PrintVida(jugador1, jugador2, input1, input2, turno);
-                
+                //PrintVida(jugador1, jugador2, input1, input2, turno);
+                batalla.vida();
                 if (jugador1.equipo[input1].HP == 0)
                 {
                     
@@ -160,7 +117,6 @@ public class Game
                 }
             }
         }
-
         return false; 
     }
     public void Play()
