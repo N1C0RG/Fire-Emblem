@@ -111,17 +111,26 @@ public class Batalla
         rival.HP -= dano; 
     }
     public void FollowUp()
+         {
+             if (player.spd >= rival.spd + 5)
+             {
+                 rival.HP -= ATK_PLAYER;
+             }
+             else if (player.spd + 5 <= rival.spd)
+             {
+                 player.HP -= ATK_RIVAL;
+             }
+         }
+    public void PrintFollowUp()
     {
         if (player.spd >= rival.spd + 5)
         {
             _view.WriteLine($"{player.name} ataca a {rival.name} con {ATK_PLAYER} de daño");
-            rival.HP -= ATK_PLAYER;
-            
+                 
         }
         else if (player.spd + 5 <= rival.spd)
         {
             _view.WriteLine($"{rival.name} ataca a {player.name} con {ATK_RIVAL} de daño");
-            player.HP -= ATK_RIVAL;
         }
         else
         {

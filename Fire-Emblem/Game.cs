@@ -87,6 +87,7 @@ public class Game
             }
             else
             {
+                batalla.PrintFollowUp();
                 batalla.FollowUp();
                 batalla.VidaEndRound();
                 batalla.RemovePlayer();
