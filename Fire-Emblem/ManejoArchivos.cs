@@ -60,48 +60,27 @@ public class ManejoArchivos
         }
         return player; 
     }
-    public List<Personaje> completar_personaje(List<JsonContent> todos_personajes, List<List<string>> player)//TODO: arreglar esto
-    {
-        List<Personaje> lista = new List<Personaje>(); 
-        foreach (List<string> l in player)
-        {
-            foreach (JsonContent i in todos_personajes) 
-            {
-                List<string> hd = new List<string>();  
-                if (i.Name == l[0])
-                {
-                    if (l.Count > 1)
-                    {
-                        hd = l.GetRange(1, l.Count - 1); 
-                    }
-                    lista.Add(new Personaje(i.Name, i.Weapon, i.Gender, i.DeathQuote, Convert.ToInt32(i.HP),
-                        Convert.ToInt32(i.Atk), Convert.ToInt32(i.Spd), Convert.ToInt32(i.Def), 
-                        Convert.ToInt32(i.Res), []));//cambie hd por []
-                }
-            }
-        }
-        return lista; 
-    }
+    
     //########################################################################################################
-    public List<Personaje> crear_equipo(List<JsonContent> todos_personajes, List<string> player)
+    public List<Personaje> CrearEquipo(List<JsonContent> todos_personajes, List<string> player)
     {
         foreach (string personaje in player)
         {
             if (personaje.Contains("("))
             {
-                var tupla = slicing(personaje);
-                datos_json(todos_personajes, tupla.Item1, tupla.Item2);
+                var tupla = Slicing(personaje);
+                DatosJson(todos_personajes, tupla.Item1, tupla.Item2);
             }
             else
             {
-                var tupla = slicing(personaje);
-                datos_json(todos_personajes, tupla.Item1, []);
+                var tupla = Slicing(personaje);
+                DatosJson(todos_personajes, tupla.Item1, []);
             }
         }
         return player_team;  
     }
 
-    public (string, string[]) slicing(string personaje)
+    public (string, string[]) Slicing(string personaje)
     {
         
         int inicio_indice = personaje.IndexOf('(');
@@ -121,7 +100,7 @@ public class ManejoArchivos
         }
     }
 
-    public void datos_json(List<JsonContent> todos_personajes, string nombre, string[] habilidaes)
+    public void DatosJson(List<JsonContent> todos_personajes, string nombre, string[] habilidaes)
     {
         foreach (JsonContent i in todos_personajes)
         {
