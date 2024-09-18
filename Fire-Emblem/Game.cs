@@ -11,7 +11,10 @@ public class Game
 {
     private View _view;
     private string _teamsFolder;
-    private int turno = 0; 
+    private int turno = 0;
+    private Personaje personaje_jugador;
+    private Personaje personaje_rival;
+    private Batalla batalla; 
     public Game(View view, string teamsFolder)
     {
         _view = view;
@@ -49,80 +52,76 @@ public class Game
     {
         _view.WriteLine($"Player {n} selecciona una opción");
         ShowTeam(player);
-    } 
-    
-    public void Turno(Player jugador, Player rival, int n_player, int n_rival, int turno)
+    }
+
+    private void aplicar_h(Personaje player, Personaje rival)//TODO: arreglar esto 
     {
-        
-        PrintOpcion(jugador, n_player);
+        if (player.habilidades.Length != 0)
+        {
+            foreach (var nombre_habilidad in player.habilidades)
+            {
+                AplicadorHabilidad aplicador_habilidad = 
+                    new AplicadorHabilidad(nombre_habilidad, player, rival, _view); 
+                aplicador_habilidad.ConstructorHabilidad();
+            }
+            foreach (var i in player.bonus_stats)
+            {
+                if (i.Value > 0)
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
+                }
+                else
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
+                }
+            }
+        }
+    }
+
+    private void InicializacionTurno(Player jugador, Player rival)
+    {
+        PrintOpcion(jugador, jugador.tipo);
         int jugador_input = Convert.ToInt32(_view.ReadLine());
         
-        PrintOpcion(rival, n_rival);
+        PrintOpcion(rival, rival.tipo);
         int rival_input = Convert.ToInt32(_view.ReadLine());
         
-        var jugador_equipo = jugador.equipo[jugador_input];
-        var rival_equipo = rival.equipo[rival_input]; 
+        personaje_jugador = jugador.equipo[jugador_input];
+        personaje_rival = rival.equipo[rival_input]; 
         
-        _view.WriteLine($"Round {turno}: {jugador_equipo.name} (Player {n_player}) comienza");
-        
-        Batalla batalla = new Batalla(jugador_equipo, rival_equipo, _view, jugador, rival);
+        _view.WriteLine($"Round {turno}: {personaje_jugador.name} (Player {jugador.tipo}) comienza");
+    }
+
+    private void InicializacionBatalla(Player jugador, Player rival)
+    {
+        batalla = new Batalla(personaje_jugador, personaje_rival, _view, jugador, rival);
         
         batalla.Ventajas();
         batalla.PrintVida();
+    }
 
+    private void SetUpHabilidades()
+    {
         // la parte de true de empieza
         //TODO: arreglar a clena code 
-        jugador_equipo.inicia_round = true; 
-        jugador_equipo.bonus_stats = new Dictionary<string, int>(); 
-        rival_equipo.bonus_stats = new Dictionary<string, int>(); 
-        if (jugador_equipo.habilidades.Length != 0)
-        {
-            foreach (var nombre_habilidad in jugador_equipo.habilidades)
-            {
-                AplicadorHabilidad aplicador_habilidad = 
-                    new AplicadorHabilidad(nombre_habilidad, jugador_equipo, rival_equipo, _view); 
-                aplicador_habilidad.ConstructorHabilidad();
-            }
-            foreach (var i in jugador_equipo.bonus_stats)
-            {
-                if (i.Value > 0)
-                {
-                    _view.WriteLine($"{jugador_equipo.name} obtiene {i.Key}+{i.Value}");
-                }
-                else
-                {
-                    _view.WriteLine($"{jugador_equipo.name} obtiene {i.Key}-{i.Value}");
-                }
-            }
-        }
+        personaje_jugador.inicia_round = true; 
+        personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
+        personaje_rival.bonus_stats = new Dictionary<string, int>(); 
         
-        if (rival_equipo.habilidades.Length != 0)
-        {
-            foreach (var nombre_habilidad in rival_equipo.habilidades)
-            {
-                AplicadorHabilidad aplicador_habilidad2 = 
-                    new AplicadorHabilidad(nombre_habilidad, rival_equipo, jugador_equipo, _view); 
-                aplicador_habilidad2.ConstructorHabilidad();
-            }
-            foreach (var i in rival_equipo.bonus_stats)
-            {
-                if (i.Value > 0)
-                {
-                    _view.WriteLine($"{rival_equipo.name} obtiene {i.Key}+{i.Value}");
-                }
-                else
-                {
-                    _view.WriteLine($"{rival_equipo.name} obtiene {i.Key}-{i.Value}");
-                }
-            }
-        }
+        aplicar_h(personaje_jugador, personaje_rival);
+        aplicar_h(personaje_rival, personaje_jugador);
+    }
+    public void Turno(Player jugador, Player rival)
+    {
         
+        
+        InicializacionTurno(jugador, rival);
+        InicializacionBatalla(jugador, rival);
+        SetUpHabilidades();
         batalla.DefinirAtack();
+        batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
         
-        int d1 = batalla.ATK_PLAYER; 
-        batalla.Atack(jugador_equipo, rival_equipo, d1);
-        
-        if (rival_equipo.HP == 0)
+        if (personaje_rival.HP == 0)
         {
             batalla.VidaEndRound();
             batalla.RemovePlayer();
@@ -130,10 +129,9 @@ public class Game
         }
         else
         {
-            int d2 = batalla.ATK_RIVAL;
-            batalla.Atack(rival_equipo, jugador_equipo, d2);
+            batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
                 
-            if (jugador_equipo.HP == 0)
+            if (personaje_jugador.HP == 0)
             {
                 batalla.VidaEndRound();
                 batalla.RemovePlayer();
@@ -148,7 +146,7 @@ public class Game
         }
         //seteo a false de nuevo el inicia round 
         //TODO: arreglar esto 
-        jugador_equipo.inicia_round = false;
+        personaje_jugador.inicia_round = false;
         return; 
     }
     public void Play()
@@ -176,11 +174,11 @@ public class Game
             {
                 if (turno % 2 != 0)
                 {
-                    Turno(jugador, rival, 1, 2, turno);
+                    Turno(jugador, rival);
                 }
                 else
                 {
-                    Turno(rival, jugador, 2, 1, turno);
+                    Turno(rival, jugador);
                 }
                 if (jugador.Perdio())
                 {
