@@ -32,5 +32,9 @@ public class AplicadorHabilidad
             habilidad.Aplicar();
             habilidad2.Aplicar();
         }
+        else if (nombre_habilidad == "Bracing Blow")
+        {
+            
+        }
     }
 }

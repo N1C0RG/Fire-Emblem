@@ -14,7 +14,9 @@ public class Game
     private int turno = 0;
     private Personaje personaje_jugador;
     private Personaje personaje_rival;
-    private Batalla batalla; 
+    private Batalla batalla;
+    private Player rival_metodo_play;
+    private Player jugador_metodo_play; 
     public Game(View view, string teamsFolder)
     {
         _view = view;
@@ -100,6 +102,14 @@ public class Game
         batalla.PrintVida();
     }
 
+    private void StarTurno(Player jugador, Player rival)//TODO: arreglar el problema que tengo entre alternanr entre el jugador y el rival 
+    {
+        InicializacionTurno(jugador, rival);
+        InicializacionBatalla(jugador, rival);
+        SetUpHabilidades();
+        batalla.DefinirAtack();
+    }
+
     private void SetUpHabilidades()
     {
         // la parte de true de empieza
@@ -111,58 +121,60 @@ public class Game
         aplicar_h(personaje_jugador, personaje_rival);
         aplicar_h(personaje_rival, personaje_jugador);
     }
+
+    private void EndRound()
+    {
+        batalla.VidaEndRound();
+        batalla.RemovePlayer();
+    }
     public void Turno(Player jugador, Player rival)
     {
         
+        StarTurno(jugador, rival);
         
-        InicializacionTurno(jugador, rival);
-        InicializacionBatalla(jugador, rival);
-        SetUpHabilidades();
-        batalla.DefinirAtack();
         batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
         
         if (personaje_rival.HP == 0)
         {
-            batalla.VidaEndRound();
-            batalla.RemovePlayer();
+            EndRound();
             return;
+        }
+
+        batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
+            
+        if (personaje_jugador.HP == 0)
+        {
+            EndRound();
         }
         else
         {
-            batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
-                
-            if (personaje_jugador.HP == 0)
-            {
-                batalla.VidaEndRound();
-                batalla.RemovePlayer();
-            }
-            else
-            {
-                batalla.PrintFollowUp();
-                batalla.FollowUp();
-                batalla.VidaEndRound();
-                batalla.RemovePlayer();
-            }
+            batalla.PrintFollowUp();
+            batalla.FollowUp();
+            EndRound();
         }
+        
         //seteo a false de nuevo el inicia round 
         //TODO: arreglar esto 
         personaje_jugador.inicia_round = false;
         return; 
     }
+
+    private void InicializadorPlay()
+    {
+        //TODO: arreglar lo del rival y jugadorr play
+        PrintTeams();
+        string archivo_seleccionado = _view.ReadLine(); 
+        ManejoArchivos archivo_jugador = new ManejoArchivos(_view, _teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
+        archivo_jugador.GuardarEquipo();
+        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.jugadorTeam), _view, 1);
+        archivo_jugador.player_team = new List<Personaje>();
+        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.rivalTeam), _view, 2);
+        
+    }
     public void Play()
     {
-        PrintTeams();
-        
-        ManejoArchivos archivo_jugador = new ManejoArchivos(_view); //TODO: arreglar el view de prueba 
-        ManejoArchivos archivo_rival = new ManejoArchivos(_view); 
-        
-        var tupla= archivo_jugador.GuardarEquipo(_view.ReadLine(), _teamsFolder);
-        
-        Player jugador = new Player(archivo_jugador.CrearEquipo(LoadJson(), tupla.Item1), _view, 1);
-        Player rival = new Player(archivo_rival.CrearEquipo(LoadJson(), tupla.Item2), _view, 2);
-        
-        Validacion valido = new Validacion(jugador, rival); 
-        
+        InicializadorPlay();
+        Validacion valido = new Validacion(jugador_metodo_play, rival_metodo_play); 
         if (valido.EquipoValido() == false)
         {
             _view.WriteLine("Archivo de equipos no válido");
@@ -174,18 +186,18 @@ public class Game
             {
                 if (turno % 2 != 0)
                 {
-                    Turno(jugador, rival);
+                    Turno(jugador_metodo_play, rival_metodo_play);
                 }
                 else
                 {
-                    Turno(rival, jugador);
+                    Turno(rival_metodo_play, jugador_metodo_play);
                 }
-                if (jugador.Perdio())
+                if (jugador_metodo_play.Perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
                     break; 
                 }
-                else if (rival.Perdio())
+                else if (rival_metodo_play.Perdio())
                 {
                     _view.WriteLine("Player 1 ganó");
                     break; 

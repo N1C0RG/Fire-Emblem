@@ -4,73 +4,44 @@ namespace Fire_Emblem;
 using Fire_Emblem_View;
 public class ManejoArchivos
 {
-    private List<Personaje> player_team = new List<Personaje>();  
+    public List<Personaje> player_team = new List<Personaje>();  
     private View _view;
+    private string _team_folder;
+    private string archivo_seleccionado;
+    public List<string> jugadorTeam = new List<string>(); 
+    public List<string> rivalTeam = new List<string>(); 
 
-    public ManejoArchivos(View view)
+    public ManejoArchivos(View view, String team_folder, String archivo_seleccionado)
     {
         this._view = view; //TODO: arreglar este view de prueba 
+        this._team_folder = team_folder;
+        this.archivo_seleccionado = archivo_seleccionado; 
     }
-    public (List<string>, List<string>) GuardarEquipo(string archivo_seleccionado, string team_folder) //TODO: hacer que este en clean code 
+    public void GuardarEquipo() //TODO: hacer que este en clean code 
     {
-        List<string> player1Team = new List<string>(); 
-        List<string> player2Team = new List<string>();
         bool cambiar_p2 = false;
-        foreach (string personaje in LeerArchivo(archivo_seleccionado, team_folder))
+        foreach (string personaje in LeerArchivo())
         {
             if (personaje == "Player 2 Team" || cambiar_p2 == true)
             {
                 cambiar_p2 = true; 
-                player2Team.Add(personaje);
+                rivalTeam.Add(personaje);
             }
             else
             {
-                player1Team.Add(personaje);
+                jugadorTeam.Add(personaje);
             }
         }
-        player1Team.RemoveAt(0);
-        player2Team.RemoveAt(0);
-        return (player1Team, player2Team); 
+        jugadorTeam.RemoveAt(0);
+        rivalTeam.RemoveAt(0);
     }
-    public string[] LeerArchivo(string archivo_seleccionado, string team_folder)
+    public string[] LeerArchivo()
     {
-        string[] filename2 = Directory.GetFiles(team_folder, archivo_seleccionado.ToString());
-        string filexd = archivo_seleccionado.ToString().PadLeft(3, '0'); 
-        var filename3 = Directory.GetFiles(team_folder).
-            Where(file => Path.GetFileName(file).Contains(filexd));
-        string filename = Path.GetFileName(filename3.ElementAt(0)); 
-        string fullPath = Path.Combine(team_folder, filename);
-        return File.ReadAllLines(fullPath); 
+        string numero_file = archivo_seleccionado.ToString().PadLeft(3, '0'); 
+        var path_completo_file = Directory.GetFiles(_team_folder).
+            Where(file => Path.GetFileName(file).Contains(numero_file));
+        return File.ReadAllLines(path_completo_file.ElementAt(0)); 
     }
-    
-    public List<List<string>> PersonajesHabilidades(List<string> player_team)//TODO: esto no deberia ir en manejo de archivos, metorlo en una clase adecuada 
-    {
-        List<List<string>> player = new List<List<string>>();
-        foreach (string i in player_team)
-        {
-            List<string> lista = new List<string>(); 
-            if (i.Contains("("))
-            {
-                int startIndex = i.IndexOf('(') + 1;
-                int endIndex = i.IndexOf(')');
-                lista.Add(i.Substring(0, startIndex-2));
-                string subcadena = i.Substring(startIndex, endIndex - startIndex);
-                string[] habilidades = subcadena.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string s in habilidades)
-                {
-                    lista.Add(s.Trim());
-                }
-            }
-            else
-            {
-                lista.Add(i); 
-            }
-            player.Add(lista);
-        }
-        return player; 
-    }
-    
-    //########################################################################################################
     public List<Personaje> CrearEquipo(List<JsonContent> todos_personajes, List<string> player)
     {
         foreach (string personaje in player)
@@ -91,7 +62,6 @@ public class ManejoArchivos
 
     public (string, string[]) Slicing(string personaje)
     {
-        
         int inicio_indice = personaje.IndexOf('(');
         int fin_indice = personaje.IndexOf(')');
         

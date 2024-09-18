@@ -47,5 +47,34 @@ public class Atk5Up : Effect
             player.bonus_stats.Add("Atk", 5);
         } 
     }
-    
+}
+
+public class DefUp : Effect
+{
+    public override void Bonus(Personaje player)
+    {
+        if (player.bonus_stats.ContainsKey("Def"))
+        {
+            player.bonus_stats["Def"] += 5;
+        }
+        else
+        {
+            player.bonus_stats.Add("Def", 5);
+        } 
+    }
+}
+
+public class ResUp : Effect
+{
+    public override void Bonus(Personaje player)
+    {
+        if (player.bonus_stats.ContainsKey("Res"))
+        {
+            player.bonus_stats["Res"] += 5;
+        }
+        else
+        {
+            player.bonus_stats.Add("Res", 5);
+        } 
+    }
 }
