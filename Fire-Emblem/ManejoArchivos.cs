@@ -1,10 +1,16 @@
 using System.Runtime.CompilerServices;
-
+using System.IO; 
 namespace Fire_Emblem;
-
+using Fire_Emblem_View;
 public class ManejoArchivos
 {
     private List<Personaje> player_team = new List<Personaje>();  
+    private View _view;
+
+    public ManejoArchivos(View view)
+    {
+        this._view = view; //TODO: arreglar este view de prueba 
+    }
     public (List<string>, List<string>) GuardarEquipo(string archivo_seleccionado, string team_folder) //TODO: hacer que este en clean code 
     {
         List<string> player1Team = new List<string>(); 
@@ -28,8 +34,11 @@ public class ManejoArchivos
     }
     public string[] LeerArchivo(string archivo_seleccionado, string team_folder)
     {
-        string equipo_seleccionado = archivo_seleccionado;
-        string filename = $"{equipo_seleccionado.ToString().PadLeft(3, '0')}.txt";
+        string[] filename2 = Directory.GetFiles(team_folder, archivo_seleccionado.ToString());
+        string filexd = archivo_seleccionado.ToString().PadLeft(3, '0'); 
+        var filename3 = Directory.GetFiles(team_folder).
+            Where(file => Path.GetFileName(file).Contains(filexd));
+        string filename = Path.GetFileName(filename3.ElementAt(0)); 
         string fullPath = Path.Combine(team_folder, filename);
         return File.ReadAllLines(fullPath); 
     }

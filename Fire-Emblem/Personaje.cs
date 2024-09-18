@@ -22,7 +22,9 @@ public class Personaje
     public int spd;
     public int def;
     public int res;
-    public string[] habilidades; 
+    public string[] habilidades;
+    public bool inicia_round = false; 
+    public Dictionary<string, int> bonus_stats= new Dictionary<string, int>(); 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades)

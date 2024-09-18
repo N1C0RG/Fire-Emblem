@@ -99,10 +99,22 @@ public class Batalla
 
     public void DefinirAtack()
     {
+        //TODO: arreglar esto creawr una clase o metodo que se encarge de aplicar los efectos al personaje 
         int def_rival = (player.weapon == "Magic") ? rival.res : rival.def; 
-        int def_player = (rival.weapon == "Magic") ? player.res : player.def; 
-        ATK_PLAYER = (int)Math.Floor(Convert.ToDecimal(player.atk) * v_player) - def_rival; 
-        ATK_RIVAL = (int)Math.Floor(Convert.ToDecimal(rival.atk) * v_rival) - def_player; 
+        int def_player = (rival.weapon == "Magic") ? player.res : player.def;
+        // _view.WriteLine($"{(int)Math.Floor(Convert.ToDecimal(player.atk) * v_player) - def_rival}");
+        // _view.WriteLine($"{(int)Math.Floor(Convert.ToDecimal(rival.atk) * v_rival) - def_player}");
+        if (player.weapon != "Magic" && rival.bonus_stats.ContainsKey("Def"))
+        {
+            def_rival += rival.bonus_stats["Def"]; 
+        }
+        if (rival.weapon != "Magic" && player.bonus_stats.ContainsKey("Def"))
+        {
+            def_player += player.bonus_stats["Def"]; 
+        }
+        ATK_PLAYER = (int)Math.Floor(Convert.ToDecimal(player.atk + (player.bonus_stats.ContainsKey("Atk") ? player.bonus_stats["Atk"] : 0)) * v_player) - def_rival; 
+        ATK_RIVAL = (int)Math.Floor(Convert.ToDecimal(rival.atk + (rival.bonus_stats.ContainsKey("Atk") ? rival.bonus_stats["Atk"] : 0)) * v_rival) - def_player;
+        
     }
 
     public void Atack(Personaje player, Personaje rival, int dano)
