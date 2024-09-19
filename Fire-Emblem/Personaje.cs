@@ -18,6 +18,7 @@ public class Personaje
     public string gender;
     public string death_quote;
     private int hp;
+    public int hp_original; 
     public int atk;
     public int spd;
     public int def;
@@ -27,7 +28,7 @@ public class Personaje
     public Dictionary<string, int> bonus_stats= new Dictionary<string, int>(); 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
-        int def, int res, string[] habilidades)
+        int def, int res, string[] habilidades, int hp_original)//TODO: ver lo de la hp original 
     {
         this.name = name;
         this.weapon = weapon;
@@ -38,7 +39,8 @@ public class Personaje
         this.spd = spd;
         this.def = def;
         this.res = res;
-        this.habilidades = habilidades; 
+        this.habilidades = habilidades;
+        this.hp_original = hp_original; //ver esto 
     }
 
     public int HP

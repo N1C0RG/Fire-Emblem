@@ -108,9 +108,17 @@ public class Batalla
         {
             def_rival += rival.bonus_stats["Def"]; 
         }
+        if (player.weapon == "Magic" && rival.bonus_stats.ContainsKey("Res"))
+        {
+            def_rival += rival.bonus_stats["Res"]; 
+        }
         if (rival.weapon != "Magic" && player.bonus_stats.ContainsKey("Def"))
         {
             def_player += player.bonus_stats["Def"]; 
+        }
+        if (rival.weapon == "Magic" && player.bonus_stats.ContainsKey("Res"))
+        {
+            def_player += player.bonus_stats["Res"]; 
         }
         ATK_PLAYER = (int)Math.Floor(Convert.ToDecimal(player.atk + (player.bonus_stats.ContainsKey("Atk") ? player.bonus_stats["Atk"] : 0)) * v_player) - def_rival; 
         ATK_RIVAL = (int)Math.Floor(Convert.ToDecimal(rival.atk + (rival.bonus_stats.ContainsKey("Atk") ? rival.bonus_stats["Atk"] : 0)) * v_rival) - def_player;

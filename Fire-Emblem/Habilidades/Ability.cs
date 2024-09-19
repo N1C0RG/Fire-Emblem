@@ -1,26 +1,40 @@
 namespace Fire_Emblem.Habilidades;
 
-public class Ability<TipoEfecto, TipoCondicion> 
-    where TipoCondicion : Condition
-    where TipoEfecto : Effect
+public class Ability 
+    //where Condition : Condition
+    //where TipoEfecto : Effect
 {
-    public TipoEfecto efecto;
-    public TipoCondicion condicion;
+    public List<Effect> efecto;
+    public List<Condition> condicion;
     public Personaje jugador;
-    public Personaje rival; 
-    public Ability(TipoEfecto efecto, TipoCondicion condicion, Personaje jugador, Personaje rival)
+    public Personaje rival;
+    private int aumento;
+    private bool cumple_condicion = true; 
+    public Ability(List<Effect> efecto, List<Condition> condicion, Personaje jugador, Personaje rival, int aumento)
     {
         this.efecto = efecto;
         this.condicion = condicion;
         this.jugador = jugador;
-        this.rival = rival; 
+        this.rival = rival;
+        this.aumento = aumento; 
     }
 
     public void Aplicar()
     {
-        if (condicion.CondicionHabilidad(jugador))
+        foreach (var i in  condicion)
         {
-            efecto.Bonus(jugador); 
+            if (i.CondicionHabilidad(jugador) == false)
+            {
+                cumple_condicion = false; 
+            }
+        }
+
+        if (cumple_condicion)
+        {
+            foreach (var i in efecto)
+            {
+               i.Bonus(jugador, aumento);
+            }
         }
     }
 }

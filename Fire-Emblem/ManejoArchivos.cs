@@ -87,7 +87,7 @@ public class ManejoArchivos
             {
                 player_team.Add(new Personaje(i.Name, i.Weapon, i.Gender, i.DeathQuote, 
                     Convert.ToInt32(i.HP), Convert.ToInt32(i.Atk), Convert.ToInt32(i.Spd), 
-                    Convert.ToInt32(i.Def), Convert.ToInt32(i.Res), habilidaes));
+                    Convert.ToInt32(i.Def), Convert.ToInt32(i.Res), habilidaes, Convert.ToInt32(i.HP)));
             }
         }
     }
