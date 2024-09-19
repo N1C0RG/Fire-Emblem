@@ -1,3 +1,5 @@
+using Fire_Emblem.Habilidades;
+
 namespace Fire_Emblem;
 public class JsonContent
 {
@@ -59,44 +61,10 @@ public class Personaje
         }
     }
 
-    public int defensa(Personaje p2)
+    public EstadisticasCombate GenerarEstadisticas()
     {
-        if (weapon == "Magic")
-        {
-            return p2.res; 
-        }
-        else
-        {
-            return p2.def; 
-        }
+        return new EstadisticasCombate(hp, atk, spd, def, res); 
     }
-    public int atacar(Personaje p2, bool? multiplicador)
-    {
-        int ataque = 0; 
-        if (multiplicador == true)
-        {
-           ataque = (int)Math.Floor(Convert.ToDecimal(atk) * 1.2m) - defensa(p2); 
-        }
-        else if (multiplicador == false)
-        {
-            ataque = (int)(Math.Floor(Convert.ToDecimal(atk) * 0.8m) - p2.def); 
-        }
-        else
-        {
-            ataque = atk - defensa(p2); 
-        }
-
-        if (ataque < 0)
-        {
-            return 0; 
-        }
-        else
-        {
-            return ataque; 
-        }
-    }
-    
-    
     
 }
 

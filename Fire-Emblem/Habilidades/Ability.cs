@@ -23,7 +23,7 @@ public class Ability
     {
         foreach (var i in  condicion)
         {
-            if (i.CondicionHabilidad(jugador) == false)
+            if (i.CondicionHabilidad(jugador, rival) == false)
             {
                 cumple_condicion = false; 
             }
@@ -33,7 +33,7 @@ public class Ability
         {
             foreach (var i in efecto)
             {
-               i.Bonus(jugador, aumento);
+               i.Bonus(jugador, rival, aumento);
             }
         }
     }

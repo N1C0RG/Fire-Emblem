@@ -66,16 +66,16 @@ public class Game
                     new AplicadorHabilidad(nombre_habilidad, player, rival, _view); 
                 aplicador_habilidad.ConstructorHabilidad();
             }
-            foreach (var i in player.bonus_stats)
+        }
+        foreach (var i in player.bonus_stats)
+        {
+            if (i.Value > 0)
             {
-                if (i.Value > 0)
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
-                }
-                else
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
-                }
+                _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
+            }
+            else
+            {
+                _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
             }
         }
     }
@@ -131,17 +131,16 @@ public class Game
     {
         
         StarTurno(jugador, rival);
-        
+        //seteo a false de nuevo el inicia round 
+        //TODO: arreglar esto 
+        personaje_jugador.inicia_round = false;
         batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
-        
         if (personaje_rival.HP == 0)
         {
             EndRound();
             return;
         }
-
         batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
-            
         if (personaje_jugador.HP == 0)
         {
             EndRound();
@@ -152,10 +151,6 @@ public class Game
             batalla.FollowUp();
             EndRound();
         }
-        
-        //seteo a false de nuevo el inicia round 
-        //TODO: arreglar esto 
-        personaje_jugador.inicia_round = false;
         return; 
     }
 

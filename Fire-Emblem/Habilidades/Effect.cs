@@ -1,57 +1,13 @@
 namespace Fire_Emblem.Habilidades;
 public abstract class Effect
 {
-    public abstract void Bonus(Personaje player, int aumento); 
+    public abstract void Bonus(Personaje player, Personaje rival, int aumento); 
 }
 
-// public class Def8Up : Effect
-// {
-//     public override void Bonus(Personaje player)
-//     {
-//         if (player.bonus_stats.ContainsKey("Def"))
-//         {
-//             player.bonus_stats["Def"] += 8;
-//         }
-//         else
-//         {
-//             player.bonus_stats.Add("Def", 8);
-//         }
-//     }
-//     
-// }
-// public class Def5Up : Effect
-// {
-//     public override void Bonus(Personaje player)
-//     {
-//         if (player.bonus_stats.ContainsKey("Def"))
-//         {
-//             player.bonus_stats["Def"] += 5;
-//         }
-//         else
-//         {
-//             player.bonus_stats.Add("Def", 5);
-//         }
-//     }
-//     
-// }
-// public class Atk5Up : Effect
-// {
-//     public override void Bonus(Personaje player)
-//     {
-//         if (player.bonus_stats.ContainsKey("Atk"))
-//         {
-//             player.bonus_stats["Atk"] += 5;
-//         }
-//         else
-//         {
-//             player.bonus_stats.Add("Atk", 5);
-//         } 
-//     }
-// }
 //TODO: en vez de hacer que cada una se encargue para una cantidad especifica de un stat hago que reciban un valor 
 public class AtkUp : Effect
 {
-    public override void Bonus(Personaje player, int aumento)
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
         if (player.bonus_stats.ContainsKey("Atk"))
         {
@@ -65,7 +21,7 @@ public class AtkUp : Effect
 }
 public class DefUp : Effect
 {
-    public override void Bonus(Personaje player, int aumento)
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
         if (player.bonus_stats.ContainsKey("Def"))
         {
@@ -80,7 +36,7 @@ public class DefUp : Effect
 
 public class ResUp : Effect
 {
-    public override void Bonus(Personaje player, int aumento)
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
         if (player.bonus_stats.ContainsKey("Res"))
         {
@@ -94,7 +50,7 @@ public class ResUp : Effect
 }
 public class SpdUp : Effect
 {
-    public override void Bonus(Personaje player, int aumento)
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
         if (player.bonus_stats.ContainsKey("Spd"))
         {
@@ -103,6 +59,29 @@ public class SpdUp : Effect
         else
         {
             player.bonus_stats.Add("Spd", aumento);
+        } 
+    }
+}
+
+public class FairAtkdUp : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (player.bonus_stats.ContainsKey("Atk"))
+        {
+            player.bonus_stats["Atk"] += aumento;
+        }
+        else
+        {
+            player.bonus_stats.Add("Atk", aumento);
+        } 
+        if (rival.bonus_stats.ContainsKey("Atk"))
+        {
+            rival.bonus_stats["Atk"] += aumento;
+        }
+        else
+        {
+            rival.bonus_stats.Add("Atk", aumento);
         } 
     }
 }

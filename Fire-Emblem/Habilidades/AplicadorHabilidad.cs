@@ -144,6 +144,95 @@ public class AplicadorHabilidad
                 10);
             habilidad.Aplicar();
         }
-        
+        else if (nombre_habilidad == "Chaos Style")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new SpdUp() }, 
+                new List<Condition> { new ConditionChaos(), new ConditionInicioCombate()}, 
+                jugador, 
+                rival, 
+                3);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Darting Blow")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new SpdUp() }, 
+                new List<Condition> { new ConditionInicioCombate()}, 
+                jugador, 
+                rival, 
+                8);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Deadly Blade")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new AtkUp(),  new SpdUp() }, 
+                new List<Condition> { new ConditionInicioCombate(), new ConditionEspada()}, 
+                jugador, 
+                rival, 
+                8);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Death Blow")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new AtkUp() }, 
+                new List<Condition> { new ConditionInicioCombate() }, 
+                jugador, 
+                rival, 
+                8);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Defense +5")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new DefUp() }, 
+                new List<Condition> { new ConditionNula() }, 
+                jugador, 
+                rival, 
+                5);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Earth Boost")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new DefUp() }, 
+                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
+                jugador, 
+                rival, 
+                6);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Fair Fight")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new FairAtkdUp() }, 
+                new List<Condition> { new ConditionInicioCombate() }, 
+                jugador, 
+                rival, 
+                6);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Fire Boost")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new AtkUp() }, 
+                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
+                jugador, 
+                rival, 
+                6);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Mirror Strike")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> {new AtkUp(), new ResUp()}, 
+                new List<Condition> { new ConditionInicioCombate() }, 
+                jugador, 
+                rival, 
+                6);
+            habilidad.Aplicar();
+        }
     }
 }

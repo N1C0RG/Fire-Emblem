@@ -132,23 +132,46 @@ public class Batalla
     }
     public void FollowUp()
          {
-             if (player.spd >= rival.spd + 5)
+             //TODO: arreglar esto 
+             int p_s = player.spd; 
+             int r_s = rival.spd; 
+             if (player.bonus_stats.ContainsKey("Spd"))
+             {
+                 p_s = player.spd + player.bonus_stats["Spd"]; 
+             }
+             if (rival.bonus_stats.ContainsKey("Spd"))
+             {
+                 r_s = rival.spd + rival.bonus_stats["Spd"]; 
+             }
+             if (p_s >= r_s + 5)
              {
                  rival.HP -= ATK_PLAYER;
              }
-             else if (player.spd + 5 <= rival.spd)
+             else if (p_s + 5 <= r_s)
              {
                  player.HP -= ATK_RIVAL;
              }
          }
     public void PrintFollowUp()
     {
-        if (player.spd >= rival.spd + 5)
+        //TODO: arreglar esto 
+        int p_s = player.spd; 
+        int r_s = rival.spd; 
+        if (player.bonus_stats.ContainsKey("Spd"))
+        {
+            p_s = player.spd + player.bonus_stats["Spd"]; 
+        }
+        if (rival.bonus_stats.ContainsKey("Spd"))
+        {
+            r_s = rival.spd + rival.bonus_stats["Spd"]; 
+        }
+
+        if (p_s >= r_s + 5)
         {
             _view.WriteLine($"{player.name} ataca a {rival.name} con {ATK_PLAYER} de daño");
                  
         }
-        else if (player.spd + 5 <= rival.spd)
+        else if (p_s + 5 <= r_s)
         {
             _view.WriteLine($"{rival.name} ataca a {player.name} con {ATK_RIVAL} de daño");
         }
