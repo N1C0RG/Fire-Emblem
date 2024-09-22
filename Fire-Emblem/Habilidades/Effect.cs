@@ -144,13 +144,81 @@ public class NeutralizaBonus : Effect
         }
     }
 }
+public class Neutralizapenalty : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        
+        foreach (var i in player.bonus_stats)
+        {
+            if (i.Value < 0)
+            {
+                player.bonus_stats[i.Key] = 0; 
+            }
+        }
+    }
+}
+
+public class CancelAtk : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (rival.bonus_stats["Atk"] > 0)
+        {
+            rival.bonus_stats["Atk"] = 0; 
+        }
+        rival.tiene_bonus.Add("Atk");
+    }
+}
+public class CancelDef : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+
+        if (rival.bonus_stats["Def"] > 0)
+        {
+            rival.bonus_stats["Def"] = 0; 
+        }
+        rival.tiene_bonus.Add("Def");
+    }
+}
+public class CancelRes : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+
+        if (rival.bonus_stats["Res"] > 0)
+        {
+            rival.bonus_stats["Res"] = 0; 
+        }
+        rival.tiene_bonus.Add("Res");
+    }
+}
+public class CancelSpd : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+
+        if (rival.bonus_stats["Spd"] > 0)
+        {
+            rival.bonus_stats["Spd"] = 0; 
+        }
+        rival.tiene_bonus.Add("Spd");
+    }
+}
+
+
+
 
 //TODO: no es un efecto 
 public class AplicarCancelacion : Effect
 {
     public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
-        rival.tiene_bonus = false; 
+        rival.tiene_bonus.Add("Atk");
+        rival.tiene_bonus.Add("Spd");
+        rival.tiene_bonus.Add("Def");
+        rival.tiene_bonus.Add("Res");
     }
 }
 
@@ -197,3 +265,61 @@ public class HpUp : Effect
         player.HP += 15; 
     }
 }
+
+public class RivalAtkDown : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (rival.bonus_stats.ContainsKey("Atk"))
+        {
+            rival.bonus_stats["Atk"] += aumento;
+        }
+        else
+        {
+            rival.bonus_stats.Add("Atk", aumento);
+        } 
+    }
+}
+public class RivalDefDown : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (rival.bonus_stats.ContainsKey("Def"))
+        {
+            rival.bonus_stats["Def"] += aumento;
+        }
+        else
+        {
+            rival.bonus_stats.Add("Def", aumento);
+        } 
+    }
+}
+public class RivalSpdDown : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (rival.bonus_stats.ContainsKey("Spd"))
+        {
+            rival.bonus_stats["Spd"] += aumento;
+        }
+        else
+        {
+            rival.bonus_stats.Add("Spd", aumento);
+        } 
+    }
+}
+public class RivalResDown : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        if (rival.bonus_stats.ContainsKey("Res"))
+        {
+            rival.bonus_stats["Res"] += aumento;
+        }
+        else
+        {
+            rival.bonus_stats.Add("Res", aumento);
+        } 
+    }
+}
+

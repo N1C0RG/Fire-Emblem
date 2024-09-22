@@ -109,10 +109,6 @@ public class Game
                 {
                     _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value} en su primer ataque");
                 }
-                else if (player.atk_follow > 0 && i.Key == "Atk")
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}+{player.atk_follow} en su primer ataque");
-                }
                 else
                 {
                     _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
@@ -123,25 +119,37 @@ public class Game
             {
                 if (player.first_atack == 1 && i.Key == "Atk" && player.habilidad_fa)
                 {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value} en su primer ataque");
-                }
-                else if (player.atk_follow < 0 && i.Key == "Atk")
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}-{player.atk_follow} en su primer ataque");
+                    _view.WriteLine($"{player.name} obtiene {i.Key}{i.Value} en su primer ataque");
                 }
                 else
                 {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
+                    _view.WriteLine($"{player.name} obtiene {i.Key}{i.Value}");
                 }
             }
         }
-        if (player.tiene_bonus == false)
+        // if (player.tiene_bonus == false)
+        // {
+        //     _view.WriteLine($"Los bonus de Atk de {player.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Spd de {player.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Def de {player.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Res de {player.name} fueron neutralizados");
+        // }
+        if (player.tiene_bonus.Count > 0)
         {
-            _view.WriteLine($"Los bonus de Atk de {player.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Spd de {player.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Def de {player.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Res de {player.name} fueron neutralizados");
+            foreach (var i in player.tiene_bonus)
+            {
+                _view.WriteLine($"Los bonus de {i} de {player.name} fueron neutralizados");
+            }
         }
+        if (player.tiene_bonus.Count < 0)
+        {
+            foreach (var i in player.tiene_bonus)
+            {
+                _view.WriteLine($"Los penalty de {i} de {player.name} fueron neutralizados");
+            }
+        }
+
+
         foreach (var i in rival.bonus_stats)
         {
             if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
@@ -159,21 +167,36 @@ public class Game
             {
                 if (rival.first_atack == 1 && i.Key == "Atk" && rival.habilidad_fa == true)
                 {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}-{i.Value} en su primer ataque");
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}{i.Value} en su primer ataque");
                 }
                 else
                 {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}-{i.Value}");
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}{i.Value}");
                 }
             }
         }
-        if (rival.tiene_bonus == false)
+
+        if (rival.tiene_bonus.Count > 0)
         {
-            _view.WriteLine($"Los bonus de Atk de {rival.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Spd de {rival.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Def de {rival.name} fueron neutralizados");
-            _view.WriteLine($"Los bonus de Res de {rival.name} fueron neutralizados");
+            foreach (var i in rival.tiene_bonus)
+            {
+                _view.WriteLine($"Los bonus de {i} de {rival.name} fueron neutralizados");
+            }
         }
+        if (rival.tiene_bonus.Count < 0)
+        {
+            foreach (var i in rival.tiene_bonus)
+            {
+                _view.WriteLine($"Los penalty de {i} de {rival.name} fueron neutralizados");
+            }
+        }
+        // if (rival.tiene_bonus == false)
+        // {
+        //     _view.WriteLine($"Los bonus de Atk de {rival.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Spd de {rival.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Def de {rival.name} fueron neutralizados");
+        //     _view.WriteLine($"Los bonus de Res de {rival.name} fueron neutralizados");
+        // }
     }
 
     private void InicializacionTurno(Player jugador, Player rival)
@@ -234,8 +257,8 @@ public class Game
         //seteo a false de nuevo el inicia round 
         //TODO: arreglar esto 
         personaje_jugador.inicia_round = false;
-        personaje_jugador.tiene_bonus = true;
-        personaje_rival.tiene_bonus = true; 
+        personaje_jugador.tiene_bonus = new List<string>();
+        personaje_rival.tiene_bonus = new List<string>(); 
         
         batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
         if (personaje_rival.HP == 0)

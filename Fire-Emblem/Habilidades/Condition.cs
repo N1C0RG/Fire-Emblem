@@ -221,3 +221,21 @@ public class ConditionFirstAtk : Condition//TODO: arreglar esto
         }
     }
 }
+
+public class ConditionFullVidaRival : Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (rival.hp_original == rival.HP)
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+
+
