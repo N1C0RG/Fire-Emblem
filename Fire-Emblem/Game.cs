@@ -56,27 +56,123 @@ public class Game
         ShowTeam(player);
     }
 
-    private void aplicar_h(Personaje player, Personaje rival)//TODO: arreglar esto 
+    private void AplicarBonusPenalty(Personaje player, Personaje rival)//TODO: arreglar esto 
     {
         if (player.habilidades.Length != 0)
         {
             foreach (var nombre_habilidad in player.habilidades)
             {
-                AplicadorHabilidad aplicador_habilidad = 
-                    new AplicadorHabilidad(nombre_habilidad, player, rival, _view); 
+                AplicadorHabilidadBonus aplicador_habilidad = 
+                    new AplicadorHabilidadBonus(nombre_habilidad, player, rival, _view); 
                 aplicador_habilidad.ConstructorHabilidad();
             }
         }
+        
+    }
+    private void AplicarNeutralizador(Personaje player, Personaje rival)//TODO: arreglar esto no deberia hacer algo aparte en la logica del juego 
+    {
+        if (player.habilidades.Length != 0)
+        {
+            foreach (var nombre_habilidad in player.habilidades)
+            {
+                AplicadorHabilidadMixta aplicador_habilidad_neutralizador = 
+                    new AplicadorHabilidadMixta(nombre_habilidad, player, rival, _view);
+                aplicador_habilidad_neutralizador.ConstructorHabilidad();
+            }
+        }
+        
+    }
+
+    private void PrintBonus(Personaje player, Personaje rival)//TODO: arreglar esto 
+    {
+        if (player.atk_follow > 0)
+        {
+            _view.WriteLine($"{player.name} obtiene Atk+{player.atk_follow} en su Follow-Up");
+        }
+        if (player.atk_follow < 0)
+        {
+            _view.WriteLine($"{player.name} obtiene Atk{player.atk_follow} en su Follow-Up");
+        }
+        if (rival.atk_follow > 0)
+        {
+            _view.WriteLine($"{rival.name} obtiene Atk+{rival.atk_follow} en su Follow-Up");
+        }
+        if (rival.atk_follow < 0)
+        {
+            _view.WriteLine($"{rival.name} obtiene Atk{rival.atk_follow} en su Follow-Up");
+        }
         foreach (var i in player.bonus_stats)
         {
-            if (i.Value > 0)
+            if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
             {
-                _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
+                if (player.first_atack == 1 && i.Key == "Atk" && player.habilidad_fa)
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value} en su primer ataque");
+                }
+                else if (player.atk_follow > 0 && i.Key == "Atk")
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}+{player.atk_follow} en su primer ataque");
+                }
+                else
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
+                }
+                
             }
-            else
+            else if (i.Value < 0)
             {
-                _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
+                if (player.first_atack == 1 && i.Key == "Atk" && player.habilidad_fa)
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value} en su primer ataque");
+                }
+                else if (player.atk_follow < 0 && i.Key == "Atk")
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}-{player.atk_follow} en su primer ataque");
+                }
+                else
+                {
+                    _view.WriteLine($"{player.name} obtiene {i.Key}-{i.Value}");
+                }
             }
+        }
+        if (player.tiene_bonus == false)
+        {
+            _view.WriteLine($"Los bonus de Atk de {player.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Spd de {player.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Def de {player.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Res de {player.name} fueron neutralizados");
+        }
+        foreach (var i in rival.bonus_stats)
+        {
+            if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
+            {
+                if (rival.first_atack == 1 && i.Key == "Atk" && rival.habilidad_fa == true)
+                {
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}+{i.Value} en su primer ataque"); 
+                }
+                else
+                {
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}+{i.Value}");
+                }
+            }
+            else if (i.Value < 0)
+            {
+                if (rival.first_atack == 1 && i.Key == "Atk" && rival.habilidad_fa == true)
+                {
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}-{i.Value} en su primer ataque");
+                }
+                else
+                {
+                    _view.WriteLine($"{rival.name} obtiene {i.Key}-{i.Value}");
+                }
+            }
+        }
+        if (rival.tiene_bonus == false)
+        {
+            _view.WriteLine($"Los bonus de Atk de {rival.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Spd de {rival.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Def de {rival.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de Res de {rival.name} fueron neutralizados");
         }
     }
 
@@ -118,8 +214,12 @@ public class Game
         personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
         personaje_rival.bonus_stats = new Dictionary<string, int>(); 
         
-        aplicar_h(personaje_jugador, personaje_rival);
-        aplicar_h(personaje_rival, personaje_jugador);
+        AplicarBonusPenalty(personaje_jugador, personaje_rival);
+        AplicarBonusPenalty(personaje_rival, personaje_jugador);
+        PrintBonus(personaje_jugador, personaje_rival);
+        AplicarNeutralizador(personaje_jugador, personaje_rival); 
+        AplicarNeutralizador(personaje_rival, personaje_jugador);
+        
     }
 
     private void EndRound()
@@ -134,6 +234,9 @@ public class Game
         //seteo a false de nuevo el inicia round 
         //TODO: arreglar esto 
         personaje_jugador.inicia_round = false;
+        personaje_jugador.tiene_bonus = true;
+        personaje_rival.tiene_bonus = true; 
+        
         batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
         if (personaje_rival.HP == 0)
         {
@@ -141,6 +244,7 @@ public class Game
             return;
         }
         batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
+        batalla.DefinirAtack();
         if (personaje_jugador.HP == 0)
         {
             EndRound();
@@ -151,6 +255,9 @@ public class Game
             batalla.FollowUp();
             EndRound();
         }
+
+        personaje_jugador.first_atack = 1; 
+        personaje_rival.first_atack = 1; 
         return; 
     }
 

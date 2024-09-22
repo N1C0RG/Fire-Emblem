@@ -120,40 +120,74 @@ public class Batalla
         {
             def_player += player.bonus_stats["Res"]; 
         }
+        
+        if (player.first_atack == 2 && player.habilidad_fa)
+        {
+            
+            player.bonus_stats["Atk"] = 0; 
+        }
+
+        if (rival.first_atack == 2 && rival.habilidad_fa)
+        {
+            rival.bonus_stats["Atk"] = 0; 
+        }
+ 
         ATK_PLAYER = (int)Math.Floor(Convert.ToDecimal(player.atk + (player.bonus_stats.ContainsKey("Atk") ? player.bonus_stats["Atk"] : 0)) * v_player) - def_rival; 
         ATK_RIVAL = (int)Math.Floor(Convert.ToDecimal(rival.atk + (rival.bonus_stats.ContainsKey("Atk") ? rival.bonus_stats["Atk"] : 0)) * v_rival) - def_player;
-        
     }
 
     public void Atack(Personaje player, Personaje rival, int dano)
     {
         _view.WriteLine($"{player.name} ataca a {rival.name} con {dano} de daño");
-        rival.HP -= dano; 
+        rival.HP -= dano;
+        player.first_atack += 1; 
     }
-    public void FollowUp()
-         {
-             //TODO: arreglar esto 
-             int p_s = player.spd; 
-             int r_s = rival.spd; 
-             if (player.bonus_stats.ContainsKey("Spd"))
-             {
-                 p_s = player.spd + player.bonus_stats["Spd"]; 
-             }
-             if (rival.bonus_stats.ContainsKey("Spd"))
-             {
-                 r_s = rival.spd + rival.bonus_stats["Spd"]; 
-             }
-             if (p_s >= r_s + 5)
-             {
-                 rival.HP -= ATK_PLAYER;
-             }
-             else if (p_s + 5 <= r_s)
-             {
-                 player.HP -= ATK_RIVAL;
-             }
-         }
-    public void PrintFollowUp()
+    public void FollowUp()//TODO: arreglar esto 
     {
+        int a = ATK_PLAYER + player.atk_follow;
+        int b = ATK_RIVAL + rival.atk_follow;
+        if (a < 0)
+        {
+            a = 0; 
+        }
+
+        if (b < 0)
+        {
+            b = 0; 
+        }
+         //TODO: arreglar esto 
+         int p_s = player.spd; 
+         int r_s = rival.spd; 
+         if (player.bonus_stats.ContainsKey("Spd"))
+         {
+             p_s = player.spd + player.bonus_stats["Spd"]; 
+         }
+         if (rival.bonus_stats.ContainsKey("Spd"))
+         {
+             r_s = rival.spd + rival.bonus_stats["Spd"]; 
+         }
+         if (p_s >= r_s + 5)
+         {
+             rival.HP -= a;
+         }
+         else if (p_s + 5 <= r_s)
+         {
+             player.HP -= b;
+         }
+    }
+    public void PrintFollowUp()//TODO: arreglar esto 
+    {
+        int a = ATK_PLAYER + player.atk_follow;
+        int b = ATK_RIVAL + rival.atk_follow;
+        if (a < 0)
+        {
+            a = 0; 
+        }
+
+        if (b < 0)
+        {
+            b = 0; 
+        }
         //TODO: arreglar esto 
         int p_s = player.spd; 
         int r_s = rival.spd; 
@@ -168,12 +202,12 @@ public class Batalla
 
         if (p_s >= r_s + 5)
         {
-            _view.WriteLine($"{player.name} ataca a {rival.name} con {ATK_PLAYER} de daño");
+            _view.WriteLine($"{player.name} ataca a {rival.name} con {a} de daño");
                  
         }
         else if (p_s + 5 <= r_s)
         {
-            _view.WriteLine($"{rival.name} ataca a {player.name} con {ATK_RIVAL} de daño");
+            _view.WriteLine($"{rival.name} ataca a {player.name} con {b} de daño");
         }
         else
         {

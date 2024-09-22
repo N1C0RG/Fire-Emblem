@@ -88,3 +88,136 @@ public class ConditionRivalHPvsPlayerHP : Condition
         }
     }
 }
+
+public class ConditionHP75 : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.HP <= (int)Math.Floor(Convert.ToDecimal(player.hp_original) * 0.75m))
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+public class ConditionMagia : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.weapon == "Magic")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionHP50 : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.HP <= (int)Math.Floor(Convert.ToDecimal(player.hp_original) * 0.5m))
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+public class ConditionWrath : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.HP != player.hp_original)
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+public class ConditionNoInicia : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.inicia_round == false)
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+public class ConditionClose : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (rival.weapon != "Magic" && rival.weapon != "Bow")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionDistant : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (rival.weapon == "Magic" || rival.weapon == "Bow")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+public class ConditionRivalHP75 : Condition
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.hp_original) * 0.75m))
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionFirstAtk : Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.first_atack == 1)
+        {
+            player.habilidad_fa = true; 
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}

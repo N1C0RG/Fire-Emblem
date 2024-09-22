@@ -26,8 +26,13 @@ public class Personaje
     public int def;
     public int res;
     public string[] habilidades;
-    public bool inicia_round = false; 
-    public Dictionary<string, int> bonus_stats= new Dictionary<string, int>(); 
+    public bool inicia_round = false;
+    public bool tiene_bonus = true;
+    public bool tiene_prioridad = false; 
+    public Dictionary<string, int> bonus_stats= new Dictionary<string, int>();
+    public int first_atack = 1;
+    public bool habilidad_fa = false;
+    public int atk_follow = 0; 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades, int hp_original)//TODO: ver lo de la hp original 
