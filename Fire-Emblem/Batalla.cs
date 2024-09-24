@@ -301,7 +301,6 @@ public class Impresora
         }
     }
 }
-
 public class CalculadoraDeAtaque
 {
     public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
@@ -315,10 +314,14 @@ public class CalculadoraDeAtaque
         {
             def += defensor.bonus_stats["Res"];
         }
+        //TODO: arreglar esto
+        if (atacante.first_atack == 2 && atacante.habilidad_fa)
+         {
+             atacante.bonus_stats["Atk"] = 0; 
+         }
         return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.bonus_stats.ContainsKey("Atk") ? atacante.bonus_stats["Atk"] : 0)) * ventaja) - def;
     }
 }
-
 public class SeguidorDeAtaque
 {
     private int _atk_follow_jugador;
@@ -335,10 +338,10 @@ public class SeguidorDeAtaque
     }
     public int follow_spd_jugador { get; private set; }
     public int follow_spd_rival { get; private set; }
-    public void FollowUp(Personaje player, Personaje rival, int atk_player, int atk_rival)
+    public void FollowUp(Personaje player, Personaje rival, int atk_player, int atk_rival, View view)
     {
         DefinirFollowUpAtk(player, rival, atk_player, atk_rival);
-        DefinirFollowUpSpd(player, rival);
+        DefinirFollowUpSpd(player, rival, view);
         if (follow_spd_jugador >= follow_spd_rival + 5)
         {
             rival.HP -= AtkFollowJugador;
@@ -353,21 +356,20 @@ public class SeguidorDeAtaque
         AtkFollowJugador = atk_player + player.atk_follow;
         AtkFollowRival = atk_rival + rival.atk_follow;
     }
-    private void DefinirFollowUpSpd(Personaje player, Personaje rival)
+    private void DefinirFollowUpSpd(Personaje player, Personaje rival, View view)
     {
         follow_spd_jugador = player.spd;
         follow_spd_rival = rival.spd;
         if (player.bonus_stats.ContainsKey("Spd"))
         {
-            follow_spd_jugador = player.bonus_stats["Spd"];
+            follow_spd_jugador += player.bonus_stats["Spd"];
         }
         if (rival.bonus_stats.ContainsKey("Spd"))
         {
-            follow_spd_rival = rival.bonus_stats["Spd"];
+            follow_spd_rival += rival.bonus_stats["Spd"];
         }
     }
 }
-
 public class RemoverJugador
 {
     public void RemovePlayer(Personaje player, Personaje rival, Player player_team, Player rival_team)
@@ -457,7 +459,7 @@ public class Batalla
 
     public void FollowUp()
     {
-        _seguidorDeAtaque.FollowUp(player, rival, AtkPlayer, AtkRival);
+        _seguidorDeAtaque.FollowUp(player, rival, AtkPlayer, AtkRival, _view);//le meti  un view
     }
 
     public void RemovePlayer()
