@@ -30,6 +30,7 @@ public class Personaje
     public List<string> bonus_neutralizados = new List<string>(); 
     public List<string> penalty_neutralizados = new List<string>(); 
     public Dictionary<string, int> bonus_stats= new Dictionary<string, int>();
+    public Dictionary<string, int> penalty_stats= new Dictionary<string, int>();
     public int first_atack = 1;
     public bool habilidad_fa = false;
     public int atk_follow = 0;

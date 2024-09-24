@@ -52,22 +52,28 @@ public class EjecucionAplicadorHabilidad
     }
     private void PrintPlayerAbility(Personaje player)
     {
-        foreach (var i in player.bonus_stats)
+        //lo que modifico (un diccionario ordenado acorde a las claves)
+        string[] order = { "Atk", "Spd", "Def", "Res" };
+        var stats_ordenados = order 
+            .Where(player.bonus_stats.ContainsKey)  
+            .Select(key => new { Key = key, Value = player.bonus_stats[key] });
+        
+        foreach (var i in stats_ordenados)
         {
             if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
             {
-                ContenidoPrintAbility(player, i, "+"); 
+                ContenidoPrintAbility(player, (i.Key, i.Value), "+"); 
             }
         }
-        foreach (var i in player.bonus_stats)
+        foreach (var i in stats_ordenados)
         {
             if (i.Value < 0)//TODO: no comtemplo el caso un bonus 0
             {
-                ContenidoPrintAbility(player, i, ""); 
+                ContenidoPrintAbility(player, (i.Key, i.Value), ""); 
             }
         }
     }
-    private void ContenidoPrintAbility(Personaje player, KeyValuePair<string, int> diccionario, string signo)
+    private void ContenidoPrintAbility(Personaje player, (string Key, int Value) diccionario, string signo)
     {
         if (player.first_atack == 1 && diccionario.Key == "Atk" && player.habilidad_fa)
         {

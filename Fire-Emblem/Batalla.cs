@@ -1,168 +1,6 @@
 using Fire_Emblem_View;
 namespace Fire_Emblem;
 
-public class Ventaja
-{
-    public decimal ventaja_player { get; private set; } = 1;
-    public decimal ventaj_rival { get; private set; } = 1;
-
-    public void CalcularVentaja(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Sword" && rival.weapon == "Axe" ||
-            player.weapon == "Lance" && rival.weapon == "Sword" ||
-            player.weapon == "Axe" && rival.weapon == "Lance")
-        {
-            ventaja_player = 1.2m;
-            ventaj_rival = 0.8m;
-        }
-        else if (rival.weapon == "Sword" && player.weapon == "Axe" ||
-                 rival.weapon == "Lance" && player.weapon == "Sword" ||
-                 rival.weapon == "Axe" && player.weapon == "Lance")
-        {
-            ventaja_player = 0.8m;
-            ventaj_rival = 1.2m;
-        }
-        else
-        {
-            ventaja_player = 1;
-            ventaj_rival = 1;
-        }
-    }
-}
-public class Impresora
-{
-    private View _view;
-
-    public Impresora(View view)
-    {
-        _view = view;
-    }
-
-    public void PrintVentaja(Personaje player, Personaje rival, decimal ventaja_player)
-    {
-        if (ventaja_player == 1.2m)
-        {
-            _view.WriteLine($"{player.name} ({player.weapon}) tiene ventaja con respecto a {rival.name} ({rival.weapon})");
-        }
-        else if (ventaja_player == 0.8m)
-        {
-            _view.WriteLine($"{rival.name} ({rival.weapon}) tiene ventaja con respecto a {player.name} ({player.weapon})");
-        }
-        else
-        {
-            _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
-        }
-    }
-
-    public void PrintVida(Personaje player, Personaje rival)
-    {
-        _view.WriteLine($"{player.name} ({player.HP}) : {rival.name} ({rival.HP})");
-    }
-
-    public void PrintFollowUp(SeguidorDeAtaque follow, Personaje player, Personaje rival)
-    {
-        if (follow.follow_spd_jugador >= follow.follow_spd_rival + 5)
-        {
-            _view.WriteLine($"{player.name} ataca a {rival.name} con {follow.AtkFollowJugador} de daño");
-        }
-        else if (follow.follow_spd_jugador + 5 <= follow.follow_spd_rival)
-        {
-            _view.WriteLine($"{rival.name} ataca a {player.name} con {follow.AtkFollowRival} de daño");
-        }
-        else
-        {
-            _view.WriteLine("Ninguna unidad puede hacer un follow up"); 
-        }
-    }
-
-    public void PrintAtaque(Personaje player, Personaje rival, int dano)
-    {
-        _view.WriteLine($"{player.name} ataca a {rival.name} con {dano} de daño");
-    }
-}
-public class CalculadoraDeAtaque
-{
-    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
-    {
-        int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
-        if (atacante.weapon != "Magic" && defensor.bonus_stats.ContainsKey("Def"))
-        {
-            def += defensor.bonus_stats["Def"];
-        }
-        if (atacante.weapon == "Magic" && defensor.bonus_stats.ContainsKey("Res"))
-        {
-            def += defensor.bonus_stats["Res"];
-        }
-        //TODO: arreglar esto
-        if (atacante.first_atack == 2 && atacante.habilidad_fa)
-         {
-             atacante.bonus_stats["Atk"] = 0; 
-         }
-        return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.bonus_stats.ContainsKey("Atk") ? atacante.bonus_stats["Atk"] : 0)) * ventaja) - def;
-    }
-}
-public class SeguidorDeAtaque
-{
-    private int _atk_follow_jugador;
-    public int AtkFollowJugador
-    {
-        get { return _atk_follow_jugador; }
-        private set { _atk_follow_jugador = value < 0 ? 0 : value; }
-    }
-    private int _atk_follow_rival;
-    public int AtkFollowRival
-    {
-        get { return _atk_follow_rival; }
-        private set { _atk_follow_rival = value < 0 ? 0 : value; }
-    }
-    public int follow_spd_jugador { get; private set; }
-    public int follow_spd_rival { get; private set; }
-    public void FollowUp(Personaje player, Personaje rival, int atk_player, int atk_rival)
-    {
-        DefinirFollowUpAtk(player, rival, atk_player, atk_rival);
-        DefinirFollowUpSpd(player, rival);
-        if (follow_spd_jugador >= follow_spd_rival + 5)
-        {
-            rival.HP -= AtkFollowJugador;
-        }
-        else if (follow_spd_jugador + 5 <= follow_spd_rival)
-        {
-            player.HP -= AtkFollowRival;
-        }
-    }
-    private void DefinirFollowUpAtk(Personaje player, Personaje rival, int atk_player, int atk_rival)
-    {
-        AtkFollowJugador = atk_player + player.atk_follow;
-        AtkFollowRival = atk_rival + rival.atk_follow;
-    }
-    private void DefinirFollowUpSpd(Personaje player, Personaje rival)
-    {
-        follow_spd_jugador = player.spd;
-        follow_spd_rival = rival.spd;
-        if (player.bonus_stats.ContainsKey("Spd"))
-        {
-            follow_spd_jugador += player.bonus_stats["Spd"];
-        }
-        if (rival.bonus_stats.ContainsKey("Spd"))
-        {
-            follow_spd_rival += rival.bonus_stats["Spd"];
-        }
-    }
-}
-public class RemoverJugador
-{
-    public void RemovePlayer(Personaje player, Personaje rival, Player player_team, Player rival_team)
-    {
-        if (player.HP == 0)
-        {
-            player_team.equipo.Remove(player);
-        }
-        else if (rival.HP == 0)
-        {
-            rival_team.equipo.Remove(rival);
-        }
-    }
-}
 public class Batalla
 {
     public Personaje player;
@@ -248,5 +86,167 @@ public class Batalla
     public void RemovePlayer()
     {
         _removerJugador.RemovePlayer(player, rival, player_team, rival_team);
+    }
+}
+public class Impresora
+{
+    private View _view;
+
+    public Impresora(View view)
+    {
+        _view = view;
+    }
+
+    public void PrintVentaja(Personaje player, Personaje rival, decimal ventaja_player)
+    {
+        if (ventaja_player == 1.2m)
+        {
+            _view.WriteLine($"{player.name} ({player.weapon}) tiene ventaja con respecto a {rival.name} ({rival.weapon})");
+        }
+        else if (ventaja_player == 0.8m)
+        {
+            _view.WriteLine($"{rival.name} ({rival.weapon}) tiene ventaja con respecto a {player.name} ({player.weapon})");
+        }
+        else
+        {
+            _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
+        }
+    }
+
+    public void PrintVida(Personaje player, Personaje rival)
+    {
+        _view.WriteLine($"{player.name} ({player.HP}) : {rival.name} ({rival.HP})");
+    }
+
+    public void PrintFollowUp(SeguidorDeAtaque follow, Personaje player, Personaje rival)
+    {
+        if (follow.follow_spd_jugador >= follow.follow_spd_rival + 5)
+        {
+            _view.WriteLine($"{player.name} ataca a {rival.name} con {follow.AtkFollowJugador} de daño");
+        }
+        else if (follow.follow_spd_jugador + 5 <= follow.follow_spd_rival)
+        {
+            _view.WriteLine($"{rival.name} ataca a {player.name} con {follow.AtkFollowRival} de daño");
+        }
+        else
+        {
+            _view.WriteLine("Ninguna unidad puede hacer un follow up"); 
+        }
+    }
+
+    public void PrintAtaque(Personaje player, Personaje rival, int dano)
+    {
+        _view.WriteLine($"{player.name} ataca a {rival.name} con {dano} de daño");
+    }
+}
+public class Ventaja
+{
+    public decimal ventaja_player { get; private set; } = 1;
+    public decimal ventaj_rival { get; private set; } = 1;
+
+    public void CalcularVentaja(Personaje player, Personaje rival)
+    {
+        if (player.weapon == "Sword" && rival.weapon == "Axe" ||
+            player.weapon == "Lance" && rival.weapon == "Sword" ||
+            player.weapon == "Axe" && rival.weapon == "Lance")
+        {
+            ventaja_player = 1.2m;
+            ventaj_rival = 0.8m;
+        }
+        else if (rival.weapon == "Sword" && player.weapon == "Axe" ||
+                 rival.weapon == "Lance" && player.weapon == "Sword" ||
+                 rival.weapon == "Axe" && player.weapon == "Lance")
+        {
+            ventaja_player = 0.8m;
+            ventaj_rival = 1.2m;
+        }
+        else
+        {
+            ventaja_player = 1;
+            ventaj_rival = 1;
+        }
+    }
+}
+public class CalculadoraDeAtaque
+{
+    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
+    {
+        int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
+        if (atacante.weapon != "Magic" && defensor.bonus_stats.ContainsKey("Def"))
+        {
+            def += defensor.bonus_stats["Def"];
+        }
+        if (atacante.weapon == "Magic" && defensor.bonus_stats.ContainsKey("Res"))
+        {
+            def += defensor.bonus_stats["Res"];
+        }
+        //TODO: arreglar esto
+        if (atacante.first_atack == 2 && atacante.habilidad_fa)
+         {
+             atacante.bonus_stats["Atk"] = 0; 
+         }
+        return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.bonus_stats.ContainsKey("Atk") ? atacante.bonus_stats["Atk"] : 0)) * ventaja) - def;
+    }
+}
+public class SeguidorDeAtaque
+{
+    private int _atk_follow_jugador;
+    public int AtkFollowJugador
+    {
+        get { return _atk_follow_jugador; }
+        private set { _atk_follow_jugador = value < 0 ? 0 : value; }
+    }
+    private int _atk_follow_rival;
+    public int AtkFollowRival
+    {
+        get { return _atk_follow_rival; }
+        private set { _atk_follow_rival = value < 0 ? 0 : value; }
+    }
+    public int follow_spd_jugador { get; private set; }
+    public int follow_spd_rival { get; private set; }
+    public void FollowUp(Personaje player, Personaje rival, int atk_player, int atk_rival)
+    {
+        DefinirFollowUpAtk(player, rival, atk_player, atk_rival);
+        DefinirFollowUpSpd(player, rival);
+        if (follow_spd_jugador >= follow_spd_rival + 5)
+        {
+            rival.HP -= AtkFollowJugador;
+        }
+        else if (follow_spd_jugador + 5 <= follow_spd_rival)
+        {
+            player.HP -= AtkFollowRival;
+        }
+    }
+    private void DefinirFollowUpAtk(Personaje player, Personaje rival, int atk_player, int atk_rival)
+    {
+        AtkFollowJugador = atk_player + player.atk_follow;
+        AtkFollowRival = atk_rival + rival.atk_follow;
+    }
+    private void DefinirFollowUpSpd(Personaje player, Personaje rival)
+    {
+        follow_spd_jugador = player.spd;
+        follow_spd_rival = rival.spd;
+        if (player.bonus_stats.ContainsKey("Spd"))
+        {
+            follow_spd_jugador += player.bonus_stats["Spd"];
+        }
+        if (rival.bonus_stats.ContainsKey("Spd"))
+        {
+            follow_spd_rival += rival.bonus_stats["Spd"];
+        }
+    }
+}
+public class RemoverJugador
+{
+    public void RemovePlayer(Personaje player, Personaje rival, Player player_team, Player rival_team)
+    {
+        if (player.HP == 0)
+        {
+            player_team.equipo.Remove(player);
+        }
+        else if (rival.HP == 0)
+        {
+            rival_team.equipo.Remove(rival);
+        }
     }
 }
