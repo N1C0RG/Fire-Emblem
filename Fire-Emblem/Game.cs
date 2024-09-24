@@ -97,11 +97,10 @@ public class Game
         //TODO: arreglar lo del rival y jugadorr play
         PrintTeams();
         string archivo_seleccionado = _view.ReadLine(); 
-        ManejoArchivos archivo_jugador = new ManejoArchivos(_view, _teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
+        ManejoArchivos archivo_jugador = new ManejoArchivos(_teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
         archivo_jugador.GuardarEquipo();
-        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.jugadorTeam), _view, 1);
-        archivo_jugador.player_team = new List<Personaje>();
-        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.rivalTeam), _view, 2);
+        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), true), _view, 1);
+        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), false), _view, 2);
         
     }
     public void Turno(Player jugador, Player rival)
