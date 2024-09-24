@@ -56,246 +56,7 @@ public class Game
         ShowTeam(player);
     }
 
-    private void AplicarBonusPenalty(Personaje player, Personaje rival)//TODO: arreglar esto 
-    {
-        if (player.habilidades.Length != 0)
-        {
-            foreach (var nombre_habilidad in player.habilidades)
-            {
-                AplicadorHabilidadBonus aplicador_habilidad = 
-                    new AplicadorHabilidadBonus(nombre_habilidad, player, rival, _view); 
-                aplicador_habilidad.ConstructorHabilidad();
-            }
-        }
-        
-    }
-    private void AplicarNeutralizador(Personaje player, Personaje rival)//TODO: arreglar esto no deberia hacer algo aparte en la logica del juego 
-    {
-        if (player.habilidades.Length != 0)
-        {
-            foreach (var nombre_habilidad in player.habilidades)
-            {
-                AplicadorHabilidadMixta aplicador_habilidad_neutralizador = 
-                    new AplicadorHabilidadMixta(nombre_habilidad, player, rival, _view);
-                aplicador_habilidad_neutralizador.ConstructorHabilidad();
-            }
-        }
-        
-    }
-
-    private void PrintBonus(Personaje player, Personaje rival)//TODO: arreglar esto 
-    {
-        if (player.atk_follow > 0)
-        {
-            _view.WriteLine($"{player.name} obtiene Atk+{player.atk_follow} en su Follow-Up");
-        }
-        if (player.atk_follow < 0)
-        {
-            _view.WriteLine($"{player.name} obtiene Atk{player.atk_follow} en su Follow-Up");
-        }
-        if (rival.atk_follow > 0)
-        {
-            _view.WriteLine($"{rival.name} obtiene Atk+{rival.atk_follow} en su Follow-Up");
-        }
-        if (rival.atk_follow < 0)
-        {
-            _view.WriteLine($"{rival.name} obtiene Atk{rival.atk_follow} en su Follow-Up");
-        }
-        foreach (var i in player.bonus_stats)
-        {
-            if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
-            {
-                if (player.first_atack == 1 && i.Key == "Atk" && player.habilidad_fa)
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value} en su primer ataque");
-                }
-                else
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}+{i.Value}");
-                }
-                
-            }
-            else if (i.Value < 0)
-            {
-                if (player.first_atack == 1 && i.Key == "Atk" && player.habilidad_fa)
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}{i.Value} en su primer ataque");
-                }
-                else
-                {
-                    _view.WriteLine($"{player.name} obtiene {i.Key}{i.Value}");
-                }
-            }
-        }
-        // if (player.tiene_bonus == false)
-        // {
-        //     _view.WriteLine($"Los bonus de Atk de {player.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Spd de {player.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Def de {player.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Res de {player.name} fueron neutralizados");
-        // }
-        if (player.tiene_bonus.Count > 0)
-        {
-            foreach (var i in player.tiene_bonus)
-            {
-                _view.WriteLine($"Los bonus de {i} de {player.name} fueron neutralizados");
-            }
-        }
-        if (player.tiene_bonus.Count < 0)
-        {
-            foreach (var i in player.tiene_bonus)
-            {
-                _view.WriteLine($"Los penalty de {i} de {player.name} fueron neutralizados");
-            }
-        }
-
-
-        foreach (var i in rival.bonus_stats)
-        {
-            if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
-            {
-                if (rival.first_atack == 1 && i.Key == "Atk" && rival.habilidad_fa == true)
-                {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}+{i.Value} en su primer ataque"); 
-                }
-                else
-                {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}+{i.Value}");
-                }
-            }
-            else if (i.Value < 0)
-            {
-                if (rival.first_atack == 1 && i.Key == "Atk" && rival.habilidad_fa == true)
-                {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}{i.Value} en su primer ataque");
-                }
-                else
-                {
-                    _view.WriteLine($"{rival.name} obtiene {i.Key}{i.Value}");
-                }
-            }
-        }
-
-        if (rival.tiene_bonus.Count > 0)
-        {
-            foreach (var i in rival.tiene_bonus)
-            {
-                _view.WriteLine($"Los bonus de {i} de {rival.name} fueron neutralizados");
-            }
-        }
-        if (rival.tiene_bonus.Count < 0)
-        {
-            foreach (var i in rival.tiene_bonus)
-            {
-                _view.WriteLine($"Los penalty de {i} de {rival.name} fueron neutralizados");
-            }
-        }
-        // if (rival.tiene_bonus == false)
-        // {
-        //     _view.WriteLine($"Los bonus de Atk de {rival.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Spd de {rival.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Def de {rival.name} fueron neutralizados");
-        //     _view.WriteLine($"Los bonus de Res de {rival.name} fueron neutralizados");
-        // }
-    }
-
-    private void InicializacionTurno(Player jugador, Player rival)
-    {
-        PrintOpcion(jugador, jugador.tipo);
-        int jugador_input = Convert.ToInt32(_view.ReadLine());
-        
-        PrintOpcion(rival, rival.tipo);
-        int rival_input = Convert.ToInt32(_view.ReadLine());
-        
-        personaje_jugador = jugador.equipo[jugador_input];
-        personaje_rival = rival.equipo[rival_input]; 
-        
-        _view.WriteLine($"Round {turno}: {personaje_jugador.name} (Player {jugador.tipo}) comienza");
-    }
-
-    private void InicializacionBatalla(Player jugador, Player rival)
-    {
-        batalla = new Batalla(personaje_jugador, personaje_rival, _view, jugador, rival);
-        
-        batalla.Ventajas();
-        batalla.PrintVida();
-    }
-
-    private void StarTurno(Player jugador, Player rival)//TODO: arreglar el problema que tengo entre alternanr entre el jugador y el rival 
-    {
-        InicializacionTurno(jugador, rival);
-        InicializacionBatalla(jugador, rival);
-        SetUpHabilidades();
-        batalla.DefinirAtack();
-    }
-
-    private void SetUpHabilidades()
-    {
-        // la parte de true de empieza
-        //TODO: arreglar a clena code 
-        personaje_jugador.inicia_round = true; 
-        personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
-        personaje_rival.bonus_stats = new Dictionary<string, int>(); 
-        
-        AplicarBonusPenalty(personaje_jugador, personaje_rival);
-        AplicarBonusPenalty(personaje_rival, personaje_jugador);
-        PrintBonus(personaje_jugador, personaje_rival);
-        AplicarNeutralizador(personaje_jugador, personaje_rival); 
-        AplicarNeutralizador(personaje_rival, personaje_jugador);
-        
-    }
-
-    private void EndRound()
-    {
-        batalla.VidaEndRound();
-        batalla.RemovePlayer();
-    }
-    public void Turno(Player jugador, Player rival)
-    {
-        
-        StarTurno(jugador, rival);
-        //seteo a false de nuevo el inicia round 
-        //TODO: arreglar esto 
-        personaje_jugador.inicia_round = false;
-        personaje_jugador.tiene_bonus = new List<string>();
-        personaje_rival.tiene_bonus = new List<string>(); 
-        
-        batalla.Atack(personaje_jugador, personaje_rival, batalla.ATK_PLAYER);
-        if (personaje_rival.HP == 0)
-        {
-            EndRound();
-            return;
-        }
-        batalla.Atack(personaje_rival, personaje_jugador, batalla.ATK_RIVAL);
-        batalla.DefinirAtack();
-        if (personaje_jugador.HP == 0)
-        {
-            EndRound();
-        }
-        else
-        {
-            batalla.PrintFollowUp();
-            batalla.FollowUp();
-            EndRound();
-        }
-
-        personaje_jugador.first_atack = 1; 
-        personaje_rival.first_atack = 1; 
-        return; 
-    }
-
-    private void InicializadorPlay()
-    {
-        //TODO: arreglar lo del rival y jugadorr play
-        PrintTeams();
-        string archivo_seleccionado = _view.ReadLine(); 
-        ManejoArchivos archivo_jugador = new ManejoArchivos(_view, _teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
-        archivo_jugador.GuardarEquipo();
-        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.jugadorTeam), _view, 1);
-        archivo_jugador.player_team = new List<Personaje>();
-        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.rivalTeam), _view, 2);
-        
-    }
+    
     public void Play()
     {
         InicializadorPlay();
@@ -329,9 +90,100 @@ public class Game
                 }
                 turno += 1;
             }
-
-            
         }
     }
+    private void InicializadorPlay()
+    {
+        //TODO: arreglar lo del rival y jugadorr play
+        PrintTeams();
+        string archivo_seleccionado = _view.ReadLine(); 
+        ManejoArchivos archivo_jugador = new ManejoArchivos(_view, _teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
+        archivo_jugador.GuardarEquipo();
+        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.jugadorTeam), _view, 1);
+        archivo_jugador.player_team = new List<Personaje>();
+        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), archivo_jugador.rivalTeam), _view, 2);
+        
+    }
+    public void Turno(Player jugador, Player rival)
+    {
+        
+        StarTurno(jugador, rival);
+        //seteo a false de nuevo el inicia round 
+        //TODO: arreglar esto 
+        personaje_jugador.inicia_round = false;
+        personaje_jugador.bonus_neutralizados = new List<string>();
+        personaje_rival.bonus_neutralizados = new List<string>(); 
+        personaje_jugador.penalty_neutralizados = new List<string>();
+        personaje_rival.penalty_neutralizados = new List<string>(); 
+        
+        batalla.Atack(personaje_jugador, personaje_rival, batalla.AtkPlayer);
+        if (personaje_rival.HP == 0)
+        {
+            EndRound();
+            return;
+        }
+        batalla.Atack(personaje_rival, personaje_jugador, batalla.AtkRival);
+        batalla.DefinirAtack();
+        if (personaje_jugador.HP == 0)
+        {
+            EndRound();
+        }
+        else
+        {
+            batalla.FollowUp();
+            batalla.PrintFollowUp();
+            EndRound();
+        }
+
+        personaje_jugador.first_atack = 1; 
+        personaje_rival.first_atack = 1;
+        personaje_jugador.oponente_previo = personaje_rival.name;
+        personaje_rival.oponente_previo = personaje_jugador.name; 
+        return; 
+    }
+    private void StarTurno(Player jugador, Player rival)//TODO: arreglar el problema que tengo entre alternanr entre el jugador y el rival 
+    {
+        InicializacionTurno(jugador, rival);
+        InicializacionBatalla(jugador, rival);
+        SetUpHabilidades();
+        batalla.DefinirAtack();
+    }
+    private void InicializacionTurno(Player jugador, Player rival)
+    {
+        PrintOpcion(jugador, jugador.tipo);
+        int jugador_input = Convert.ToInt32(_view.ReadLine());
+        
+        PrintOpcion(rival, rival.tipo);
+        int rival_input = Convert.ToInt32(_view.ReadLine());
+        
+        personaje_jugador = jugador.equipo[jugador_input];
+        personaje_rival = rival.equipo[rival_input]; 
+        
+        _view.WriteLine($"Round {turno}: {personaje_jugador.name} (Player {jugador.tipo}) comienza");
+    }
+    private void InicializacionBatalla(Player jugador, Player rival)
+    {
+        batalla = new Batalla(personaje_jugador, personaje_rival, _view, jugador, rival);
+        
+        batalla.Ventajas();
+        batalla.PrintVentaja();
+    }
+    private void SetUpHabilidades()
+    {
+        // la parte de true de empieza
+        //TODO: arreglar a clena code 
+        personaje_jugador.inicia_round = true; 
+        personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
+        personaje_rival.bonus_stats = new Dictionary<string, int>();
+        EjecucionAplicadorHabilidad manejo_ejecutador =
+            new EjecucionAplicadorHabilidad(personaje_jugador, personaje_rival, _view);
+        manejo_ejecutador.AplicarTodo();
+    }
+    private void EndRound()
+    {
+        batalla.VidaEndRound();
+        batalla.RemovePlayer();
+    }
+
 }
 

@@ -9,7 +9,7 @@ public class ConditionInicioCombate : Condition
 {
     public override bool CondicionHabilidad(Personaje player, Personaje rival)
     {
-        if (player.inicia_round == true)
+        if (player.inicia_round)
         {
             return true; 
         }
@@ -236,6 +236,80 @@ public class ConditionFullVidaRival : Condition//TODO: arreglar esto
         }
     }
 }
+
+public class ConditionPreviousRival : Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.oponente_previo == rival.name)
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionRivalEsHombre: Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (rival.gender == "Male")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionTieneAxe: Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.weapon == "Axe")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionTieneLanza: Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.weapon == "Lance")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionTieneBow: Condition//TODO: arreglar esto 
+{
+    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.weapon == "Bow")
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+
+
+
 
 
 

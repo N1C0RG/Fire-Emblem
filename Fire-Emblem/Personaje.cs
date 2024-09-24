@@ -27,12 +27,13 @@ public class Personaje
     public int res;
     public string[] habilidades;
     public bool inicia_round = false;
-    public List<string> tiene_bonus = new List<string>(); 
-    public bool tiene_prioridad = false; 
+    public List<string> bonus_neutralizados = new List<string>(); 
+    public List<string> penalty_neutralizados = new List<string>(); 
     public Dictionary<string, int> bonus_stats= new Dictionary<string, int>();
     public int first_atack = 1;
     public bool habilidad_fa = false;
-    public int atk_follow = 0;  
+    public int atk_follow = 0;
+    public string oponente_previo = ""; 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades, int hp_original)//TODO: ver lo de la hp original 

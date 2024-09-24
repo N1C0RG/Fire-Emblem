@@ -167,7 +167,7 @@ public class CancelAtk : Effect
         {
             rival.bonus_stats["Atk"] = 0; 
         }
-        rival.tiene_bonus.Add("Atk");
+        rival.bonus_neutralizados.Add("Atk");
     }
 }
 public class CancelDef : Effect
@@ -179,7 +179,7 @@ public class CancelDef : Effect
         {
             rival.bonus_stats["Def"] = 0; 
         }
-        rival.tiene_bonus.Add("Def");
+        rival.bonus_neutralizados.Add("Def");
     }
 }
 public class CancelRes : Effect
@@ -191,7 +191,7 @@ public class CancelRes : Effect
         {
             rival.bonus_stats["Res"] = 0; 
         }
-        rival.tiene_bonus.Add("Res");
+        rival.bonus_neutralizados.Add("Res");
     }
 }
 public class CancelSpd : Effect
@@ -203,7 +203,7 @@ public class CancelSpd : Effect
         {
             rival.bonus_stats["Spd"] = 0; 
         }
-        rival.tiene_bonus.Add("Spd");
+        rival.bonus_neutralizados.Add("Spd");
     }
 }
 
@@ -215,10 +215,20 @@ public class AplicarCancelacion : Effect
 {
     public override void Bonus(Personaje player, Personaje rival, int aumento)
     {
-        rival.tiene_bonus.Add("Atk");
-        rival.tiene_bonus.Add("Spd");
-        rival.tiene_bonus.Add("Def");
-        rival.tiene_bonus.Add("Res");
+        rival.bonus_neutralizados.Add("Atk");
+        rival.bonus_neutralizados.Add("Spd");
+        rival.bonus_neutralizados.Add("Def");
+        rival.bonus_neutralizados.Add("Res");
+    }
+}
+public class AplicarCancelacionPenalty : Effect
+{
+    public override void Bonus(Personaje player, Personaje rival, int aumento)
+    {
+        player.penalty_neutralizados.Add("Atk");
+        player.penalty_neutralizados.Add("Spd");
+        player.penalty_neutralizados.Add("Def");
+        player.penalty_neutralizados.Add("Res");
     }
 }
 

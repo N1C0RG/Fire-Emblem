@@ -16,8 +16,6 @@ public abstract class AplicadorHabilidad
     }
     public abstract void ConstructorHabilidad();
 }
-
-
 public class AplicadorHabilidadBonus : AplicadorHabilidad
 {
     public AplicadorHabilidadBonus(string nombreHabilidad, Personaje jugador, Personaje rival, View view)
@@ -673,12 +671,147 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Agnea's Arrow")
         {
             Ability habilidad = new Ability (
-                new List<Effect> {new Neutralizapenalty(), new SandstormNeutraliza(), new AplicarCancelacion()}, 
+                new List<Effect> { new AplicarCancelacionPenalty() }, 
                 new List<Condition> { new ConditionNula()}, 
                 jugador, 
                 rival, 
                 0);
             habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Blinding Flash")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new RivalSpdDown() }, 
+                new List<Condition> { new ConditionInicioCombate()}, 
+                jugador, 
+                rival, 
+                -4);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Charmer")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new RivalAtkDown(), new RivalSpdDown() }, 
+                new List<Condition> { new ConditionPreviousRival()}, 
+                jugador, 
+                rival, 
+                -3);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Disarming Sigh")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new RivalAtkDown() }, 
+                new List<Condition> { new ConditionRivalEsHombre()}, 
+                jugador, 
+                rival, 
+                -8);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Stunning Smile")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new RivalSpdDown() }, 
+                new List<Condition> { new ConditionRivalEsHombre()}, 
+                jugador, 
+                rival, 
+                -8);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Not *Quite*")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new RivalAtkDown() }, 
+                new List<Condition> { new ConditionNoInicia()}, 
+                jugador, 
+                rival, 
+                -4);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Axe Power")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new AtkUp()}, 
+                new List<Condition> { new ConditionTieneAxe()}, 
+                jugador, 
+                rival, 
+                10);
+            habilidad.Aplicar();
+            Ability habilidad2 = new Ability (
+                new List<Effect> { new DefUp()}, 
+                new List<Condition> { new ConditionTieneAxe()}, 
+                jugador, 
+                rival, 
+                -10);
+            habilidad2.Aplicar();
+        }
+        else if (nombre_habilidad == "Lance Agility")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new SpdUp()}, 
+                new List<Condition> { new ConditionTieneLanza()}, 
+                jugador, 
+                rival, 
+                12);
+            habilidad.Aplicar();
+            Ability habilidad2 = new Ability (
+                new List<Effect> { new AtkUp()}, 
+                new List<Condition> { new ConditionTieneLanza()}, 
+                jugador, 
+                rival, 
+                -6);
+            habilidad2.Aplicar();
+        }
+        else if (nombre_habilidad == "Lance Power")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new AtkUp()}, 
+                new List<Condition> { new ConditionTieneLanza()}, 
+                jugador, 
+                rival, 
+                10);
+            habilidad.Aplicar();
+            Ability habilidad2 = new Ability (
+                new List<Effect> { new DefUp()}, 
+                new List<Condition> { new ConditionTieneLanza()}, 
+                jugador, 
+                rival, 
+                -10);
+            habilidad2.Aplicar();
+        }
+        else if (nombre_habilidad == "Bow Focus")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new AtkUp()}, 
+                new List<Condition> { new ConditionTieneBow()}, 
+                jugador, 
+                rival, 
+                10);
+            habilidad.Aplicar();
+            Ability habilidad2 = new Ability (
+                new List<Effect> { new ResUp()}, 
+                new List<Condition> { new ConditionTieneBow()}, 
+                jugador, 
+                rival, 
+                -10);
+            habilidad2.Aplicar();
+        }
+        else if (nombre_habilidad == "Bow Agility")
+        {
+            Ability habilidad = new Ability (
+                new List<Effect> { new SpdUp()}, 
+                new List<Condition> { new ConditionTieneBow()}, 
+                jugador, 
+                rival, 
+                12);
+            habilidad.Aplicar();
+            Ability habilidad2 = new Ability (
+                new List<Effect> { new AtkUp()}, 
+                new List<Condition> { new ConditionTieneBow()}, 
+                jugador, 
+                rival, 
+                -6);
+            habilidad2.Aplicar();
         }
     }
 }
@@ -739,7 +872,7 @@ public class AplicadorHabilidadMixta : AplicadorHabilidad
                 0);
             habilidad2.Aplicar();
         }
-        else if (nombre_habilidad == "Agnea’s Arrow")
+        else if (nombre_habilidad == "Agnea's Arrow")
         {
             Ability habilidad = new Ability (
                 new List<Effect> {new Neutralizapenalty(), new SandstormNeutraliza() }, 
