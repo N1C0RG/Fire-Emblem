@@ -687,7 +687,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
     }
 }
 
-public class AplicadorHabilidadMixta : AplicadorHabilidad
+public class AplicadorHabilidadMixta : AplicadorHabilidad //TODO: tengo codigo repetdo aca 
 {
     public AplicadorHabilidadMixta(string nombreHabilidad, Personaje jugador, Personaje rival, View view)
         : base(nombreHabilidad, jugador, rival, view) 

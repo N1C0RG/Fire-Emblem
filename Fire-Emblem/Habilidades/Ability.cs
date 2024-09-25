@@ -15,7 +15,6 @@ public class Ability
         this.condicion = condicion;
         this.jugador = jugador;
         this.rival = rival;
-        this.aumento = aumento; 
     }
 
     public void Aplicar()

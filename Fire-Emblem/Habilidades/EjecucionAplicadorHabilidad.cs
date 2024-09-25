@@ -1,134 +1,116 @@
-using System.Security.Cryptography.X509Certificates;
 using Fire_Emblem_View;
 
-namespace Fire_Emblem.Habilidades;
-
-public class EjecucionAplicadorHabilidad
+namespace Fire_Emblem.Habilidades
 {
-    private Personaje jugador;
-    private Personaje rival;
-    private View _view;
+    public class EjecucionAplicadorHabilidad
+    {
+        private readonly Personaje _jugador;
+        private readonly Personaje _rival;
+        private readonly View _view;
 
-    public EjecucionAplicadorHabilidad(Personaje jugador, Personaje rival, View view)
-    {
-        this.jugador = jugador;
-        this.rival = rival;
-        this._view = view; 
-    }
-    private void AplicarBonusPenalty(Personaje jugador, Personaje rival)//TODO: arreglar esto 
-    {
-        if (jugador.habilidades.Length != 0)
+        public EjecucionAplicadorHabilidad(Personaje jugador, Personaje rival, View view)
         {
-            foreach (var nombre_habilidad in jugador.habilidades)
-            {
-                AplicadorHabilidadBonus aplicador_habilidad = 
-                    new AplicadorHabilidadBonus(nombre_habilidad, jugador, rival, _view); 
-                aplicador_habilidad.ConstructorHabilidad();
-            }
+            _jugador = jugador;
+            _rival = rival;
+            _view = view;
         }
-    }
-    private void AplicarNeutralizador(Personaje jugador, Personaje rival)//TODO: arreglar esto no deberia hacer algo aparte en la logica del juego 
-    {
-        if (jugador.habilidades.Length != 0)
-        {
-            foreach (var nombre_habilidad in jugador.habilidades)
-            {
-                AplicadorHabilidadMixta aplicador_habilidad_neutralizador = 
-                    new AplicadorHabilidadMixta(nombre_habilidad, jugador, rival, _view);
-                aplicador_habilidad_neutralizador.ConstructorHabilidad();
-            }
-        }
-    }
-    private void PrintFollowAtkUp(Personaje player)
-    {
-        if (player.atk_follow > 0)
-        {
-            _view.WriteLine($"{player.name} obtiene Atk+{player.atk_follow} en su Follow-Up");
-        }
-        if (player.atk_follow < 0)
-        {
-            _view.WriteLine($"{player.name} obtiene Atk{player.atk_follow} en su Follow-Up");
-        }
-    }
-    private void PrintPlayerAbility(Personaje player)
-    {
-        //lo que modifico (un diccionario ordenado acorde a las claves)
-        string[] order = { "Atk", "Spd", "Def", "Res" };
-        var bonus_ordenados = order
-            .Where(key => player.bonus_stats.ContainsKey(key))
-            .Select(key => new { Key = key, Value = player.bonus_stats[key] });
 
-        // Filter and order penalty stats
-        var penalty_ordenados = order
-            .Where(key => player.penalty_stats.ContainsKey(key))
-            .Select(key => new { Key = key, Value = player.penalty_stats[key] });
-        
-        foreach (var i in bonus_ordenados)
+        public void AplicarTodo()
         {
-            //_view.WriteLine($"{i}");
-            ContenidoPrintAbility(player, (i.Key, i.Value), "+"); 
-            
+            AplicarHabilidades(_jugador, _rival);
+            AplicarHabilidades(_rival, _jugador);
+            PrintAllAbilities();
+            AplicarNeutralizadores(_jugador, _rival);
+            AplicarNeutralizadores(_rival, _jugador);
+            //CalcularNetosStats();
         }
-        foreach (var i in bonus_ordenados)
+
+        private void AplicarHabilidades(Personaje jugador, Personaje rival)
         {
-            if (i.Value < 0)//TODO: no comtempvlo el caso un bonus 0
+            foreach (var habilidad in jugador.habilidades)
             {
-                ContenidoPrintAbility(player, (i.Key, i.Value), ""); 
+                var aplicador = new AplicadorHabilidadBonus(habilidad, jugador, rival, _view);
+                aplicador.ConstructorHabilidad();
             }
         }
-        foreach (var i in penalty_ordenados)
+
+        private void AplicarNeutralizadores(Personaje jugador, Personaje rival)
         {
-            ContenidoPrintAbility(player, (i.Key, i.Value), ""); 
-        }
-    }
-    private void ContenidoPrintAbility(Personaje player, (string Key, int Value) diccionario, string s)
-    {
-        if (player.first_atack == 1 && diccionario.Key == "Atk" && player.habilidad_fa)
-        {
-            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{s}{diccionario.Value} en su primer ataque");
-        }
-        else
-        {
-            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{s}{diccionario.Value}");
-        }
-    }
-    private void PrintNeutralizacion(Personaje player)
-    {
-        if (player.bonus_neutralizados.Count > 0)
-        {
-            foreach (var i in player.bonus_neutralizados)
+            foreach (var habilidad in jugador.habilidades)
             {
-                _view.WriteLine($"Los bonus de {i} de {player.name} fueron neutralizados");
+                var aplicador = new AplicadorHabilidadMixta(habilidad, jugador, rival, _view);
+                aplicador.ConstructorHabilidad();
             }
         }
-        if (player.penalty_neutralizados.Count > 0)
+
+        private void PrintAllAbilities()
         {
-            foreach (var i in player.penalty_neutralizados)
+            PrintFollowUpAtk(_jugador);
+            PrintFollowUpAtk(_rival);
+            PrintPlayerAbilities(_jugador);
+            PrintNeutralizations(_jugador);
+            PrintPlayerAbilities(_rival);
+            PrintNeutralizations(_rival);
+        }
+
+        private void PrintFollowUpAtk(Personaje player)
+        {
+            if (player.atk_follow != 0)
             {
-                _view.WriteLine($"Los penalty de {i} de {player.name} fueron neutralizados");
+                var sign = player.atk_follow > 0 ? "+" : "";
+                _view.WriteLine($"{player.name} obtiene Atk{sign}{player.atk_follow} en su Follow-Up");
             }
         }
-    }
-    private void PrintTodoAbility()
-    {
-        PrintFollowAtkUp(jugador);
-        PrintFollowAtkUp(rival);
-        PrintPlayerAbility(jugador);
-        PrintNeutralizacion(jugador);
-        PrintPlayerAbility(rival);
-        PrintNeutralizacion(rival);
-    }
-    public void AplicarTodo()
-    {
-        AplicarBonusPenalty(jugador, rival);
-        AplicarBonusPenalty(rival, jugador);
-        PrintTodoAbility();
-        AplicarNeutralizador(jugador, rival);
-        AplicarNeutralizador(rival, jugador);
-        
-        //TODO: meter esto donde corresponda 
-        jugador.CalcularNetosStats();
-        rival.CalcularNetosStats();
-    
+
+        private void PrintPlayerAbilities(Personaje player)
+        {
+            //Todo: mover tal vez esto a el personaje 
+            var orderedBonuses = GetOrderedStats(player.bonus_stats);
+            var orderedPenalties = GetOrderedStats(player.penalty_stats);
+
+            foreach (var stat in orderedBonuses)
+            {
+                PrintAbility(player, stat, stat.Value > 0 ? "+" : "");
+            }
+
+            foreach (var stat in orderedPenalties)
+            {
+                PrintAbility(player, stat, "");
+            }
+        }
+
+        private void PrintAbility(Personaje player, KeyValuePair<string, int> stat, string sign)
+        {
+            var message = (player.first_atack == 1 && stat.Key == "Atk" && player.habilidad_fa)
+                ? $"{player.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
+                : $"{player.name} obtiene {stat.Key}{sign}{stat.Value}";
+
+            _view.WriteLine(message);
+        }
+
+        private void PrintNeutralizations(Personaje player)
+        {
+            foreach (var bonus in player.bonus_neutralizados)
+            {
+                _view.WriteLine($"Los bonus de {bonus} de {player.name} fueron neutralizados");
+            }
+
+            foreach (var penalty in player.penalty_neutralizados)
+            {
+                _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
+            }
+        }
+
+        // private void CalcularNetosStats()
+        // {
+        //     _jugador.CalcularNetosStats();
+        //     _rival.CalcularNetosStats();
+        // }
+
+        private IEnumerable<KeyValuePair<string, int>> GetOrderedStats(Dictionary<string, int> stats)
+        {
+            string[] order = { "Atk", "Spd", "Def", "Res" };
+            return order.Where(stats.ContainsKey).Select(key => new KeyValuePair<string, int>(key, stats[key]));
+        }
     }
 }

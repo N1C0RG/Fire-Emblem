@@ -1,192 +1,174 @@
 ﻿using Fire_Emblem_View;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-namespace Fire_Emblem;
 using Fire_Emblem.Habilidades;
-using System.IO; 
-using Fire_Emblem; 
 
-public class Game
+namespace Fire_Emblem
 {
-    private View _view;
-    private string _teamsFolder;
-    private int turno = 0;
-    private Personaje personaje_jugador;
-    private Personaje personaje_rival;
-    private Batalla batalla;
-    private Player rival_metodo_play;
-    private Player jugador_metodo_play; 
-    public Game(View view, string teamsFolder)
+    public class Game
     {
-        _view = view;
-        _teamsFolder = teamsFolder;
-    }
-    public void PrintTeams()
-    {
-        _view.WriteLine(message:"Elige un archivo para cargar los equipos");
-        string[] archivos_equipos = Directory.GetFiles(_teamsFolder, "*.txt");
-        int contador = 0; 
-        foreach (var i in archivos_equipos)
-        {
-            _view.WriteLine($"{contador}: {Path.GetFileName(i)}");
-            contador += 1; 
-        }
-    }
-    // para hacer este metodo use stack overflow 
-    public List<JsonContent> LoadJson()
-    {
-        string directorio_path = AppDomain.CurrentDomain.BaseDirectory; 
-        string jsonFilePath = Path.Combine(directorio_path, "characters.json");
-        string jsonString = File.ReadAllText(jsonFilePath);
-        List<JsonContent> todos_personajes = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
-        return todos_personajes; 
-    }
-    public void ShowTeam(Player player)
-    {
-        for (int i = 0; i < player.equipo.Count; i++)
-        {
-            _view.WriteLine($"{i}: " + player.equipo[i].name);
-        }
-    }
+        private readonly View _view;
+        private readonly string _teamsFolder;
+        private int _turno;
+        private Personaje _playerPersonaje;
+        private Personaje _rivalPersonaje;
+        private Batalla _batalla;
+        private Player _jugadorPlayer;
+        private Player _rivalPlayer;
 
-    private void PrintOpcion(Player player, int n)
-    {
-        _view.WriteLine($"Player {n} selecciona una opción");
-        ShowTeam(player);
-    }
-
-    
-    public void Play()
-    {
-        InicializadorPlay();
-        Validacion valido = new Validacion(jugador_metodo_play, rival_metodo_play); 
-        if (valido.EquipoValido() == false)
+        public Game(View view, string teamsFolder)
         {
-            _view.WriteLine("Archivo de equipos no válido");
+            _view = view;
+            _teamsFolder = teamsFolder;
         }
-        else
+
+        public void Play()
         {
-            turno = 1; 
+            InicializacionPlay();
+            var validation = new Validacion(_jugadorPlayer, _rivalPlayer);
+            if (!validation.EquipoValido())
+            {
+                _view.WriteLine("Archivo de equipos no válido");
+                return;
+            }
+
+            _turno = 1;
             while (true)
             {
-                if (turno % 2 != 0)
-                {
-                    Turno(jugador_metodo_play, rival_metodo_play);
-                }
-                else
-                {
-                    Turno(rival_metodo_play, jugador_metodo_play);
-                }
-                if (jugador_metodo_play.Perdio())
+                EjecutarTurno();
+                if (_jugadorPlayer.Perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
-                    break; 
+                    break;
                 }
-                else if (rival_metodo_play.Perdio())
+                if (_rivalPlayer.Perdio())
                 {
                     _view.WriteLine("Player 1 ganó");
-                    break; 
+                    break;
                 }
-                turno += 1;
+                _turno++;
+            }
+        }
+
+        private void InicializacionPlay()
+        {
+            PrintEquipos();
+            string selectedFile = _view.ReadLine();
+            var fileHandler = new ManejoArchivos(_teamsFolder, selectedFile);
+            fileHandler.GuardarEquipo();
+            _jugadorPlayer = new Player(fileHandler.CrearEquipo(true), _view, 1);
+            _rivalPlayer = new Player(fileHandler.CrearEquipo(false), _view, 2);
+        }
+
+        private void EjecutarTurno()
+        {
+            if (_turno % 2 != 0)
+            {
+                ProcesarTurno(_jugadorPlayer, _rivalPlayer);
+            }
+            else
+            {
+                ProcesarTurno(_rivalPlayer, _jugadorPlayer);
+            }
+        }
+
+        private void ProcesarTurno(Player currentPlayer, Player opponent)
+        {
+            IniciarTurno(currentPlayer, opponent);
+            _batalla.Atack(_playerPersonaje, _rivalPersonaje, _batalla.AtkPlayer);
+            if (_rivalPersonaje.HP == 0)
+            {
+                EndRound();
+                return;
+            }
+            _batalla.Atack(_rivalPersonaje, _playerPersonaje, _batalla.AtkRival);
+            _batalla.DefinirAtack();
+            if (_playerPersonaje.HP == 0)
+            {
+                EndRound();
+            }
+            else
+            {
+                _batalla.FollowUp();
+                _batalla.PrintFollowUp();
+                EndRound();
+            }
+
+            ResetearValoresPersonajeTurno();
+        }
+
+        private void IniciarTurno(Player currentPlayer, Player opponent)
+        {
+            InicializarTurno(currentPlayer, opponent);
+            InicializarBatalla(currentPlayer, opponent);
+            AplicarAbilities();
+            _batalla.DefinirAtack();
+        }
+
+        private void InicializarTurno(Player currentPlayer, Player opponent)
+        {
+            PrintOpciones(currentPlayer, currentPlayer.tipo);
+            int playerInput = Convert.ToInt32(_view.ReadLine());
+
+            PrintOpciones(opponent, opponent.tipo);
+            int opponentInput = Convert.ToInt32(_view.ReadLine());
+
+            _playerPersonaje = currentPlayer.equipo[playerInput];
+            _rivalPersonaje = opponent.equipo[opponentInput];
+
+            _view.WriteLine($"Round {_turno}: {_playerPersonaje.name} (Player {currentPlayer.tipo}) comienza");
+        }
+
+        private void InicializarBatalla(Player currentPlayer, Player opponent)
+        {
+            _batalla = new Batalla(_playerPersonaje, _rivalPersonaje, _view, currentPlayer, opponent);
+            _batalla.Ventajas();
+            _batalla.PrintVentaja();
+        }
+
+        private void AplicarAbilities()
+        {
+            _playerPersonaje.inicia_round = true;
+            _playerPersonaje.ResetearContenedoresDeStats();
+            _rivalPersonaje.ResetearContenedoresDeStats();
+
+            var abilityExecutor = new EjecucionAplicadorHabilidad(_playerPersonaje, _rivalPersonaje, _view);
+            abilityExecutor.AplicarTodo();
+            
+            _playerPersonaje.CalcularNetosStats();
+            _rivalPersonaje.CalcularNetosStats();
+            _playerPersonaje.inicia_round = false;
+        }
+
+        private void EndRound()
+        {
+            _batalla.VidaEndRound();
+            _batalla.RemovePlayer();
+        }
+
+        private void ResetearValoresPersonajeTurno()
+        {
+            _playerPersonaje.first_atack = 1;
+            _rivalPersonaje.first_atack = 1;
+            _playerPersonaje.oponente_previo = _rivalPersonaje.name;
+            _rivalPersonaje.oponente_previo = _playerPersonaje.name;
+        }
+
+        private void PrintEquipos()
+        {
+            _view.WriteLine("Elige un archivo para cargar los equipos");
+            string[] teamFiles = Directory.GetFiles(_teamsFolder, "*.txt");
+            for (int i = 0; i < teamFiles.Length; i++)
+            {
+                _view.WriteLine($"{i}: {Path.GetFileName(teamFiles[i])}");
+            }
+        }
+
+        private void PrintOpciones(Player player, int playerNumber)
+        {
+            _view.WriteLine($"Player {playerNumber} selecciona una opción");
+            for (int i = 0; i < player.equipo.Count; i++)
+            {
+                _view.WriteLine($"{i}: {player.equipo[i].name}");
             }
         }
     }
-    private void InicializadorPlay()
-    {
-        //TODO: arreglar lo del rival y jugadorr play
-        PrintTeams();
-        string archivo_seleccionado = _view.ReadLine(); 
-        ManejoArchivos archivo_jugador = new ManejoArchivos(_teamsFolder, archivo_seleccionado); //TODO: arreglar el view de prueba 
-        archivo_jugador.GuardarEquipo();
-        jugador_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), true), _view, 1);
-        rival_metodo_play = new Player(archivo_jugador.CrearEquipo(LoadJson(), false), _view, 2);
-        
-    }
-    public void Turno(Player jugador, Player rival)
-    {
-        
-        StarTurno(jugador, rival);
-        //seteo a false de nuevo el inicia round 
-        //TODO: arreglar esto 
-        personaje_jugador.inicia_round = false;
-        personaje_jugador.bonus_neutralizados = new List<string>();
-        personaje_rival.bonus_neutralizados = new List<string>(); 
-        personaje_jugador.penalty_neutralizados = new List<string>();
-        personaje_rival.penalty_neutralizados = new List<string>(); 
-        
-        batalla.Atack(personaje_jugador, personaje_rival, batalla.AtkPlayer);
-        if (personaje_rival.HP == 0)
-        {
-            EndRound();
-            return;
-        }
-        batalla.Atack(personaje_rival, personaje_jugador, batalla.AtkRival);
-        batalla.DefinirAtack();
-        if (personaje_jugador.HP == 0)
-        {
-            EndRound();
-        }
-        else
-        {
-            batalla.FollowUp();
-            batalla.PrintFollowUp();
-            EndRound();
-        }
-
-        personaje_jugador.first_atack = 1; 
-        personaje_rival.first_atack = 1;
-        personaje_jugador.oponente_previo = personaje_rival.name;
-        personaje_rival.oponente_previo = personaje_jugador.name; 
-        return; 
-    }
-    private void StarTurno(Player jugador, Player rival)//TODO: arreglar el problema que tengo entre alternanr entre el jugador y el rival 
-    {
-        InicializacionTurno(jugador, rival);
-        InicializacionBatalla(jugador, rival);
-        SetUpHabilidades();
-        batalla.DefinirAtack();
-    }
-    private void InicializacionTurno(Player jugador, Player rival)
-    {
-        PrintOpcion(jugador, jugador.tipo);
-        int jugador_input = Convert.ToInt32(_view.ReadLine());
-        
-        PrintOpcion(rival, rival.tipo);
-        int rival_input = Convert.ToInt32(_view.ReadLine());
-        
-        personaje_jugador = jugador.equipo[jugador_input];
-        personaje_rival = rival.equipo[rival_input]; 
-        
-        _view.WriteLine($"Round {turno}: {personaje_jugador.name} (Player {jugador.tipo}) comienza");
-    }
-    private void InicializacionBatalla(Player jugador, Player rival)
-    {
-        batalla = new Batalla(personaje_jugador, personaje_rival, _view, jugador, rival);
-        
-        batalla.Ventajas();
-        batalla.PrintVentaja();
-    }
-    private void SetUpHabilidades()
-    {
-        // la parte de true de empieza
-        //TODO: arreglar a clena code 
-        personaje_jugador.inicia_round = true; 
-        // personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
-        // personaje_rival.bonus_stats = new Dictionary<string, int>();
-        // personaje_jugador.penalty_stats = new Dictionary<string, int>(); 
-        // personaje_rival.penalty_stats = new Dictionary<string, int>();
-        personaje_jugador.ResetearContenedoresDeStats();
-        personaje_rival.ResetearContenedoresDeStats();
-        EjecucionAplicadorHabilidad manejo_ejecutador =
-            new EjecucionAplicadorHabilidad(personaje_jugador, personaje_rival, _view);
-        manejo_ejecutador.AplicarTodo();
-    }
-    private void EndRound()
-    {
-        batalla.VidaEndRound();
-        batalla.RemovePlayer();
-    }
-
 }
-

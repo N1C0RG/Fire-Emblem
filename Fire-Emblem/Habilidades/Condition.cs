@@ -223,7 +223,6 @@ public class ConditionFirstAtk : ICondition//TODO: arreglar esto
         }
     }
 }
-
 public class ConditionPreviousRival : ICondition//TODO: arreglar esto 
 {
     public bool CondicionHabilidad(Personaje player, Personaje rival)

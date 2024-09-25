@@ -133,7 +133,6 @@ public class Impresora
             _view.WriteLine("Ninguna unidad puede hacer un follow up"); 
         }
     }
-
     public void PrintAtaque(Personaje player, Personaje rival, int dano)
     {
         _view.WriteLine($"{player.name} ataca a {rival.name} con {dano} de daño");

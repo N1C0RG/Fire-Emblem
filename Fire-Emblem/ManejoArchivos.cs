@@ -1,4 +1,5 @@
 namespace Fire_Emblem;
+using System.Text.Json;
 public class ManejoArchivos
 {
     private FileReader _fileReader;
@@ -18,10 +19,10 @@ public class ManejoArchivos
         _teamManager.SaveTeams(fileLines);
     }
 
-    public List<Personaje> CrearEquipo(List<JsonContent> allCharacters, bool isPlayerTeam)
+    public List<Personaje> CrearEquipo(bool isPlayerTeam)
     {
         var teamData = isPlayerTeam ? _teamManager.GetPlayerTeam() : _teamManager.GetRivalTeam();
-        return _teamBuilder.CreateTeam(allCharacters, teamData);
+        return _teamBuilder.CreateTeam(_fileReader.LoadJsonCharacter(), teamData);
     }
 }
 
@@ -42,6 +43,14 @@ public class FileReader
         var fullPath = Directory.GetFiles(_teamFolder)
             .FirstOrDefault(file => Path.GetFileName(file).Contains(fileNumber));
         return fullPath != null ? File.ReadAllLines(fullPath) : Array.Empty<string>();
+    }
+    public List<JsonContent> LoadJsonCharacter()
+    {
+        string directorio_path = AppDomain.CurrentDomain.BaseDirectory; 
+        string jsonFilePath = Path.Combine(directorio_path, "characters.json");
+        string jsonString = File.ReadAllText(jsonFilePath);
+        List<JsonContent> todos_personajes = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
+        return todos_personajes; 
     }
 }
 public class TeamManager
