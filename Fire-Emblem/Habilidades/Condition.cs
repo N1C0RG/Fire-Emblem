@@ -1,13 +1,55 @@
 namespace Fire_Emblem.Habilidades;
 
-public abstract class Condition
+public interface ICondition
 {
-    public abstract bool CondicionHabilidad(Personaje player, Personaje rival); 
+    public bool CondicionHabilidad(Personaje player, Personaje rival); 
 }
 
-public class ConditionInicioCombate : Condition
+public abstract class CondicionArma : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    protected string Weapon; 
+    protected CondicionArma(string weapon)
+    {
+        Weapon = weapon; 
+    }
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
+    {
+        if (player.weapon == Weapon)
+        {
+            return true; 
+        }
+        else
+        {
+            return false; 
+        }
+    }
+}
+public class ConditionSword : CondicionArma
+{
+    public ConditionSword() : base("Sword"){}
+}
+public class ConditionLance : CondicionArma
+{
+    public ConditionLance() : base("Lance"){}
+}
+public class ConditionAxe : CondicionArma
+{
+    public ConditionAxe() : base("Axe"){}
+}
+public class ConditionBow : CondicionArma
+{
+    public ConditionBow() : base("Bow"){}
+}
+public class ConditionMagic : CondicionArma
+{
+    public ConditionMagic() : base("Magic"){}
+}
+
+
+
+public class ConditionInicioCombate : ICondition
+{
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.inicia_round)
         {
@@ -20,17 +62,17 @@ public class ConditionInicioCombate : Condition
     }
 }
 
-public class ConditionNula : Condition
+public class ConditionNula : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         return true; 
     }
 }
 
-public class ConditionVida80 : Condition
+public class ConditionVida80 : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if ((int)Math.Floor(Convert.ToDecimal(player.hp_original) * 0.8m) >= player.HP)
         {
@@ -43,9 +85,9 @@ public class ConditionVida80 : Condition
     }
 }
 
-public class ConditionChaos : Condition
+public class ConditionChaos : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if ((player.weapon != "Magic" && rival.weapon == "Magic") ||
             (rival.weapon != "Magic" && player.weapon == "Magic"))
@@ -59,24 +101,10 @@ public class ConditionChaos : Condition
     }
 }
 
-public class ConditionEspada : Condition
-{
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Sword")
-        {
-            return true; 
-        }
-        else
-        {
-            return false; 
-        }
-    }
-}
 
-public class ConditionRivalHPvsPlayerHP : Condition
+public class ConditionRivalHPvsPlayerHP : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.HP >= rival.HP + 3)
         {
@@ -89,9 +117,9 @@ public class ConditionRivalHPvsPlayerHP : Condition
     }
 }
 
-public class ConditionHP75 : Condition
+public class ConditionHP75 : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.HP <= (int)Math.Floor(Convert.ToDecimal(player.hp_original) * 0.75m))
         {
@@ -104,23 +132,10 @@ public class ConditionHP75 : Condition
     }
 }
 
-public class ConditionMagia : Condition
+
+public class ConditionHP50 : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Magic")
-        {
-            return true; 
-        }
-        else
-        {
-            return false; 
-        }
-    }
-}
-public class ConditionHP50 : Condition
-{
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.HP <= (int)Math.Floor(Convert.ToDecimal(player.hp_original) * 0.5m))
         {
@@ -133,9 +148,9 @@ public class ConditionHP50 : Condition
     }
 }
 
-public class ConditionWrath : Condition
+public class ConditionWrath : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.HP != player.hp_original)
         {
@@ -148,9 +163,9 @@ public class ConditionWrath : Condition
     }
 }
 
-public class ConditionNoInicia : Condition
+public class ConditionNoInicia : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.inicia_round == false)
         {
@@ -163,9 +178,9 @@ public class ConditionNoInicia : Condition
     }
 }
 
-public class ConditionClose : Condition
+public class ConditionClose : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (rival.weapon != "Magic" && rival.weapon != "Bow")
         {
@@ -177,9 +192,9 @@ public class ConditionClose : Condition
         }
     }
 }
-public class ConditionDistant : Condition
+public class ConditionDistant : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (rival.weapon == "Magic" || rival.weapon == "Bow")
         {
@@ -192,9 +207,9 @@ public class ConditionDistant : Condition
     }
 }
 
-public class ConditionRivalHP75 : Condition
+public class ConditionRivalHP75 : ICondition
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.hp_original) * 0.75m))
         {
@@ -206,9 +221,9 @@ public class ConditionRivalHP75 : Condition
         }
     }
 }
-public class ConditionFirstAtk : Condition//TODO: arreglar esto 
+public class ConditionFirstAtk : ICondition//TODO: arreglar esto 
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.first_atack == 1)
         {
@@ -222,9 +237,9 @@ public class ConditionFirstAtk : Condition//TODO: arreglar esto
     }
 }
 
-public class ConditionFullVidaRival : Condition//TODO: arreglar esto 
+public class ConditionFullVidaRival : ICondition//TODO: arreglar esto 
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (rival.hp_original == rival.HP)
         {
@@ -237,9 +252,9 @@ public class ConditionFullVidaRival : Condition//TODO: arreglar esto
     }
 }
 
-public class ConditionPreviousRival : Condition//TODO: arreglar esto 
+public class ConditionPreviousRival : ICondition//TODO: arreglar esto 
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (player.oponente_previo == rival.name)
         {
@@ -251,9 +266,9 @@ public class ConditionPreviousRival : Condition//TODO: arreglar esto
         }
     }
 }
-public class ConditionRivalEsHombre: Condition//TODO: arreglar esto 
+public class ConditionRivalEsHombre: ICondition//TODO: arreglar esto 
 {
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
+    public bool CondicionHabilidad(Personaje player, Personaje rival)
     {
         if (rival.gender == "Male")
         {
@@ -265,49 +280,6 @@ public class ConditionRivalEsHombre: Condition//TODO: arreglar esto
         }
     }
 }
-public class ConditionTieneAxe: Condition//TODO: arreglar esto 
-{
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Axe")
-        {
-            return true; 
-        }
-        else
-        {
-            return false; 
-        }
-    }
-}
-public class ConditionTieneLanza: Condition//TODO: arreglar esto 
-{
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Lance")
-        {
-            return true; 
-        }
-        else
-        {
-            return false; 
-        }
-    }
-}
-public class ConditionTieneBow: Condition//TODO: arreglar esto 
-{
-    public override bool CondicionHabilidad(Personaje player, Personaje rival)
-    {
-        if (player.weapon == "Bow")
-        {
-            return true; 
-        }
-        else
-        {
-            return false; 
-        }
-    }
-}
-
 
 
 

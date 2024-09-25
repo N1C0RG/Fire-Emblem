@@ -28,533 +28,479 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new DefUp(8) }, 
-                new List<Condition> { new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Atk/Def +5")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(5), new DefUp(5)}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                5);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Bracing Blow")
         {
-            //TODO: la parte de los multiples efectos usar una lista de efectos para la clase ability 
             Ability habilidad = new Ability (
                 new List<IEffect> { new DefUp(6), new ResUp(6)}, 
-                new List<Condition> { new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Atk/Res +5")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(5), new ResUp(5)}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                5);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Attack +6")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new AtkUp(6)}, 
-                new List<Condition> { new ConditionNula() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(6) },
+                new List<ICondition> { new ConditionNula() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Atk/Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new DefUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Atk/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new ResUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Atk/Spd")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new SpdUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Def/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new DefUp(10), new ResUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Spd/Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(10), new DefUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Brazen Spd/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(10), new ResUp(10)}, 
-                new List<Condition> { new ConditionVida80()}, 
+                new List<ICondition> { new ConditionVida80()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Chaos Style")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(3) }, 
-                new List<Condition> { new ConditionChaos(), new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionChaos(), new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Darting Blow")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(8) }, 
-                new List<Condition> { new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Deadly Blade")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(8),  new SpdUp(8) }, 
-                new List<Condition> { new ConditionInicioCombate(), new ConditionEspada()}, 
+                new List<ICondition> { new ConditionInicioCombate(), new ConditionSword()}, 
                 jugador, 
-                rival, 
-                8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Death Blow")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(8) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
+                new List<ICondition> { new ConditionInicioCombate() }, 
                 jugador, 
-                rival, 
-                8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Defense +5")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new DefUp(5) }, 
-                new List<Condition> { new ConditionNula() }, 
+                new List<ICondition> { new ConditionNula() }, 
                 jugador, 
-                rival, 
-                5);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Earth Boost")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new DefUp(6) }, 
-                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
+                new List<ICondition> { new ConditionRivalHPvsPlayerHP() }, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Fair Fight")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new FairAtkdUp() }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
+                new List<IEffect> {new AtkUp(6), new RivalAtkUp(6) }, 
+                new List<ICondition> { new ConditionInicioCombate() }, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Fire Boost")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6) }, 
-                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
+                new List<ICondition> { new ConditionRivalHPvsPlayerHP() }, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Mirror Strike")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6), new ResUp(6)}, 
-                new List<Condition> { new ConditionInicioCombate() }, 
+                new List<ICondition> { new ConditionInicioCombate() }, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Perceptive")
         {
+            int cantidad = 12 + (jugador.spd / 4);
             Ability habilidad = new Ability (
-                new List<IEffect> {new PerceptiveSpddUp() }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
+                new List<IEffect> {new SpdUp(cantidad) }, 
+                new List<ICondition> { new ConditionInicioCombate() }, 
                 jugador, 
-                rival, 
-                12);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Resistance +5")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new ResUp(5) }, 
-                new List<Condition> { new ConditionNula() }, 
+                new List<ICondition> { new ConditionNula() }, 
                 jugador, 
-                rival, 
-                5);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Resolve")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new DefUp(7), new ResUp(7) }, 
-                new List<Condition> { new ConditionHP75() }, 
+                new List<ICondition> { new ConditionHP75() }, 
                 jugador, 
-                rival, 
-                7);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Spd/Res +5")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SpdUp(5), new ResUp(5) }, 
-                new List<Condition> { new ConditionNula() }, 
-                jugador, 
-                rival, 
-                5);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new SpdUp(5), new ResUp(5) },
+                new List<ICondition> { new ConditionNula() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Speed +5")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SpdUp(5) }, 
-                new List<Condition> { new ConditionNula() }, 
-                jugador, 
-                rival, 
-                5);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new SpdUp(5) },
+                new List<ICondition> { new ConditionNula() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Steady Blow")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SpdUp(6), new DefUp(6) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new SpdUp(6), new DefUp(6) },
+                new List<ICondition> { new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Sturdy Blow")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new AtkUp(6), new DefUp(6) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(6), new DefUp(6) },
+                new List<ICondition> { new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Swift Sparrow")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new AtkUp(6), new SpdUp(6) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(6), new SpdUp(6) },
+                new List<ICondition> { new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Swift Strike")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SpdUp(6), new ResUp(6) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new SpdUp(6), new ResUp(6) },
+                new List<ICondition> { new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Tome Precision")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6), new SpdUp(6) }, 
-                new List<Condition> { new ConditionMagia() }, 
+                new List<ICondition> { new ConditionMagic() }, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Warding Blow")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new ResUp(8) }, 
-                new List<Condition> { new ConditionInicioCombate() }, 
-                jugador, 
-                rival, 
-                8);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new ResUp(8) },
+                new List<ICondition> { new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Water Boost")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new ResUp(6) }, 
-                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new ResUp(6) },
+                new List<ICondition> { new ConditionRivalHPvsPlayerHP() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Will to Win")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new AtkUp(8) }, 
-                new List<Condition> { new ConditionHP50() }, 
-                jugador, 
-                rival, 
-                8);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(8) },
+                new List<ICondition> { new ConditionHP50() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Wind Boost")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SpdUp(6) }, 
-                new List<Condition> { new ConditionRivalHPvsPlayerHP() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new SpdUp(6) },
+                new List<ICondition> { new ConditionRivalHPvsPlayerHP() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Wrath")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new WrathAtkUp() }, 
-                new List<Condition> { new ConditionWrath() }, 
-                jugador, 
-                rival, 
-                0);
+            int cantidad = jugador.hp_original - jugador.HP > 30 ? 30 : jugador.hp_original - jugador.HP;
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(cantidad), new SpdUp(cantidad) },
+                new List<ICondition> { new ConditionWrath() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Beorc's Blessing")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new AplicarCancelacion() }, 
-                new List<Condition> { new ConditionNula() }, 
-                jugador, 
-                rival, 
-                0);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AplicarCancelacion() },
+                new List<ICondition> { new ConditionNula() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
-        //mixta 
         else if (nombre_habilidad == "Close Def")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new DefUp(8), new ResUp(8), new AplicarCancelacion()}, 
-                new List<Condition> { new ConditionClose(), new ConditionNoInicia() }, 
-                jugador, 
-                rival, 
-                8);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacion() },
+                new List<ICondition> { new ConditionClose(), new ConditionNoInicia() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Distant Def")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new DefUp(8), new ResUp(8), new AplicarCancelacion() }, 
-                new List<Condition> { new ConditionDistant(), new ConditionNoInicia() }, 
-                jugador, 
-                rival, 
-                8);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacion() },
+                new List<ICondition> { new ConditionDistant(), new ConditionNoInicia() },
+                jugador,
+                rival); 
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Dragonskin")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion() }, 
-                new List<Condition> {  new ConditionNoInicia() }, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion() },
+                new List<ICondition> { new ConditionNoInicia() },
+                jugador,
+                rival);
             habilidad.Aplicar();
-            Ability habilidad2 = new Ability (
-                new List<IEffect> {new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion()}, 
-                new List<Condition> { new ConditionRivalHP75(), new ConditionInicioCombate()}, 
-                jugador, 
-                rival, 
-                6);
+            Ability habilidad2 = new Ability(
+                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion() },
+                new List<ICondition> { new ConditionRivalHP75(), new ConditionInicioCombate() },
+                jugador,
+                rival);
             habilidad2.Aplicar();
         }
         else if (nombre_habilidad == "Ignis")
         {
-            Ability habilidad2 = new Ability (
-                new List<IEffect> {new Up50Atack()}, 
-                new List<Condition> { new ConditionFirstAtk()}, 
-                jugador, 
-                rival, 
-                0);
-            habilidad2.Aplicar();
+            Ability habilidad = new Ability(
+                new List<IEffect> { new Up50Atack() },
+                new List<ICondition> { new ConditionFirstAtk() },
+                jugador,
+                rival);
+            habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Sandstorm")
         {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new Sandstorm() }, 
-                new List<Condition> { new ConditionNula()}, 
-                jugador, 
-                rival, 
-                0);
+            Ability habilidad = new Ability(
+                new List<IEffect> { new Sandstorm() },
+                new List<ICondition> { new ConditionNula() },
+                jugador,
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "HP +15")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new HpUp() }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Fort. Def/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new DefUp(6), new ResUp(6)}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
             Ability habilidad2 = new Ability (
                 new List<IEffect> {new AtkUp(-2)}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -2);
+                rival);
             habilidad2.Aplicar();
         }
         else if (nombre_habilidad == "Life and Death")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6), new SpdUp(6), new DefUp(-5), new ResUp(-5)}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Atk/Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalAtkUp(-3), new RivalDefUp(-3), new CancelAtk(), new CancelDef()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Atk/Spd")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalAtkUp(-3), new RivalSpdUp(-3), new CancelAtk(), new CancelSpd()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Atk/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalAtkUp(-3), new RivalResUp(-3), new CancelAtk(), new CancelRes()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Spd/Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalSpdUp(-3), new RivalDefUp(-3), new CancelSpd(), new CancelDef()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Spd/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalSpdUp(-3), new RivalResUp(-3), new CancelSpd(), new CancelRes()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lull Def/Res")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalDefUp(-3), new RivalResUp(-3), new CancelDef(), new CancelRes()}, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Solid Ground")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6), new DefUp(6) }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
             Ability habilidad2 = new Ability (
                 new List<IEffect> {new ResUp(-5) }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                -5);
+                rival);
             habilidad2.Aplicar();
         }
         else if (nombre_habilidad == "Soulblade")
@@ -562,67 +508,60 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
             int cantidad = ((rival.def + rival.res) / 2);
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalResUp(cantidad - rival.res), new RivalDefUp(cantidad - rival.def)}, 
-                new List<Condition> { new ConditionEspada()}, 
+                new List<ICondition> { new ConditionSword()}, 
                 jugador, 
-                rival, 
-                cantidad - rival.res);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Still Water")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(6), new ResUp(6), new DefUp(-5) }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                6);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Sword Agility")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new SpdUp(12), new AtkUp(-6)}, 
-                new List<Condition> { new ConditionEspada()}, 
+                new List<ICondition> { new ConditionSword()}, 
                 jugador, 
-                rival, 
-                12);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Sword Power")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(10), new DefUp(-10) }, 
-                new List<Condition> { new ConditionEspada()}, 
+                new List<ICondition> { new ConditionSword()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Sword Focus")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new AtkUp(10), new ResUp(-10) }, 
-                new List<Condition> { new ConditionEspada()}, 
+                new List<ICondition> { new ConditionSword()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Belief in Love")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
-                new List<Condition> { new ConditionNoInicia()}, 
+                new List<ICondition> { new ConditionNoInicia()}, 
                 jugador, 
-                rival, 
-                -5);
+                rival);
             habilidad.Aplicar();
             Ability habilidad2 = new Ability (
                 new List<IEffect> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
-                new List<Condition> { new ConditionFullVidaRival(), new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionFullVidaRival(), new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                -5);
+                rival);
             habilidad2.Aplicar();
         }
         
@@ -630,120 +569,108 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AplicarCancelacionPenalty() }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Blinding Flash")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalSpdUp(-4) }, 
-                new List<Condition> { new ConditionInicioCombate()}, 
+                new List<ICondition> { new ConditionInicioCombate()}, 
                 jugador, 
-                rival, 
-                -4);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Charmer")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalAtkUp(-3), new RivalSpdUp(-3) }, 
-                new List<Condition> { new ConditionPreviousRival()}, 
+                new List<ICondition> { new ConditionPreviousRival()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Single-Minded")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(8) }, 
-                new List<Condition> { new ConditionPreviousRival()}, 
+                new List<ICondition> { new ConditionPreviousRival()}, 
                 jugador, 
-                rival, 
-                -3);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Disarming Sigh")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalAtkUp(-8) }, 
-                new List<Condition> { new ConditionRivalEsHombre()}, 
+                new List<ICondition> { new ConditionRivalEsHombre()}, 
                 jugador, 
-                rival, 
-                -8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Stunning Smile")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalSpdUp(-8) }, 
-                new List<Condition> { new ConditionRivalEsHombre()}, 
+                new List<ICondition> { new ConditionRivalEsHombre()}, 
                 jugador, 
-                rival, 
-                -8);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Not *Quite*")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalAtkUp(-4) }, 
-                new List<Condition> { new ConditionNoInicia()}, 
+                new List<ICondition> { new ConditionNoInicia()}, 
                 jugador, 
-                rival, 
-                -4);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Axe Power")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new DefUp(-10)}, 
-                new List<Condition> { new ConditionTieneAxe()}, 
+                new List<ICondition> { new ConditionAxe()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lance Agility")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(12), new AtkUp(-6)}, 
-                new List<Condition> { new ConditionTieneLanza()}, 
+                new List<ICondition> { new ConditionLance()}, 
                 jugador, 
-                rival, 
-                12);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Lance Power")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new DefUp(-10)}, 
-                new List<Condition> { new ConditionTieneLanza()}, 
+                new List<ICondition> { new ConditionLance()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Bow Focus")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new ResUp(-10)}, 
-                new List<Condition> { new ConditionTieneBow()}, 
+                new List<ICondition> { new ConditionBow()}, 
                 jugador, 
-                rival, 
-                10);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Bow Agility")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(12), new AtkUp(-6)}, 
-                new List<Condition> { new ConditionTieneBow()}, 
+                new List<ICondition> { new ConditionBow()}, 
                 jugador, 
-                rival, 
-                12);
+                rival);
             habilidad.Aplicar();
         }
     }
@@ -762,57 +689,51 @@ public class AplicadorHabilidadMixta : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
-                new List<Condition> { new ConditionNula() }, 
+                new List<ICondition> { new ConditionNula() }, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Close Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<Condition> { new ConditionClose(), new ConditionNoInicia() }, 
+                new List<ICondition> { new ConditionClose(), new ConditionNoInicia() }, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Distant Def")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<Condition> { new ConditionDistant(), new ConditionNoInicia() }, 
+                new List<ICondition> { new ConditionDistant(), new ConditionNoInicia() }, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
         else if (nombre_habilidad == "Dragonskin")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<Condition> { new ConditionNoInicia() }, 
+                new List<ICondition> { new ConditionNoInicia() }, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
             Ability habilidad2 = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<Condition> { new ConditionInicioCombate(), new ConditionRivalHP75() }, 
+                new List<ICondition> { new ConditionInicioCombate(), new ConditionRivalHP75() }, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad2.Aplicar();
         }
         else if (nombre_habilidad == "Agnea's Arrow")
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelarPenaltyRes(), new CancelPenaltyAtk(), new CancelPenaltyDef(), new CancelPenaltySpd() }, 
-                new List<Condition> { new ConditionNula()}, 
+                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
-                rival, 
-                0);
+                rival);
             habilidad.Aplicar();
         }
     }

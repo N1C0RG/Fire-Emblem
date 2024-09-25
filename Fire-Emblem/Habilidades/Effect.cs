@@ -1,7 +1,7 @@
 namespace Fire_Emblem.Habilidades;
 public interface IEffect
 {
-    public void Bonus(Personaje player, Personaje rival, int aumento); 
+    public void Bonus(Personaje player, Personaje rival); 
 }
 public abstract class StatEffectPlayer : IEffect
 {
@@ -13,7 +13,7 @@ public abstract class StatEffectPlayer : IEffect
         this.Cantidad = cantidad;
     }
 
-    public void Bonus(Personaje player, Personaje rival, int aumento)
+    public void Bonus(Personaje player, Personaje rival)
     {
         var stats = Cantidad > 0 ? player.bonus_stats : player.penalty_stats;
 
@@ -36,7 +36,7 @@ public abstract class StatEffectRival : IEffect
         StatKey = statKey;
         this.Cantidad = cantidad;
     }
-    public void Bonus(Personaje player, Personaje rival, int aumento)
+    public void Bonus(Personaje player, Personaje rival)
     {
         var stats = Cantidad > 0 ? rival.bonus_stats : rival.penalty_stats;
 
@@ -58,7 +58,7 @@ public abstract class NeutralizacionBonus : IEffect
     {
         StatKey = statKey;
     }
-    public void Bonus(Personaje player, Personaje rival, int aumento)
+    public void Bonus(Personaje player, Personaje rival)
     {
         if (rival.bonus_stats.ContainsKey(StatKey))
         {
@@ -74,7 +74,7 @@ public abstract class NeutralizacionPenalty : IEffect
     {
         StatKey = statKey;
     }
-    public void Bonus(Personaje player, Personaje rival, int aumento)
+    public void Bonus(Personaje player, Personaje rival)
     {
         if (player.penalty_stats.ContainsKey(StatKey))
         {
@@ -84,7 +84,6 @@ public abstract class NeutralizacionPenalty : IEffect
     }
 }
 
-//TODO: en vez de hacer que cada una se encargue para una cantidad especifica de un stat hago que reciban un valor 
 public class AtkUp : StatEffectPlayer
 {
     public AtkUp(int cantidad) : base("Atk", cantidad) { }
@@ -117,88 +116,6 @@ public class RivalResUp : StatEffectRival
 {
     public RivalResUp(int cantidad) : base("Res", cantidad) { }
 }
-
-public class FairAtkdUp : IEffect
-{
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
-    {
-        if (player.bonus_stats.ContainsKey("Atk"))
-        {
-            player.bonus_stats["Atk"] += aumento;
-        }
-        else
-        {
-            player.bonus_stats.Add("Atk", aumento);
-        } 
-        if (rival.bonus_stats.ContainsKey("Atk"))
-        {
-            rival.bonus_stats["Atk"] += aumento;
-        }
-        else
-        {
-            rival.bonus_stats.Add("Atk", aumento);
-        } 
-    }
-}
-
-public class PerceptiveSpddUp : IEffect
-{
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
-    {
-        if (player.bonus_stats.ContainsKey("Spd"))
-        {
-            player.bonus_stats["Spd"] += aumento + (player.spd / 4);
-        }
-        else
-        {
-            player.bonus_stats.Add("Spd", aumento + (player.spd / 4));
-        } 
-    }
-}
-
-public class WrathAtkUp : IEffect
-{
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
-    {
-        int bonus = player.hp_original - player.HP;
-        if (bonus > 30)
-        {
-            bonus = 30; 
-        }
-        if (player.bonus_stats.ContainsKey("Atk"))
-        {
-            player.bonus_stats["Atk"] += aumento + bonus;
-        }
-        else
-        {
-            player.bonus_stats.Add("Atk", aumento + bonus);
-        } 
-        if (player.bonus_stats.ContainsKey("Spd"))
-        {
-            player.bonus_stats["Spd"] += aumento + bonus;
-        }
-        else
-        {
-            player.bonus_stats.Add("Spd", aumento + bonus);
-        } 
-    }
-}
-
-public class Neutralizapenalty : IEffect
-{
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
-    {
-        
-        foreach (var i in player.bonus_stats)
-        {
-            if (i.Value < 0)
-            {
-                player.bonus_stats[i.Key] = 0; 
-            }
-        }
-    }
-}
-
 public class CancelAtk : NeutralizacionBonus
 {
     public CancelAtk() : base("Atk") { }
@@ -231,11 +148,9 @@ public class CancelPenaltySpd : NeutralizacionPenalty
 {
     public CancelPenaltySpd() : base("Spd") { }
 }
-
-//TODO: no es un efecto 
 public class AplicarCancelacion : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public  void Bonus(Personaje player, Personaje rival)
     {
         rival.bonus_neutralizados.Add("Atk");
         rival.bonus_neutralizados.Add("Spd");
@@ -243,9 +158,10 @@ public class AplicarCancelacion : IEffect
         rival.bonus_neutralizados.Add("Res");
     }
 }
+
 public class AplicarCancelacionPenalty : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public void Bonus(Personaje player, Personaje rival)
     {
         player.penalty_neutralizados.Add("Atk");
         player.penalty_neutralizados.Add("Spd");
@@ -253,10 +169,36 @@ public class AplicarCancelacionPenalty : IEffect
         player.penalty_neutralizados.Add("Res");
     }
 }
-
+// public class WrathAtkUp : IEffect
+// {
+//     public  void Bonus(Personaje player, Personaje rival)
+//     {
+//         int bonus = player.hp_original - player.HP;
+//         if (bonus > 30)
+//         {
+//             bonus = 30; 
+//         }
+//         if (player.bonus_stats.ContainsKey("Atk"))
+//         {
+//             player.bonus_stats["Atk"] += aumento + bonus;
+//         }
+//         else
+//         {
+//             player.bonus_stats.Add("Atk", aumento + bonus);
+//         } 
+//         if (player.bonus_stats.ContainsKey("Spd"))
+//         {
+//             player.bonus_stats["Spd"] += aumento + bonus;
+//         }
+//         else
+//         {
+//             player.bonus_stats.Add("Spd", aumento + bonus);
+//         } 
+//     }
+// }
 public class Up50Atack: IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public  void Bonus(Personaje player, Personaje rival)
     {
         if (player.bonus_stats.ContainsKey("Atk"))
         {
@@ -271,16 +213,15 @@ public class Up50Atack: IEffect
 
 public class Sandstorm : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public  void Bonus(Personaje player, Personaje rival)
     {
         player.atk_follow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk;
-        
     }
 }
 
 public class SandstormNeutraliza : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public  void Bonus(Personaje player, Personaje rival)
     {
         if (rival.atk_follow > 0)
         {
@@ -292,7 +233,7 @@ public class SandstormNeutraliza : IEffect
 
 public class HpUp : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival, int aumento)
+    public  void Bonus(Personaje player, Personaje rival)
     {
         player.HP += 15; 
     }
