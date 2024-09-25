@@ -172,10 +172,12 @@ public class Game
         // la parte de true de empieza
         //TODO: arreglar a clena code 
         personaje_jugador.inicia_round = true; 
-        personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
-        personaje_rival.bonus_stats = new Dictionary<string, int>();
-        personaje_jugador.penalty_stats = new Dictionary<string, int>(); 
-        personaje_rival.penalty_stats = new Dictionary<string, int>();
+        // personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
+        // personaje_rival.bonus_stats = new Dictionary<string, int>();
+        // personaje_jugador.penalty_stats = new Dictionary<string, int>(); 
+        // personaje_rival.penalty_stats = new Dictionary<string, int>();
+        personaje_jugador.ResetearContenedoresDeStats();
+        personaje_rival.ResetearContenedoresDeStats();
         EjecucionAplicadorHabilidad manejo_ejecutador =
             new EjecucionAplicadorHabilidad(personaje_jugador, personaje_rival, _view);
         manejo_ejecutador.AplicarTodo();

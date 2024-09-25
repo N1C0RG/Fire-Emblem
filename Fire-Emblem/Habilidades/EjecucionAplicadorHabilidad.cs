@@ -65,10 +65,9 @@ public class EjecucionAplicadorHabilidad
         
         foreach (var i in bonus_ordenados)
         {
-            if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
-            {
-                ContenidoPrintAbility(player, (i.Key, i.Value), "+"); 
-            }
+            //_view.WriteLine($"{i}");
+            ContenidoPrintAbility(player, (i.Key, i.Value), "+"); 
+            
         }
         foreach (var i in bonus_ordenados)
         {

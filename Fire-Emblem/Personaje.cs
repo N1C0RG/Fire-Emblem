@@ -90,6 +90,15 @@ public class Personaje
         }
     }
     
+    public void ResetearContenedoresDeStats()
+    {
+        bonus_stats.Clear();
+        penalty_stats.Clear();
+        netos_stats.Clear();
+        bonus_neutralizados.Clear();
+        penalty_neutralizados.Clear();
+    }
+    
 }
 
 

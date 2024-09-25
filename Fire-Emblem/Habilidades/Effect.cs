@@ -50,7 +50,6 @@ public abstract class StatEffectRival : IEffect
         }
     }
 }
-
 public abstract class NeutralizacionBonus : IEffect
 {
     protected string StatKey;
@@ -64,7 +63,6 @@ public abstract class NeutralizacionBonus : IEffect
         {
             rival.bonus_stats[StatKey] = 0;
         }
-        rival.bonus_neutralizados.Add(StatKey);
     }
 }
 public abstract class NeutralizacionPenalty : IEffect
@@ -80,10 +78,20 @@ public abstract class NeutralizacionPenalty : IEffect
         {
             player.penalty_stats[StatKey] = 0;
         }
-        player.penalty_neutralizados.Add(StatKey);
     }
 }
-
+public abstract class AplicarCancelacionBonus : IEffect
+{
+    protected string StatKey;
+    protected AplicarCancelacionBonus(string statKey)
+    {
+        StatKey = statKey;
+    }
+    public void Bonus(Personaje player, Personaje rival)
+    {
+        rival.bonus_neutralizados.Add(StatKey);
+    }
+}
 public class AtkUp : StatEffectPlayer
 {
     public AtkUp(int cantidad) : base("Atk", cantidad) { }
@@ -148,15 +156,21 @@ public class CancelPenaltySpd : NeutralizacionPenalty
 {
     public CancelPenaltySpd() : base("Spd") { }
 }
-public class AplicarCancelacion : IEffect
+public class AplicarCancelacionAtk : AplicarCancelacionBonus
 {
-    public  void Bonus(Personaje player, Personaje rival)
-    {
-        rival.bonus_neutralizados.Add("Atk");
-        rival.bonus_neutralizados.Add("Spd");
-        rival.bonus_neutralizados.Add("Def");
-        rival.bonus_neutralizados.Add("Res");
-    }
+    public AplicarCancelacionAtk() : base("Atk") { }
+}
+public class AplicarCancelacionDef : AplicarCancelacionBonus
+{
+    public AplicarCancelacionDef() : base("Def") { }
+}
+public class AplicarCancelacionRes : AplicarCancelacionBonus
+{
+    public AplicarCancelacionRes() : base("Res") { }
+}
+public class AplicarCancelacionSpd : AplicarCancelacionBonus
+{
+    public AplicarCancelacionSpd() : base("Spd") { }
 }
 
 public class AplicarCancelacionPenalty : IEffect
@@ -169,33 +183,7 @@ public class AplicarCancelacionPenalty : IEffect
         player.penalty_neutralizados.Add("Res");
     }
 }
-// public class WrathAtkUp : IEffect
-// {
-//     public  void Bonus(Personaje player, Personaje rival)
-//     {
-//         int bonus = player.hp_original - player.HP;
-//         if (bonus > 30)
-//         {
-//             bonus = 30; 
-//         }
-//         if (player.bonus_stats.ContainsKey("Atk"))
-//         {
-//             player.bonus_stats["Atk"] += aumento + bonus;
-//         }
-//         else
-//         {
-//             player.bonus_stats.Add("Atk", aumento + bonus);
-//         } 
-//         if (player.bonus_stats.ContainsKey("Spd"))
-//         {
-//             player.bonus_stats["Spd"] += aumento + bonus;
-//         }
-//         else
-//         {
-//             player.bonus_stats.Add("Spd", aumento + bonus);
-//         } 
-//     }
-// }
+
 public class Up50Atack: IEffect
 {
     public  void Bonus(Personaje player, Personaje rival)

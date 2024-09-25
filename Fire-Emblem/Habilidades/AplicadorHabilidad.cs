@@ -73,7 +73,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new DefUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -82,7 +82,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new ResUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -91,7 +91,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new AtkUp(10), new SpdUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -100,7 +100,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new DefUp(10), new ResUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -109,7 +109,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(10), new DefUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -118,7 +118,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SpdUp(10), new ResUp(10)}, 
-                new List<ICondition> { new ConditionVida80()}, 
+                new List<ICondition> { new HpMenos80()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -227,7 +227,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> {new DefUp(7), new ResUp(7) }, 
-                new List<ICondition> { new ConditionHP75() }, 
+                new List<ICondition> { new HpMenos75() }, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
@@ -317,7 +317,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         {
             Ability habilidad = new Ability(
                 new List<IEffect> { new AtkUp(8) },
-                new List<ICondition> { new ConditionHP50() },
+                new List<ICondition> { new HpMenos50() },
                 jugador,
                 rival);
             habilidad.Aplicar();
@@ -336,7 +336,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
             int cantidad = jugador.hp_original - jugador.HP > 30 ? 30 : jugador.hp_original - jugador.HP;
             Ability habilidad = new Ability(
                 new List<IEffect> { new AtkUp(cantidad), new SpdUp(cantidad) },
-                new List<ICondition> { new ConditionWrath() },
+                new List<ICondition> { new ConditionNotFullVidaPlayer() },
                 jugador,
                 rival);
             habilidad.Aplicar();
@@ -344,7 +344,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Beorc's Blessing")
         {
             Ability habilidad = new Ability(
-                new List<IEffect> { new AplicarCancelacion() },
+                new List<IEffect> { new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionNula() },
                 jugador,
                 rival);
@@ -353,7 +353,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Close Def")
         {
             Ability habilidad = new Ability(
-                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacion() },
+                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionClose(), new ConditionNoInicia() },
                 jugador,
                 rival);
@@ -362,7 +362,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Distant Def")
         {
             Ability habilidad = new Ability(
-                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacion() },
+                new List<IEffect> { new DefUp(8), new ResUp(8), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionDistant(), new ConditionNoInicia() },
                 jugador,
                 rival); 
@@ -371,13 +371,13 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Dragonskin")
         {
             Ability habilidad = new Ability(
-                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion() },
+                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionNoInicia() },
                 jugador,
                 rival);
             habilidad.Aplicar();
             Ability habilidad2 = new Ability(
-                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6), new AplicarCancelacion() },
+                new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionRivalHP75(), new ConditionInicioCombate() },
                 jugador,
                 rival);
@@ -437,7 +437,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Atk/Def")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalAtkUp(-3), new RivalDefUp(-3), new CancelAtk(), new CancelDef()}, 
+                new List<IEffect> {new RivalAtkUp(-3), new RivalDefUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionDef()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -446,7 +446,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Atk/Spd")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalAtkUp(-3), new RivalSpdUp(-3), new CancelAtk(), new CancelSpd()}, 
+                new List<IEffect> {new RivalAtkUp(-3), new RivalSpdUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionSpd()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -455,7 +455,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Atk/Res")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalAtkUp(-3), new RivalResUp(-3), new CancelAtk(), new CancelRes()}, 
+                new List<IEffect> {new RivalAtkUp(-3), new RivalResUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionRes()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -464,7 +464,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Spd/Def")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalSpdUp(-3), new RivalDefUp(-3), new CancelSpd(), new CancelDef()}, 
+                new List<IEffect> {new RivalSpdUp(-3), new RivalDefUp(-3), new AplicarCancelacionSpd(), new AplicarCancelacionDef()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -473,7 +473,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Spd/Res")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalSpdUp(-3), new RivalResUp(-3), new CancelSpd(), new CancelRes()}, 
+                new List<IEffect> {new RivalSpdUp(-3), new RivalResUp(-3), new AplicarCancelacionSpd(), new AplicarCancelacionRes()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -482,7 +482,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         else if (nombre_habilidad == "Lull Def/Res")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> {new RivalDefUp(-3), new RivalResUp(-3), new CancelDef(), new CancelRes()}, 
+                new List<IEffect> {new RivalDefUp(-3), new RivalResUp(-3), new AplicarCancelacionDef(), new AplicarCancelacionRes()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -673,6 +673,17 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
                 rival);
             habilidad.Aplicar();
         }
+        else if (nombre_habilidad == "Light and Dark")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new RivalAtkUp(-5), new RivalSpdUp(-5), 
+                    new RivalDefUp(-5), new RivalResUp(-5), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes(),
+                    new AplicarCancelacionPenalty()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
     }
 }
 
@@ -731,6 +742,70 @@ public class AplicadorHabilidadMixta : AplicadorHabilidad
         {
             Ability habilidad = new Ability (
                 new List<IEffect> { new SandstormNeutraliza(), new CancelarPenaltyRes(), new CancelPenaltyAtk(), new CancelPenaltyDef(), new CancelPenaltySpd() }, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Light and Dark")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelarPenaltyRes(), new CancelPenaltyAtk(), new CancelPenaltyDef(), 
+                    new CancelPenaltySpd(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Atk/Def")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelAtk(), new CancelDef()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Atk/Spd")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelAtk(), new CancelSpd()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Atk/Res")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelAtk(), new CancelRes()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Spd/Def")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelSpd(), new CancelDef()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Spd/Res")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelSpd(), new CancelRes()}, 
+                new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Lull Def/Res")
+        {
+            Ability habilidad = new Ability (
+                new List<IEffect> { new CancelDef(), new CancelRes()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
