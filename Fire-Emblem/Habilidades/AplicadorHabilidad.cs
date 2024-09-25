@@ -741,7 +741,7 @@ public class AplicadorHabilidadMixta : AplicadorHabilidad
         else if (nombre_habilidad == "Agnea's Arrow")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new CancelarPenaltyRes(), new CancelPenaltyAtk(), new CancelPenaltyDef(), new CancelPenaltySpd() }, 
+                new List<IEffect> { new SandstormNeutraliza(), new NeutralizarPenalty() }, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
@@ -750,8 +750,7 @@ public class AplicadorHabilidadMixta : AplicadorHabilidad
         else if (nombre_habilidad == "Light and Dark")
         {
             Ability habilidad = new Ability (
-                new List<IEffect> { new CancelarPenaltyRes(), new CancelPenaltyAtk(), new CancelPenaltyDef(), 
-                    new CancelPenaltySpd(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
+                new List<IEffect> { new NeutralizarPenalty(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
                 new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);

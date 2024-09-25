@@ -65,21 +65,6 @@ public abstract class NeutralizacionBonus : IEffect
         }
     }
 }
-public abstract class NeutralizacionPenalty : IEffect
-{
-    protected string StatKey;
-    protected NeutralizacionPenalty(string statKey)
-    {
-        StatKey = statKey;
-    }
-    public void Bonus(Personaje player, Personaje rival)
-    {
-        if (player.penalty_stats.ContainsKey(StatKey))
-        {
-            player.penalty_stats[StatKey] = 0;
-        }
-    }
-}
 public abstract class AplicarCancelacionBonus : IEffect
 {
     protected string StatKey;
@@ -140,22 +125,6 @@ public class CancelSpd : NeutralizacionBonus
 {
     public CancelSpd() : base("Spd") { }
 }
-public class CancelPenaltyAtk : NeutralizacionPenalty
-{
-    public CancelPenaltyAtk() : base("Atk") { }
-}
-public class CancelPenaltyDef : NeutralizacionPenalty
-{
-    public CancelPenaltyDef() : base("Def") { }
-}
-public class CancelarPenaltyRes : NeutralizacionPenalty
-{
-    public CancelarPenaltyRes() : base("Res") { }
-}
-public class CancelPenaltySpd : NeutralizacionPenalty
-{
-    public CancelPenaltySpd() : base("Spd") { }
-}
 public class AplicarCancelacionAtk : AplicarCancelacionBonus
 {
     public AplicarCancelacionAtk() : base("Atk") { }
@@ -183,7 +152,19 @@ public class AplicarCancelacionPenalty : IEffect
         player.penalty_neutralizados.Add("Res");
     }
 }
-
+public class NeutralizarPenalty : IEffect
+{
+    public void Bonus(Personaje player, Personaje rival)
+    {
+        foreach (var i in player.penalty_stats)
+        {
+            if (player.penalty_stats.ContainsKey(i.Key))
+            {
+                player.penalty_stats[i.Key] = 0;
+            }
+        }
+    }
+}
 public class Up50Atack: IEffect
 {
     public  void Bonus(Personaje player, Personaje rival)
