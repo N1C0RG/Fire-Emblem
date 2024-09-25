@@ -65,8 +65,8 @@ namespace Fire_Emblem.Habilidades
         private void PrintPlayerAbilities(Personaje player)
         {
             //Todo: mover tal vez esto a el personaje 
-            var orderedBonuses = GetOrderedStats(player.bonus_stats);
-            var orderedPenalties = GetOrderedStats(player.penalty_stats);
+            var orderedBonuses = OrdenarStats(player.bonus_stats);
+            var orderedPenalties = OrdenarStats(player.penalty_stats);
 
             foreach (var stat in orderedBonuses)
             {
@@ -75,13 +75,16 @@ namespace Fire_Emblem.Habilidades
 
             foreach (var stat in orderedPenalties)
             {
-                PrintAbility(player, stat, "");
+                if (stat.Value < 0)
+                {
+                    PrintAbility(player, stat, "");
+                }
             }
         }
 
         private void PrintAbility(Personaje player, KeyValuePair<string, int> stat, string sign)
         {
-            var message = (player.first_atack == 1 && stat.Key == "Atk" && player.habilidad_fa)
+            var message = (player.first_atack == 1 && player.habilidad_fa)
                 ? $"{player.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
                 : $"{player.name} obtiene {stat.Key}{sign}{stat.Value}";
 
@@ -89,13 +92,15 @@ namespace Fire_Emblem.Habilidades
         }
 
         private void PrintNeutralizations(Personaje player)
-        {
-            foreach (var bonus in player.bonus_neutralizados)
+        {   //TODO; mover esto a el personaje
+            var ordenBonusNeutralizados = OrdenarNeutralizaciones(player.bonus_neutralizados);
+            var ordenPenaltyNeutralizado = OrdenarNeutralizaciones(player.penalty_neutralizados);
+            foreach (var bonus in ordenBonusNeutralizados)
             {
                 _view.WriteLine($"Los bonus de {bonus} de {player.name} fueron neutralizados");
             }
 
-            foreach (var penalty in player.penalty_neutralizados)
+            foreach (var penalty in ordenPenaltyNeutralizado)
             {
                 _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
             }
@@ -107,10 +112,15 @@ namespace Fire_Emblem.Habilidades
         //     _rival.CalcularNetosStats();
         // }
 
-        private IEnumerable<KeyValuePair<string, int>> GetOrderedStats(Dictionary<string, int> stats)
+        private IEnumerable<KeyValuePair<string, int>> OrdenarStats(Dictionary<string, int> stats)
         {
-            string[] order = { "Atk", "Spd", "Def", "Res" };
-            return order.Where(stats.ContainsKey).Select(key => new KeyValuePair<string, int>(key, stats[key]));
+            string[] orden = { "Atk", "Spd", "Def", "Res" };
+            return orden.Where(stats.ContainsKey).Select(key => new KeyValuePair<string, int>(key, stats[key]));
+        }
+        private IEnumerable<string> OrdenarNeutralizaciones(IEnumerable<string> neutralizations)
+        {
+            string[] orden = { "Atk", "Spd", "Def", "Res" };
+            return orden.Where(neutralizations.Contains);
         }
     }
 }

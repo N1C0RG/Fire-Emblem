@@ -333,6 +333,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         }
         else if (nombre_habilidad == "Wrath")
         {
+            //TODO; mover esto a efecto ? 
             int cantidad = jugador.hp_original - jugador.HP > 30 ? 30 : jugador.hp_original - jugador.HP;
             Ability habilidad = new Ability(
                 new List<IEffect> { new AtkUp(cantidad), new SpdUp(cantidad) },
@@ -504,7 +505,7 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
             habilidad2.Aplicar();
         }
         else if (nombre_habilidad == "Soulblade")
-        {
+        {   //TODO; mover esto a efecto ? 
             int cantidad = ((rival.def + rival.res) / 2);
             Ability habilidad = new Ability (
                 new List<IEffect> {new RivalResUp(cantidad - rival.res), new RivalDefUp(cantidad - rival.def)}, 
@@ -680,6 +681,18 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
                     new RivalDefUp(-5), new RivalResUp(-5), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes(),
                     new AplicarCancelacionPenalty()}, 
                 new List<ICondition> { new ConditionNula()}, 
+                jugador, 
+                rival);
+            habilidad.Aplicar();
+        }
+        else if (nombre_habilidad == "Luna") //TODO; mover esto a efecto y tengo que arreglarlo, no vuelvo los stats despues del primer ataque? 
+        {
+            rival.habilidad_fa = true; 
+            int res = (int)Math.Floor(Convert.ToDecimal(rival.res) * 0.5m); 
+            int def = (int)Math.Floor(Convert.ToDecimal(rival.def) * 0.5m);
+            Ability habilidad = new Ability (
+                new List<IEffect> { new RivalDefUp(-def), new RivalResUp(-res)}, 
+                new List<ICondition> { new ConditionNula() }, 
                 jugador, 
                 rival);
             habilidad.Aplicar();
