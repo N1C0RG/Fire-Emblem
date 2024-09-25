@@ -174,6 +174,8 @@ public class Game
         personaje_jugador.inicia_round = true; 
         personaje_jugador.bonus_stats = new Dictionary<string, int>(); 
         personaje_rival.bonus_stats = new Dictionary<string, int>();
+        personaje_jugador.penalty_stats = new Dictionary<string, int>(); 
+        personaje_rival.penalty_stats = new Dictionary<string, int>();
         EjecucionAplicadorHabilidad manejo_ejecutador =
             new EjecucionAplicadorHabilidad(personaje_jugador, personaje_rival, _view);
         manejo_ejecutador.AplicarTodo();

@@ -80,7 +80,7 @@ public class Batalla
 
     public void FollowUp()
     {
-        _seguidorDeAtaque.FollowUp(player, rival, AtkPlayer, AtkRival);//le meti  un view
+        _seguidorDeAtaque.FollowUp(player, rival, AtkPlayer, AtkRival);
     }
 
     public void RemovePlayer()
@@ -169,23 +169,23 @@ public class Ventaja
 }
 public class CalculadoraDeAtaque
 {
-    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
+    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)//cambie bonus stats por neto stats 
     {
         int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
-        if (atacante.weapon != "Magic" && defensor.bonus_stats.ContainsKey("Def"))
+        if (atacante.weapon != "Magic" && defensor.netos_stats.ContainsKey("Def"))
         {
-            def += defensor.bonus_stats["Def"];
+            def += defensor.netos_stats["Def"];
         }
-        if (atacante.weapon == "Magic" && defensor.bonus_stats.ContainsKey("Res"))
+        if (atacante.weapon == "Magic" && defensor.netos_stats.ContainsKey("Res"))
         {
-            def += defensor.bonus_stats["Res"];
+            def += defensor.netos_stats["Res"];
         }
         //TODO: arreglar esto
         if (atacante.first_atack == 2 && atacante.habilidad_fa)
          {
-             atacante.bonus_stats["Atk"] = 0; 
+             atacante.netos_stats["Atk"] = 0; 
          }
-        return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.bonus_stats.ContainsKey("Atk") ? atacante.bonus_stats["Atk"] : 0)) * ventaja) - def;
+        return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.netos_stats.ContainsKey("Atk") ? atacante.netos_stats["Atk"] : 0)) * ventaja) - def;
     }
 }
 public class SeguidorDeAtaque
@@ -226,13 +226,13 @@ public class SeguidorDeAtaque
     {
         follow_spd_jugador = player.spd;
         follow_spd_rival = rival.spd;
-        if (player.bonus_stats.ContainsKey("Spd"))
+        if (player.netos_stats.ContainsKey("Spd"))
         {
-            follow_spd_jugador += player.bonus_stats["Spd"];
+            follow_spd_jugador += player.netos_stats["Spd"];
         }
-        if (rival.bonus_stats.ContainsKey("Spd"))
+        if (rival.netos_stats.ContainsKey("Spd"))
         {
-            follow_spd_rival += rival.bonus_stats["Spd"];
+            follow_spd_rival += rival.netos_stats["Spd"];
         }
     }
 }

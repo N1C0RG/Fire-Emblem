@@ -54,34 +54,43 @@ public class EjecucionAplicadorHabilidad
     {
         //lo que modifico (un diccionario ordenado acorde a las claves)
         string[] order = { "Atk", "Spd", "Def", "Res" };
-        var stats_ordenados = order 
-            .Where(player.bonus_stats.ContainsKey)  
+        var bonus_ordenados = order
+            .Where(key => player.bonus_stats.ContainsKey(key))
             .Select(key => new { Key = key, Value = player.bonus_stats[key] });
+
+        // Filter and order penalty stats
+        var penalty_ordenados = order
+            .Where(key => player.penalty_stats.ContainsKey(key))
+            .Select(key => new { Key = key, Value = player.penalty_stats[key] });
         
-        foreach (var i in stats_ordenados)
+        foreach (var i in bonus_ordenados)
         {
             if (i.Value > 0)//TODO: no comtemplo el caso un bonus 0
             {
                 ContenidoPrintAbility(player, (i.Key, i.Value), "+"); 
             }
         }
-        foreach (var i in stats_ordenados)
+        foreach (var i in bonus_ordenados)
         {
-            if (i.Value < 0)//TODO: no comtemplo el caso un bonus 0
+            if (i.Value < 0)//TODO: no comtempvlo el caso un bonus 0
             {
                 ContenidoPrintAbility(player, (i.Key, i.Value), ""); 
             }
         }
+        foreach (var i in penalty_ordenados)
+        {
+            ContenidoPrintAbility(player, (i.Key, i.Value), ""); 
+        }
     }
-    private void ContenidoPrintAbility(Personaje player, (string Key, int Value) diccionario, string signo)
+    private void ContenidoPrintAbility(Personaje player, (string Key, int Value) diccionario, string s)
     {
         if (player.first_atack == 1 && diccionario.Key == "Atk" && player.habilidad_fa)
         {
-            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{signo}{diccionario.Value} en su primer ataque");
+            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{s}{diccionario.Value} en su primer ataque");
         }
         else
         {
-            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{signo}{diccionario.Value}");
+            _view.WriteLine($"{player.name} obtiene {diccionario.Key}{s}{diccionario.Value}");
         }
     }
     private void PrintNeutralizacion(Personaje player)
@@ -117,6 +126,10 @@ public class EjecucionAplicadorHabilidad
         PrintTodoAbility();
         AplicarNeutralizador(jugador, rival);
         AplicarNeutralizador(rival, jugador);
+        
+        //TODO: meter esto donde corresponda 
+        jugador.CalcularNetosStats();
+        rival.CalcularNetosStats();
     
     }
 }

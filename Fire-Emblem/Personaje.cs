@@ -31,6 +31,7 @@ public class Personaje
     public List<string> penalty_neutralizados = new List<string>(); 
     public Dictionary<string, int> bonus_stats= new Dictionary<string, int>();
     public Dictionary<string, int> penalty_stats= new Dictionary<string, int>();
+    public Dictionary<string, int> netos_stats= new Dictionary<string, int>();
     public int first_atack = 1;
     public bool habilidad_fa = false;
     public int atk_follow = 0;
@@ -68,9 +69,25 @@ public class Personaje
         }
     }
 
-    public EstadisticasCombate GenerarEstadisticas()
+    public void CalcularNetosStats()
     {
-        return new EstadisticasCombate(hp, atk, spd, def, res); 
+        netos_stats.Clear();
+
+        foreach (var stat in bonus_stats.Keys)
+        {
+            int bonus = bonus_stats.ContainsKey(stat) ? bonus_stats[stat] : 0;
+            int penalty = penalty_stats.ContainsKey(stat) ? penalty_stats[stat] : 0;
+            netos_stats[stat] = bonus + penalty;
+        }
+
+        foreach (var stat in penalty_stats.Keys)
+        {
+            if (!netos_stats.ContainsKey(stat))
+            {
+                int penalty = penalty_stats.ContainsKey(stat) ? penalty_stats[stat] : 0;
+                netos_stats[stat] = penalty;
+            }
+        }
     }
     
 }
