@@ -1,4 +1,6 @@
 using Fire_Emblem_View;
+using Fire_Emblem.Habilidades;
+
 namespace Fire_Emblem;
 
 public class Batalla
@@ -168,8 +170,13 @@ public class Ventaja
 }
 public class CalculadoraDeAtaque
 {
-    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)//cambie bonus stats por neto stats 
+    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
     {
+        
+        //TODO: arreglar esto
+        atacante.ResetearStatsPorFirstAtack();
+        defensor.ResetearStatsPorFirstAtack(); 
+
         int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
         if (atacante.weapon != "Magic" && defensor.netos_stats.ContainsKey("Def"))
         {
@@ -179,11 +186,7 @@ public class CalculadoraDeAtaque
         {
             def += defensor.netos_stats["Res"];
         }
-        //TODO: arreglar esto
-        if (atacante.first_atack == 2 && atacante.habilidad_fa)
-         {
-             atacante.netos_stats["Atk"] = 0; 
-         }
+        
         return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.netos_stats.ContainsKey("Atk") ? atacante.netos_stats["Atk"] : 0)) * ventaja) - def;
     }
 }

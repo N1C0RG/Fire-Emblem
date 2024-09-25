@@ -84,17 +84,18 @@ namespace Fire_Emblem.Habilidades
 
         private void PrintAbility(Personaje player, KeyValuePair<string, int> stat, string sign)
         {
-            var message = (player.first_atack == 1 && player.habilidad_fa)
+            var mensaje = (player.first_atack == 1 && player.habilidad_first_atack.Contains(stat.Key))
                 ? $"{player.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
                 : $"{player.name} obtiene {stat.Key}{sign}{stat.Value}";
 
-            _view.WriteLine(message);
+            _view.WriteLine(mensaje);
         }
 
         private void PrintNeutralizations(Personaje player)
         {   //TODO; mover esto a el personaje
             var ordenBonusNeutralizados = OrdenarNeutralizaciones(player.bonus_neutralizados);
             var ordenPenaltyNeutralizado = OrdenarNeutralizaciones(player.penalty_neutralizados);
+            
             foreach (var bonus in ordenBonusNeutralizados)
             {
                 _view.WriteLine($"Los bonus de {bonus} de {player.name} fueron neutralizados");

@@ -33,12 +33,13 @@ public class Personaje
     public Dictionary<string, int> penalty_stats= new Dictionary<string, int>();
     public Dictionary<string, int> netos_stats= new Dictionary<string, int>();
     public int first_atack = 1;
-    public bool habilidad_fa = false;
+    public List<string> habilidad_first_atack = new List<string>();
+    //public bool habilidad_fa;
     public int atk_follow = 0;
     public string oponente_previo = ""; 
 
     public Personaje(string name, string weapon, string gender, string death_quote, int hp, int atk, int spd, 
-        int def, int res, string[] habilidades, int hp_original)//TODO: ver lo de la hp original 
+        int def, int res, string[] habilidades)
     {
         this.name = name;
         this.weapon = weapon;
@@ -50,7 +51,7 @@ public class Personaje
         this.def = def;
         this.res = res;
         this.habilidades = habilidades;
-        this.hp_original = hp_original; //ver esto 
+        this.hp_original = hp; 
     }
 
     public int HP
@@ -97,6 +98,19 @@ public class Personaje
         netos_stats.Clear();
         bonus_neutralizados.Clear();
         penalty_neutralizados.Clear();
+        habilidad_first_atack.Clear();
+    }
+    
+    public void ResetearStatsPorFirstAtack()
+    {
+        foreach (var stat in habilidad_first_atack)
+        {
+            if (first_atack == 2)
+            { 
+                netos_stats[stat] = 0; 
+            }
+        }
+
     }
     
 }

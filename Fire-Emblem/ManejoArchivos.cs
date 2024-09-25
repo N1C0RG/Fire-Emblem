@@ -118,7 +118,7 @@ public class TeamBuilder
         {
             team.Add(new Personaje(characterData.Name, characterData.Weapon, characterData.Gender, characterData.DeathQuote,
                 Convert.ToInt32(characterData.HP), Convert.ToInt32(characterData.Atk), Convert.ToInt32(characterData.Spd),
-                Convert.ToInt32(characterData.Def), Convert.ToInt32(characterData.Res), abilities, Convert.ToInt32(characterData.HP)));
+                Convert.ToInt32(characterData.Def), Convert.ToInt32(characterData.Res), abilities));
         }
     }
 }

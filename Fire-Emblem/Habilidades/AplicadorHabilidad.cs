@@ -687,7 +687,8 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
         }
         else if (nombre_habilidad == "Luna") //TODO; mover esto a efecto y tengo que arreglarlo, no vuelvo los stats despues del primer ataque? 
         {
-            rival.habilidad_fa = true; 
+            rival.habilidad_first_atack.Add("Def");
+            rival.habilidad_first_atack.Add("Res");
             int res = (int)Math.Floor(Convert.ToDecimal(rival.res) * 0.5m); 
             int def = (int)Math.Floor(Convert.ToDecimal(rival.def) * 0.5m);
             Ability habilidad = new Ability (

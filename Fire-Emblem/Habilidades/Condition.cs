@@ -214,7 +214,7 @@ public class ConditionFirstAtk : ICondition//TODO: arreglar esto
     {
         if (player.first_atack == 1)
         {
-            player.habilidad_fa = true; 
+            player.habilidad_first_atack.Add("Atk"); 
             return true; 
         }
         else
