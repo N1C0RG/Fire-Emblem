@@ -1,28 +1,18 @@
 namespace Fire_Emblem.Habilidades;
 using Fire_Emblem_View; 
 
-public abstract class AplicadorHabilidad
+public class AplicadorHabilidad //TODO: dividir esto en mas claes 
 {
     protected string nombre_habilidad;
     protected Personaje jugador;
     protected Personaje rival;
-    protected View _view;
-    public AplicadorHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival, View view)
+    public AplicadorHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival)
     {
         this.nombre_habilidad = nombreHabilidad;
         this.jugador = jugador;
         this.rival = rival;
-        this._view = view;
     }
-    public abstract void ConstructorHabilidad();
-}
-public class AplicadorHabilidadBonus : AplicadorHabilidad
-{
-    public AplicadorHabilidadBonus(string nombreHabilidad, Personaje jugador, Personaje rival, View view)
-        : base(nombreHabilidad, jugador, rival, view) 
-    {
-    }
-    public override void ConstructorHabilidad()
+    public void ConstructorHabilidad()
     {
         if (nombre_habilidad == "Armored Blow")
         {
@@ -685,139 +675,13 @@ public class AplicadorHabilidadBonus : AplicadorHabilidad
                 rival);
             habilidad.Aplicar();
         }
-        else if (nombre_habilidad == "Luna") //TODO; mover esto a efecto y tengo que arreglarlo, no vuelvo los stats despues del primer ataque? 
+        else if (nombre_habilidad == "Luna") //TODO: numeros que entrego 
         {
             int res = (int)Math.Floor(Convert.ToDecimal(rival.res) * 0.5m); 
             int def = (int)Math.Floor(Convert.ToDecimal(rival.def) * 0.5m);
             Ability habilidad = new Ability (
                 new List<IEffect> { new RivalDefUp(-def), new RivalResUp(-res), new EfectoLuna() }, 
                 new List<ICondition> { new ConditionNula() }, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-    }
-}
-
-public class AplicadorHabilidadMixta : AplicadorHabilidad //TODO: tengo codigo repetdo aca 
-{
-    public AplicadorHabilidadMixta(string nombreHabilidad, Personaje jugador, Personaje rival, View view)
-        : base(nombreHabilidad, jugador, rival, view) 
-    {
-    }
-
-    public override void ConstructorHabilidad()
-    {
-        if (nombre_habilidad == "Beorc's Blessing")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> {new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
-                new List<ICondition> { new ConditionNula() }, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Close Def")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<ICondition> { new ConditionClose(), new ConditionNoInicia() }, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Distant Def")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<ICondition> { new ConditionDistant(), new ConditionNoInicia() }, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Dragonskin")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<ICondition> { new ConditionNoInicia() }, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-            Ability habilidad2 = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd() }, 
-                new List<ICondition> { new ConditionInicioCombate(), new ConditionRivalHP75() }, 
-                jugador, 
-                rival);
-            habilidad2.Aplicar();
-        }
-        else if (nombre_habilidad == "Agnea's Arrow")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new SandstormNeutraliza(), new NeutralizarPenalty() }, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Light and Dark")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new NeutralizarPenalty(), new CancelAtk(), new CancelDef(), new CancelRes(), new CancelSpd()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Atk/Def")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelAtk(), new CancelDef()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Atk/Spd")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelAtk(), new CancelSpd()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Atk/Res")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelAtk(), new CancelRes()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Spd/Def")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelSpd(), new CancelDef()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Spd/Res")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelSpd(), new CancelRes()}, 
-                new List<ICondition> { new ConditionNula()}, 
-                jugador, 
-                rival);
-            habilidad.Aplicar();
-        }
-        else if (nombre_habilidad == "Lull Def/Res")
-        {
-            Ability habilidad = new Ability (
-                new List<IEffect> { new CancelDef(), new CancelRes()}, 
-                new List<ICondition> { new ConditionNula()}, 
                 jugador, 
                 rival);
             habilidad.Aplicar();

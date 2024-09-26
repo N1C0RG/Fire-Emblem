@@ -50,21 +50,6 @@ public abstract class StatEffectRival : IEffect
         }
     }
 }
-public abstract class NeutralizacionBonus : IEffect
-{
-    protected string StatKey;
-    protected NeutralizacionBonus(string statKey)
-    {
-        StatKey = statKey;
-    }
-    public void Bonus(Personaje player, Personaje rival)
-    {
-        if (rival.bonus_stats.ContainsKey(StatKey))
-        {
-            rival.bonus_stats[StatKey] = 0;
-        }
-    }
-}
 public abstract class AplicarCancelacionBonus : IEffect
 {
     protected string StatKey;
@@ -109,22 +94,6 @@ public class RivalResUp : StatEffectRival
 {
     public RivalResUp(int cantidad) : base("Res", cantidad) { }
 }
-public class CancelAtk : NeutralizacionBonus
-{
-    public CancelAtk() : base("Atk") { }
-}
-public class CancelDef : NeutralizacionBonus
-{
-    public CancelDef() : base("Def") { }
-}
-public class CancelRes : NeutralizacionBonus
-{
-    public CancelRes() : base("Res") { }
-}
-public class CancelSpd : NeutralizacionBonus
-{
-    public CancelSpd() : base("Spd") { }
-}
 public class AplicarCancelacionAtk : AplicarCancelacionBonus
 {
     public AplicarCancelacionAtk() : base("Atk") { }
@@ -152,23 +121,6 @@ public class AplicarCancelacionPenalty : IEffect
         player.penalty_neutralizados.Add("Res");
     }
 }
-public class NeutralizarPenalty : IEffect
-{
-    public void Bonus(Personaje player, Personaje rival)
-    {
-        foreach (var i in player.penalty_stats)
-        {
-            if (player.penalty_stats.ContainsKey(i.Key))
-            {
-                player.penalty_stats[i.Key] = 0;
-            }
-        }
-        if (player.atk_follow < 0)
-        {
-            player.atk_follow = 0;
-        }
-    }
-}
 public class Up50Atack: IEffect
 {
     public  void Bonus(Personaje player, Personaje rival)
@@ -189,17 +141,6 @@ public class Sandstorm : IEffect
     public  void Bonus(Personaje player, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
     {
         player.atk_follow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk;
-    }
-}
-
-public class SandstormNeutraliza : IEffect
-{
-    public  void Bonus(Personaje player, Personaje rival)
-    {
-        if (rival.atk_follow > 0)
-        {
-            rival.atk_follow = 0;
-        }
     }
 }
 

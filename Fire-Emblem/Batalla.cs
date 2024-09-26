@@ -173,6 +173,7 @@ public class CalculadoraDeAtaque
         defensor.ResetearStatsPorFirstAtack(); 
 
         int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
+        
         if (atacante.weapon != "Magic" && defensor.netos_stats.ContainsKey("Def"))
         {
             def += defensor.netos_stats["Def"];

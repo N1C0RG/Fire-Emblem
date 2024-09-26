@@ -109,7 +109,23 @@ public class Personaje
                 netos_stats[stat] = 0; 
             }
         }
-
+    }
+    public void OrdenarContenedores()
+    {
+        bonus_stats = OrdenarStats(bonus_stats).ToDictionary(x => x.Key, x => x.Value);
+        penalty_stats = OrdenarStats(penalty_stats).ToDictionary(x => x.Key, x => x.Value);
+        bonus_neutralizados = OrdenarNeutralizaciones(bonus_neutralizados).ToList();
+        penalty_neutralizados = OrdenarNeutralizaciones(penalty_neutralizados).ToList();
+    }
+    private IEnumerable<KeyValuePair<string, int>> OrdenarStats(Dictionary<string, int> stats)
+    {
+        string[] orden = { "Atk", "Spd", "Def", "Res" };
+        return orden.Where(stats.ContainsKey).Select(key => new KeyValuePair<string, int>(key, stats[key]));
+    }
+    private IEnumerable<string> OrdenarNeutralizaciones(IEnumerable<string> neutralizations)
+    {
+        string[] orden = { "Atk", "Spd", "Def", "Res" };
+        return orden.Where(neutralizations.Contains);
     }
     
 }
