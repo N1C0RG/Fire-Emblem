@@ -130,7 +130,7 @@ namespace Fire_Emblem
             _playerPersonaje.ResetearContenedoresDeStats();
             _rivalPersonaje.ResetearContenedoresDeStats();
 
-            var abilityExecutor = new EjecucionAplicadorHabilidad(_playerPersonaje, _rivalPersonaje, _view);
+            var abilityExecutor = new HabilidadManager(_playerPersonaje, _rivalPersonaje, _view);
             abilityExecutor.AplicarTodo();
             
             _playerPersonaje.CalcularNetosStats();

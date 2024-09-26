@@ -1,25 +1,29 @@
 using Fire_Emblem_View;
 namespace Fire_Emblem.Habilidades;
-public class EjecucionAplicadorHabilidad
+public class HabilidadManager
 {
     private Personaje _jugador;
     private Personaje _rival;
     private View _view;
+    private NeutralizadorEfectos _neutralizadorEfectos;
+    private ImpresoraHabilidades _impresoraHabilidades;
 
-    public EjecucionAplicadorHabilidad(Personaje jugador, Personaje rival, View view)
+    public HabilidadManager(Personaje jugador, Personaje rival, View view)
     {
         _jugador = jugador;
         _rival = rival;
         _view = view;
+        _neutralizadorEfectos = new NeutralizadorEfectos(jugador, rival);
+        _impresoraHabilidades = new ImpresoraHabilidades(jugador, rival, view);
     }
 
     public void AplicarTodo()
     {
         AplicarHabilidades(_jugador, _rival);
         AplicarHabilidades(_rival, _jugador);
-        PrintAllAbilities();
-        AplicarNeutralizadores(_jugador);
-        AplicarNeutralizadores(_rival);
+        OrdenarBonusEnDiccionarioListas();
+        _impresoraHabilidades.PrintAllAbilities();
+        _neutralizadorEfectos.AplicarNeutralizadores();
     }
 
     private void AplicarHabilidades(Personaje jugador, Personaje rival)
@@ -31,10 +35,29 @@ public class EjecucionAplicadorHabilidad
         }
     }
 
-    private void AplicarNeutralizadores(Personaje player)
+    private void OrdenarBonusEnDiccionarioListas()
     {
-        NeutralizarBonusPenalty(player);
-        NeutralizarFollowBonusPenalty(player);
+        _jugador.OrdenarContenedores();
+        _rival.OrdenarContenedores();
+    }
+}
+
+
+public class NeutralizadorEfectos
+{
+    private Personaje _jugador;
+    private Personaje _rival; 
+    public NeutralizadorEfectos(Personaje jugador, Personaje rival)
+    {
+        _jugador = jugador;
+        _rival = rival; 
+    }
+    public void AplicarNeutralizadores()
+    {
+        NeutralizarBonusPenalty(_jugador);
+        NeutralizarFollowBonusPenalty(_jugador);
+        NeutralizarBonusPenalty(_rival);
+        NeutralizarFollowBonusPenalty(_rival);
     }
     private void NeutralizarBonusPenalty(Personaje player)
     {
@@ -58,8 +81,20 @@ public class EjecucionAplicadorHabilidad
             player.atk_follow = 0;
         }
     }
+}
 
-    private void PrintAllAbilities()
+public class ImpresoraHabilidades
+{
+    private Personaje _jugador;
+    private Personaje _rival;
+    private View _view; 
+    public ImpresoraHabilidades(Personaje jugador, Personaje rival, View view)
+    {
+        _jugador = jugador;
+        _rival = rival;
+        _view = view; 
+    }
+    public void PrintAllAbilities()
     {
         PrintFollowUpAtk(_jugador);
         PrintFollowUpAtk(_rival);
@@ -69,27 +104,14 @@ public class EjecucionAplicadorHabilidad
         PrintNeutralizations(_rival);
     }
 
-    private void PrintFollowUpAtk(Personaje player)
-    {
-        if (player.atk_follow != 0)
-        {
-            var sign = player.atk_follow > 0 ? "+" : "";
-            _view.WriteLine($"{player.name} obtiene Atk{sign}{player.atk_follow} en su Follow-Up");
-        }
-    }
-
     private void PrintPlayerAbilities(Personaje player)
     {
-        //Todo: mover tal vez esto a el personaje 
-        var orderedBonuses = OrdenarStats(player.bonus_stats);
-        var orderedPenalties = OrdenarStats(player.penalty_stats);
-
-        foreach (var stat in orderedBonuses)
+        foreach (var stat in player.bonus_stats)
         {
             PrintAbility(player, stat, stat.Value > 0 ? "+" : "");
         }
 
-        foreach (var stat in orderedPenalties)
+        foreach (var stat in player.penalty_stats)
         {
             if (stat.Value < 0)
             {
@@ -106,46 +128,26 @@ public class EjecucionAplicadorHabilidad
 
         _view.WriteLine(mensaje);
     }
-
+    
     private void PrintNeutralizations(Personaje player)
-    {   
-        //TODO; mover esto a el personaje
-        var ordenBonusNeutralizados = OrdenarNeutralizaciones(player.bonus_neutralizados);
-        var ordenPenaltyNeutralizado = OrdenarNeutralizaciones(player.penalty_neutralizados);
-        
-        foreach (var bonus in ordenBonusNeutralizados)
+    {  
+        foreach (var bonus in player.bonus_neutralizados)
         {
             _view.WriteLine($"Los bonus de {bonus} de {player.name} fueron neutralizados");
         }
 
-        foreach (var penalty in ordenPenaltyNeutralizado)
+        foreach (var penalty in player.penalty_neutralizados)
         {
             _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
         }
     }
-    
-    private IEnumerable<KeyValuePair<string, int>> OrdenarStats(Dictionary<string, int> stats)
+    private void PrintFollowUpAtk(Personaje player)
     {
-        string[] orden = { "Atk", "Spd", "Def", "Res" };
-        return orden.Where(stats.ContainsKey).Select(key => new KeyValuePair<string, int>(key, stats[key]));
-    }
-    private IEnumerable<string> OrdenarNeutralizaciones(IEnumerable<string> neutralizations)
-    {
-        string[] orden = { "Atk", "Spd", "Def", "Res" };
-        return orden.Where(neutralizations.Contains);
-    }
-}
-
-
-public class NeutralizadorEfectos
-{
-    private Personaje _jugador;
-    private Personaje _rival; 
-    public NeutralizadorEfectos(Personaje jugador, Personaje rival)
-    {
-        _jugador = jugador;
-        _rival = rival; 
+        if (player.atk_follow != 0)
+        {
+            var sign = player.atk_follow > 0 ? "+" : "";
+            _view.WriteLine($"{player.name} obtiene Atk{sign}{player.atk_follow} en su Follow-Up");
+        }
     }
     
-
 }
