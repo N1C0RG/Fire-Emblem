@@ -17,10 +17,7 @@ public abstract class CondicionArma : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public abstract class CondicionVida : ICondition
@@ -36,10 +33,7 @@ public abstract class CondicionVida : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionSword : CondicionArma
@@ -82,10 +76,7 @@ public class ConditionFullVidaRival : ICondition//TODO: arreglar esto
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionNotFullVidaPlayer : ICondition
@@ -96,10 +87,7 @@ public class ConditionNotFullVidaPlayer : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionRivalHPvsPlayerHP : ICondition
@@ -110,10 +98,7 @@ public class ConditionRivalHPvsPlayerHP : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionRivalHP75 : ICondition
@@ -124,10 +109,7 @@ public class ConditionRivalHP75 : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionInicioCombate : ICondition
@@ -138,10 +120,7 @@ public class ConditionInicioCombate : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionNoInicia : ICondition
@@ -152,10 +131,7 @@ public class ConditionNoInicia : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionNula : ICondition
@@ -174,10 +150,7 @@ public class ConditionChaos : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionClose : ICondition
@@ -188,10 +161,7 @@ public class ConditionClose : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionDistant : ICondition
@@ -202,10 +172,7 @@ public class ConditionDistant : ICondition
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionFirstAtk : ICondition//TODO: arreglar esto 
@@ -217,10 +184,7 @@ public class ConditionFirstAtk : ICondition//TODO: arreglar esto
             player.habilidad_first_atack.Add("Atk"); 
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionPreviousRival : ICondition//TODO: arreglar esto 
@@ -231,10 +195,7 @@ public class ConditionPreviousRival : ICondition//TODO: arreglar esto
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 public class ConditionRivalEsHombre: ICondition//TODO: arreglar esto 
@@ -245,10 +206,7 @@ public class ConditionRivalEsHombre: ICondition//TODO: arreglar esto
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false;
     }
 }
 

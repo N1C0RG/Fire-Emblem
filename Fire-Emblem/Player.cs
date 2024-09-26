@@ -20,9 +20,6 @@ public class Player
         {
             return true; 
         }
-        else
-        {
-            return false; 
-        }
+        return false; 
     }
 }

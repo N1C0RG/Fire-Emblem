@@ -203,6 +203,15 @@ public class SandstormNeutraliza : IEffect
     }
 }
 
+public class EfectoLuna : IEffect
+{
+    public  void Bonus(Personaje player, Personaje rival)
+    {
+        rival.habilidad_first_atack.Add("Def");
+        rival.habilidad_first_atack.Add("Res");
+    }
+}
+
 public class HpUp : IEffect
 {
     public  void Bonus(Personaje player, Personaje rival)

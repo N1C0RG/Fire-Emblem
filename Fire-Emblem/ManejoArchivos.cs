@@ -88,27 +88,27 @@ public class TeamBuilder
         var team = new List<Personaje>();
         foreach (string character in player_data)
         {
-            var (name, abilities) = SliceCharacterData(character);
+            var (name, abilities) = SliceHabilidadesPersonaje(character);
             AddCharacterToTeam(all_characters, name, abilities, team);
         }
         return team;
     }
-    private (string, string[]) SliceCharacterData(string character)
+    private (string, string[]) SliceHabilidadesPersonaje(string personaje)
     {
-        int start_index = character.IndexOf('(');
-        int end_index = character.IndexOf(')');
+        int start_index = personaje.IndexOf('(');
+        int end_index = personaje.IndexOf(')');
 
         if (start_index == -1 || end_index == -1)
         {
-            string name = character.Trim();
+            string name = personaje.Trim();
             return (name, Array.Empty<string>());
         }
         else
         {
-            string name = character.Substring(0, start_index).Trim();
-            string abilitiesString = character.Substring(start_index + 1, end_index - start_index - 1);
-            string[] abilities = abilitiesString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            return (name, abilities);
+            string nombre = personaje.Substring(0, start_index).Trim();
+            string string_con_habilidades = personaje.Substring(start_index + 1, end_index - start_index - 1);
+            string[] habilidades = string_con_habilidades.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            return (nombre, habilidades);
         }
     }
     private void AddCharacterToTeam(List<JsonContent> allCharacters, string name, string[] abilities, List<Personaje> team)
