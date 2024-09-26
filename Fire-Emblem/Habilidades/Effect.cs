@@ -163,6 +163,10 @@ public class NeutralizarPenalty : IEffect
                 player.penalty_stats[i.Key] = 0;
             }
         }
+        if (player.atk_follow < 0)
+        {
+            player.atk_follow = 0;
+        }
     }
 }
 public class Up50Atack: IEffect
@@ -182,7 +186,7 @@ public class Up50Atack: IEffect
 
 public class Sandstorm : IEffect
 {
-    public  void Bonus(Personaje player, Personaje rival)
+    public  void Bonus(Personaje player, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
     {
         player.atk_follow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk;
     }
@@ -196,7 +200,6 @@ public class SandstormNeutraliza : IEffect
         {
             rival.atk_follow = 0;
         }
-        
     }
 }
 

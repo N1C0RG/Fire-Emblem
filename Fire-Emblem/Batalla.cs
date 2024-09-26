@@ -13,7 +13,7 @@ public class Batalla
     private Ventaja _ventaja;
     private Impresora _Impresora;
     private CalculadoraDeAtaque _calculadoraDeAtaque;
-    private SeguidorDeAtaque _seguidorDeAtaque;
+    private RealizarFollowUp _seguidorDeAtaque;
     private RemoverJugador _removerJugador;
     
     private int _atkPlayer;
@@ -38,7 +38,7 @@ public class Batalla
         _ventaja = new Ventaja();
         _Impresora = new Impresora(view);
         _calculadoraDeAtaque = new CalculadoraDeAtaque();
-        _seguidorDeAtaque = new SeguidorDeAtaque();
+        _seguidorDeAtaque = new RealizarFollowUp();
         _removerJugador = new RemoverJugador();
     }
 
@@ -71,13 +71,8 @@ public class Batalla
     
     public void Atack(Personaje player, Personaje rival, int dano)
     {
-        DanoAtaque(player, rival, dano);
+        _calculadoraDeAtaque.AccionAtacar(player, rival, dano);
         _Impresora.PrintAtaque(player, rival, dano);
-    }
-    private void DanoAtaque(Personaje player, Personaje rival, int dano)
-    {
-        rival.HP -= dano;
-        player.first_atack += 1;
     }
 
     public void FollowUp()
@@ -120,7 +115,7 @@ public class Impresora
         _view.WriteLine($"{player.name} ({player.HP}) : {rival.name} ({rival.HP})");
     }
 
-    public void PrintFollowUp(SeguidorDeAtaque follow, Personaje player, Personaje rival)
+    public void PrintFollowUp(RealizarFollowUp follow, Personaje player, Personaje rival)
     {
         if (follow.follow_spd_jugador >= follow.follow_spd_rival + 5)
         {
@@ -189,8 +184,13 @@ public class CalculadoraDeAtaque
         
         return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.netos_stats.ContainsKey("Atk") ? atacante.netos_stats["Atk"] : 0)) * ventaja) - def;
     }
+    public void AccionAtacar(Personaje atacante, Personaje defensor, int dano)
+    {
+        defensor.HP -= dano;
+        atacante.first_atack += 1;
+    }
 }
-public class SeguidorDeAtaque
+public class RealizarFollowUp
 {
     private int _atk_follow_jugador;
     public int AtkFollowJugador
@@ -210,6 +210,7 @@ public class SeguidorDeAtaque
     {
         DefinirFollowUpAtk(player, rival, atk_player, atk_rival);
         DefinirFollowUpSpd(player, rival);
+        
         if (follow_spd_jugador >= follow_spd_rival + 5)
         {
             rival.HP -= AtkFollowJugador;
@@ -228,6 +229,7 @@ public class SeguidorDeAtaque
     {
         follow_spd_jugador = player.spd;
         follow_spd_rival = rival.spd;
+        
         if (player.netos_stats.ContainsKey("Spd"))
         {
             follow_spd_jugador += player.netos_stats["Spd"];
