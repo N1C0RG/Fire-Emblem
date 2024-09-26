@@ -54,8 +54,8 @@ namespace Fire_Emblem
             string selectedFile = _view.ReadLine();
             var fileHandler = new ManejoArchivos(_teamsFolder, selectedFile);
             fileHandler.GuardarEquipo();
-            _jugadorPlayer = new Player(fileHandler.CrearEquipo(true), _view, 1);
-            _rivalPlayer = new Player(fileHandler.CrearEquipo(false), _view, 2);
+            _jugadorPlayer = new Player(fileHandler.CrearEquipo(true), 1);
+            _rivalPlayer = new Player(fileHandler.CrearEquipo(false), 2);
         }
 
         private void EjecutarTurno()
