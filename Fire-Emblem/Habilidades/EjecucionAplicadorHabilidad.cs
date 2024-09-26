@@ -22,7 +22,6 @@ namespace Fire_Emblem.Habilidades
             PrintAllAbilities();
             AplicarNeutralizadores(_jugador, _rival);
             AplicarNeutralizadores(_rival, _jugador);
-            //CalcularNetosStats();
         }
 
         private void AplicarHabilidades(Personaje jugador, Personaje rival)
@@ -92,7 +91,8 @@ namespace Fire_Emblem.Habilidades
         }
 
         private void PrintNeutralizations(Personaje player)
-        {   //TODO; mover esto a el personaje
+        {   
+            //TODO; mover esto a el personaje
             var ordenBonusNeutralizados = OrdenarNeutralizaciones(player.bonus_neutralizados);
             var ordenPenaltyNeutralizado = OrdenarNeutralizaciones(player.penalty_neutralizados);
             
@@ -106,13 +106,7 @@ namespace Fire_Emblem.Habilidades
                 _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
             }
         }
-
-        // private void CalcularNetosStats()
-        // {
-        //     _jugador.CalcularNetosStats();
-        //     _rival.CalcularNetosStats();
-        // }
-
+        
         private IEnumerable<KeyValuePair<string, int>> OrdenarStats(Dictionary<string, int> stats)
         {
             string[] orden = { "Atk", "Spd", "Def", "Res" };

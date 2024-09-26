@@ -34,7 +34,6 @@ public class Personaje
     public Dictionary<string, int> netos_stats= new Dictionary<string, int>();
     public int first_atack = 1;
     public List<string> habilidad_first_atack = new List<string>();
-    //public bool habilidad_fa;
     public int atk_follow = 0;
     public string oponente_previo = ""; 
 
