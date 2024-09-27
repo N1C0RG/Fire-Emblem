@@ -367,12 +367,12 @@ public class AplicadorHabilidad //TODO: dividir esto en mas claes
                 _jugador,
                 _rival);
             habilidad.Aplicar();
-            Ability habilidad2 = new Ability(
+            Ability habilidad_segunda_condicion = new Ability(
                 new List<IEffect> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondition> { new ConditionRivalHP75(), new ConditionInicioCombate() },
                 _jugador,
                 _rival);
-            habilidad2.Aplicar();
+            habilidad_segunda_condicion.Aplicar();
         }
         else if (_nombre_habilidad == "Ignis")
         {
@@ -409,12 +409,12 @@ public class AplicadorHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             habilidad.Aplicar();
-            Ability habilidad2 = new Ability (
+            Ability habilidad_segunda_condicion = new Ability (
                 new List<IEffect> {new AtkUp(-2)}, 
                 new List<ICondition> { new ConditionNula()}, 
                 _jugador, 
                 _rival);
-            habilidad2.Aplicar();
+            habilidad_segunda_condicion.Aplicar();
         }
         else if (_nombre_habilidad == "Life and Death")
         {
@@ -487,12 +487,12 @@ public class AplicadorHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             habilidad.Aplicar();
-            Ability habilidad2 = new Ability (
+            Ability habilidad_segunda_condicion = new Ability (
                 new List<IEffect> {new ResUp(-5) }, 
                 new List<ICondition> { new ConditionNula()}, 
                 _jugador, 
                 _rival);
-            habilidad2.Aplicar();
+            habilidad_segunda_condicion.Aplicar();
         }
         else if (_nombre_habilidad == "Soulblade")
         {   //TODO; mover esto a efecto ? 
@@ -548,12 +548,12 @@ public class AplicadorHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             habilidad.Aplicar();
-            Ability habilidad2 = new Ability (
+            Ability habilidad_segunda_condicion = new Ability (
                 new List<IEffect> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
                 new List<ICondition> { new ConditionFullVidaRival(), new ConditionInicioCombate()}, 
                 _jugador, 
                 _rival);
-            habilidad2.Aplicar();
+            habilidad_segunda_condicion.Aplicar();
         }
         
         else if (_nombre_habilidad == "Agnea's Arrow")
