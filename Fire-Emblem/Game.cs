@@ -73,22 +73,22 @@ namespace Fire_Emblem
         private void ProcesarTurno(Player currentPlayer, Player opponent)
         {
             IniciarTurno(currentPlayer, opponent);
-            _batalla.Atack(_playerPersonaje, _rivalPersonaje, _batalla.AtkPlayer);
+            _batalla.realizarAtaque(_playerPersonaje, _rivalPersonaje, _batalla.AtkPlayer);
             if (_rivalPersonaje.HP == 0)
             {
                 EndRound();
                 return;
             }
-            _batalla.Atack(_rivalPersonaje, _playerPersonaje, _batalla.AtkRival);
-            _batalla.DefinirAtack();
+            _batalla.realizarAtaque(_rivalPersonaje, _playerPersonaje, _batalla.AtkRival);
+            _batalla.definirAtaque();
             if (_playerPersonaje.HP == 0)
             {
                 EndRound();
             }
             else
             {
-                _batalla.FollowUp();
-                _batalla.PrintFollowUp();
+                _batalla.realizarFollowUp();
+                _batalla.printFollowUp();
                 EndRound();
             }
 
@@ -100,7 +100,7 @@ namespace Fire_Emblem
             InicializarTurno(currentPlayer, opponent);
             InicializarBatalla(currentPlayer, opponent);
             AplicarAbilities();
-            _batalla.DefinirAtack();
+            _batalla.definirAtaque();
         }
 
         private void InicializarTurno(Player currentPlayer, Player opponent)
@@ -120,8 +120,8 @@ namespace Fire_Emblem
         private void InicializarBatalla(Player currentPlayer, Player opponent)
         {
             _batalla = new Batalla(_playerPersonaje, _rivalPersonaje, _view, currentPlayer, opponent);
-            _batalla.Ventajas();
-            _batalla.PrintVentaja();
+            _batalla.calcularVentajas();
+            _batalla.printVentaja();
         }
 
         private void AplicarAbilities()
@@ -131,7 +131,7 @@ namespace Fire_Emblem
             _rivalPersonaje.ResetearContenedoresDeStats();
 
             var abilityExecutor = new HabilidadManager(_playerPersonaje, _rivalPersonaje, _view);
-            abilityExecutor.AplicarTodo();
+            abilityExecutor.aplicarTodo();
             
             _playerPersonaje.CalcularNetosStats();
             _rivalPersonaje.CalcularNetosStats();
@@ -140,8 +140,8 @@ namespace Fire_Emblem
 
         private void EndRound()
         {
-            _batalla.VidaEndRound();
-            _batalla.RemovePlayer();
+            _batalla.printVidaEndRound();
+            _batalla.removerJugador();
         }
 
         private void ResetearValoresPersonajeTurno()

@@ -1,9 +1,9 @@
 namespace Fire_Emblem.Habilidades;
-public interface IEffect
+public interface IEfecto
 {
-    public void Bonus(Personaje player, Personaje rival); 
+    public void efecto(Personaje player, Personaje rival); 
 }
-public abstract class StatEffectPlayer : IEffect
+public abstract class StatEffectPlayer : IEfecto
 {
     protected string StatKey;
     protected int Cantidad; 
@@ -13,7 +13,7 @@ public abstract class StatEffectPlayer : IEffect
         this.Cantidad = cantidad;
     }
 
-    public void Bonus(Personaje player, Personaje rival)
+    public void efecto(Personaje player, Personaje rival)
     {
         var stats = Cantidad > 0 ? player.bonus_stats : player.penalty_stats;
 
@@ -27,7 +27,7 @@ public abstract class StatEffectPlayer : IEffect
         }
     }
 }
-public abstract class StatEffectRival : IEffect
+public abstract class StatEffectRival : IEfecto
 {
     protected string StatKey;
     protected int Cantidad; 
@@ -36,7 +36,7 @@ public abstract class StatEffectRival : IEffect
         StatKey = statKey;
         this.Cantidad = cantidad;
     }
-    public void Bonus(Personaje player, Personaje rival)
+    public void efecto(Personaje player, Personaje rival)
     {
         var stats = Cantidad > 0 ? rival.bonus_stats : rival.penalty_stats;
 
@@ -50,14 +50,14 @@ public abstract class StatEffectRival : IEffect
         }
     }
 }
-public abstract class AplicarCancelacionBonus : IEffect
+public abstract class AplicarCancelacionBonus : IEfecto
 {
     protected string StatKey;
     protected AplicarCancelacionBonus(string statKey)
     {
         StatKey = statKey;
     }
-    public void Bonus(Personaje player, Personaje rival)
+    public void efecto(Personaje player, Personaje rival)
     {
         rival.bonus_neutralizados.Add(StatKey);
     }
@@ -111,9 +111,9 @@ public class AplicarCancelacionSpd : AplicarCancelacionBonus
     public AplicarCancelacionSpd() : base("Spd") { }
 }
 
-public class AplicarCancelacionPenalty : IEffect
+public class AplicarCancelacionPenalty : IEfecto
 {
-    public void Bonus(Personaje player, Personaje rival)
+    public void efecto(Personaje player, Personaje rival)
     {
         player.penalty_neutralizados.Add("Atk");
         player.penalty_neutralizados.Add("Spd");
@@ -121,9 +121,9 @@ public class AplicarCancelacionPenalty : IEffect
         player.penalty_neutralizados.Add("Res");
     }
 }
-public class Up50Atack: IEffect
+public class Up50Atack: IEfecto
 {
-    public  void Bonus(Personaje player, Personaje rival)
+    public  void efecto(Personaje player, Personaje rival)
     {
         if (player.bonus_stats.ContainsKey("Atk"))
         {
@@ -136,26 +136,26 @@ public class Up50Atack: IEffect
     }
 }
 
-public class Sandstorm : IEffect
+public class Sandstorm : IEfecto
 {
-    public  void Bonus(Personaje player, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
+    public  void efecto(Personaje player, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
     {
         player.atk_follow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk;
     }
 }
 
-public class EfectoLuna : IEffect
+public class EfectoLuna : IEfecto
 {
-    public  void Bonus(Personaje player, Personaje rival)
+    public  void efecto(Personaje player, Personaje rival)
     {
         rival.habilidad_first_atack.Add("Def");
         rival.habilidad_first_atack.Add("Res");
     }
 }
 
-public class HpUp : IEffect
+public class HpUp : IEfecto
 {
-    public  void Bonus(Personaje player, Personaje rival)
+    public  void efecto(Personaje player, Personaje rival)
     {
         player.HP += 15; 
     }

@@ -6,7 +6,7 @@ public class HabilidadManager
     private Personaje _rival;
     private View _view;
     private NeutralizadorEfectos _neutralizadorEfectos;
-    private ImpresoraHabilidades _impresoraHabilidades;
+    private ImpresoraBonusPenaltyNeutralizaciones _impresoraHabilidades;
 
     public HabilidadManager(Personaje jugador, Personaje rival, View view)
     {
@@ -14,28 +14,28 @@ public class HabilidadManager
         _rival = rival;
         _view = view;
         _neutralizadorEfectos = new NeutralizadorEfectos(jugador, rival);
-        _impresoraHabilidades = new ImpresoraHabilidades(jugador, rival, view);
+        _impresoraHabilidades = new ImpresoraBonusPenaltyNeutralizaciones(jugador, rival, view);
     }
 
-    public void AplicarTodo()
+    public void aplicarTodo()
     {
-        AplicarHabilidades(_jugador, _rival);
-        AplicarHabilidades(_rival, _jugador);
-        OrdenarBonusEnDiccionarioListas();
-        _impresoraHabilidades.PrintAllAbilities();
-        _neutralizadorEfectos.AplicarNeutralizadores();
+        aplicarHabilidades(_jugador, _rival);
+        aplicarHabilidades(_rival, _jugador);
+        ordenarBonusEnDiccionarioListas();
+        _impresoraHabilidades.printTodoBonusPenaltyNeutralizaciones();
+        _neutralizadorEfectos.aplicarNeutralizadores();
     }
 
-    private void AplicarHabilidades(Personaje jugador, Personaje rival)
+    private void aplicarHabilidades(Personaje jugador, Personaje rival)
     {
         foreach (var habilidad in jugador.habilidades)
         {
-            var aplicador = new AplicadorHabilidad(habilidad, jugador, rival);
-            aplicador.ConstructorHabilidad();
+            var aplicador = new FabricaHabilidad(habilidad, jugador, rival);
+            aplicador.crearHabilidad();
         }
     }
 
-    private void OrdenarBonusEnDiccionarioListas()
+    private void ordenarBonusEnDiccionarioListas()
     {
         _jugador.OrdenarContenedores();
         _rival.OrdenarContenedores();
@@ -52,14 +52,14 @@ public class NeutralizadorEfectos
         _jugador = jugador;
         _rival = rival; 
     }
-    public void AplicarNeutralizadores()
+    public void aplicarNeutralizadores()
     {
-        NeutralizarBonusPenalty(_jugador);
-        NeutralizarFollowBonusPenalty(_jugador);
-        NeutralizarBonusPenalty(_rival);
-        NeutralizarFollowBonusPenalty(_rival);
+        neutralizarBonusPenalty(_jugador);
+        neutralizarFollowBonusPenalty(_jugador);
+        neutralizarBonusPenalty(_rival);
+        neutralizarFollowBonusPenalty(_rival);
     }
-    private void NeutralizarBonusPenalty(Personaje player)
+    private void neutralizarBonusPenalty(Personaje player)
     {
         foreach (var stat in player.bonus_neutralizados)
         {
@@ -70,7 +70,7 @@ public class NeutralizadorEfectos
             player.penalty_stats[stat] = 0;
         }
     }
-    private void NeutralizarFollowBonusPenalty(Personaje player)
+    private void neutralizarFollowBonusPenalty(Personaje player)
     {
         if (player.atk_follow > 0 && player.bonus_neutralizados.Contains("Atk"))
         {
@@ -83,44 +83,44 @@ public class NeutralizadorEfectos
     }
 }
 
-public class ImpresoraHabilidades
+public class ImpresoraBonusPenaltyNeutralizaciones
 {
     private Personaje _jugador;
     private Personaje _rival;
     private View _view; 
-    public ImpresoraHabilidades(Personaje jugador, Personaje rival, View view)
+    public ImpresoraBonusPenaltyNeutralizaciones(Personaje jugador, Personaje rival, View view)
     {
         _jugador = jugador;
         _rival = rival;
         _view = view; 
     }
-    public void PrintAllAbilities()
+    public void printTodoBonusPenaltyNeutralizaciones()
     {
-        PrintFollowUpAtk(_jugador);
-        PrintFollowUpAtk(_rival);
-        PrintPlayerAbilities(_jugador);
-        PrintNeutralizations(_jugador);
-        PrintPlayerAbilities(_rival);
-        PrintNeutralizations(_rival);
+        printFollowUpAtk(_jugador);
+        printFollowUpAtk(_rival);
+        printJugadorBonusPenalty(_jugador);
+        printBonusPenaltyNeutralizados(_jugador);
+        printJugadorBonusPenalty(_rival);
+        printBonusPenaltyNeutralizados(_rival);
     }
 
-    private void PrintPlayerAbilities(Personaje player)
+    private void printJugadorBonusPenalty(Personaje player)
     {
         foreach (var stat in player.bonus_stats)
         {
-            PrintAbility(player, stat, stat.Value > 0 ? "+" : "");
+            printBonusPenalty(player, stat, stat.Value > 0 ? "+" : "");
         }
 
         foreach (var stat in player.penalty_stats)
         {
             if (stat.Value < 0)
             {
-                PrintAbility(player, stat, "");
+                printBonusPenalty(player, stat, "");
             }
         }
     }
 
-    private void PrintAbility(Personaje player, KeyValuePair<string, int> stat, string sign)
+    private void printBonusPenalty(Personaje player, KeyValuePair<string, int> stat, string sign)
     {
         var mensaje = (player.first_atack == 1 && player.habilidad_first_atack.Contains(stat.Key))
             ? $"{player.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
@@ -129,7 +129,7 @@ public class ImpresoraHabilidades
         _view.WriteLine(mensaje);
     }
     
-    private void PrintNeutralizations(Personaje player)
+    private void printBonusPenaltyNeutralizados(Personaje player)
     {  
         foreach (var bonus in player.bonus_neutralizados)
         {
@@ -141,7 +141,7 @@ public class ImpresoraHabilidades
             _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
         }
     }
-    private void PrintFollowUpAtk(Personaje player)
+    private void printFollowUpAtk(Personaje player)
     {
         if (player.atk_follow != 0)
         {

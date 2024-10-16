@@ -1,15 +1,13 @@
 namespace Fire_Emblem.Habilidades;
 
-public class Ability 
+public class Habilidad 
 {
-    public List<IEffect> efecto;
-    public List<ICondition> condicion;
+    public List<IEfecto> efecto;
+    public List<ICondicion> condicion;
     public Personaje jugador;
     public Personaje rival;
-    private int aumento;
     private bool cumple_todas_condicion = true;
-    private bool cumple_una_condicion = true; 
-    public Ability(List<IEffect> efecto, List<ICondition> condicion, Personaje jugador, Personaje rival)
+    public Habilidad(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
     {
         this.efecto = efecto;
         this.condicion = condicion;
@@ -17,11 +15,11 @@ public class Ability
         this.rival = rival;
     }
 
-    public void Aplicar()
+    public void aplicarHabilidad()
     {
         foreach (var i in  condicion)
         {
-            if (i.CondicionHabilidad(jugador, rival) == false)
+            if (i.condicionHabilidad(jugador, rival) == false)
             {
                 cumple_todas_condicion = false; 
             }
@@ -31,7 +29,7 @@ public class Ability
         {
             foreach (var i in efecto)
             {
-               i.Bonus(jugador, rival);
+                i.efecto(jugador, rival);
             }
         }
     }
