@@ -53,9 +53,9 @@ namespace Fire_Emblem
             PrintEquipos();
             string selectedFile = _view.ReadLine();
             var fileHandler = new ManejoArchivos(_teamsFolder, selectedFile);
-            fileHandler.GuardarEquipo();
-            _jugadorPlayer = new Player(fileHandler.CrearEquipo(true), 1);
-            _rivalPlayer = new Player(fileHandler.CrearEquipo(false), 2);
+            fileHandler.guardarEquipo();
+            _jugadorPlayer = new Player(fileHandler.crearEquipo(true), 1);
+            _rivalPlayer = new Player(fileHandler.crearEquipo(false), 2);
         }
 
         private void EjecutarTurno()
@@ -127,14 +127,14 @@ namespace Fire_Emblem
         private void AplicarAbilities()
         {
             _playerPersonaje.inicia_round = true;
-            _playerPersonaje.ResetearContenedoresDeStats();
-            _rivalPersonaje.ResetearContenedoresDeStats();
+            _playerPersonaje.resetearContenedoresDeStats();
+            _rivalPersonaje.resetearContenedoresDeStats();
 
             var abilityExecutor = new HabilidadManager(_playerPersonaje, _rivalPersonaje, _view);
             abilityExecutor.aplicarTodo();
             
-            _playerPersonaje.CalcularNetosStats();
-            _rivalPersonaje.CalcularNetosStats();
+            _playerPersonaje.calcularNetosStats();
+            _rivalPersonaje.calcularNetosStats();
             _playerPersonaje.inicia_round = false;
         }
 

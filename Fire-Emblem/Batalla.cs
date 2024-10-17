@@ -1,6 +1,5 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Habilidades;
-
 namespace Fire_Emblem;
 
 public class Batalla
@@ -117,11 +116,11 @@ public class ImpresoraVentajaVidaAtaque
 
     public void printFollowUp(ManejadorFollowUp follow, Personaje player, Personaje rival)
     {
-        if (follow.spdFollowJugador >= follow.spdFollowRival + 5)
+        if (follow.spdFollowJugador >= follow.spdFollowRival + follow.velocidadAdicionalFollowUp)
         {
             _view.WriteLine($"{player.name} ataca a {rival.name} con {follow.AtkFollowJugador} de daño");
         }
-        else if (follow.spdFollowJugador + 5 <= follow.spdFollowRival)
+        else if (follow.spdFollowJugador + follow.velocidadAdicionalFollowUp <= follow.spdFollowRival)
         {
             _view.WriteLine($"{rival.name} ataca a {player.name} con {follow.AtkFollowRival} de daño");
         }
@@ -139,27 +138,33 @@ public class Ventaja
 {
     public decimal ventajaPlayer { get; private set; } = 1;
     public decimal ventajaRival { get; private set; } = 1;
+    
+    public decimal multiplicadorVentaja { get; private set; } = 1.2m;
+    
+    public decimal multiplicadorDesventaja { get; private set; } = 0.8m;
+    
+    public decimal multiplicadorDefault { get; private set; } = 1m;
 
     public void calcularVentaja(Personaje player, Personaje rival)
     {
-        if (player.weapon == "Sword" && rival.weapon == "Axe" || //TODO: crear un enum o usar variables 
-            player.weapon == "Lance" && rival.weapon == "Sword" ||
-            player.weapon == "Axe" && rival.weapon == "Lance")
+        if (player.weapon == Armas.Sword.ToString() && rival.weapon == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
+            player.weapon == Armas.Lance.ToString() && rival.weapon == Armas.Sword.ToString() ||
+            player.weapon == Armas.Axe.ToString() && rival.weapon == Armas.Lance.ToString())
         {
-            ventajaPlayer = 1.2m;
-            ventajaRival = 0.8m;
+            ventajaPlayer = multiplicadorVentaja;
+            ventajaRival = multiplicadorDesventaja;
         }
-        else if (rival.weapon == "Sword" && player.weapon == "Axe" ||
-                 rival.weapon == "Lance" && player.weapon == "Sword" ||
-                 rival.weapon == "Axe" && player.weapon == "Lance")
+        else if (rival.weapon == Armas.Sword.ToString() && player.weapon == Armas.Axe.ToString() ||
+                 rival.weapon == Armas.Lance.ToString() && player.weapon == Armas.Sword.ToString() ||
+                 rival.weapon == Armas.Axe.ToString() && player.weapon == Armas.Lance.ToString())
         {
-            ventajaPlayer = 0.8m;
-            ventajaRival = 1.2m;
+            ventajaPlayer = multiplicadorDesventaja;
+            ventajaRival = multiplicadorVentaja;
         }
         else
         {
-            ventajaPlayer = 1;
-            ventajaRival = 1;
+            ventajaPlayer = multiplicadorDefault;
+            ventajaRival = multiplicadorDefault;
         }
     }
 }
@@ -172,13 +177,13 @@ public class ManejadorDeAtaques
         atacante.ResetearStatsPorFirstAtack();
         defensor.ResetearStatsPorFirstAtack(); 
 
-        int def = (atacante.weapon == "Magic") ? defensor.res : defensor.def;
+        int def = (atacante.weapon == Armas.Magic.ToString()) ? defensor.res : defensor.def;
         
-        if (atacante.weapon != "Magic" && defensor.netos_stats.ContainsKey("Def"))
+        if (atacante.weapon != Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Def"))
         {
             def += defensor.netos_stats["Def"];
         }
-        if (atacante.weapon == "Magic" && defensor.netos_stats.ContainsKey("Res"))
+        if (atacante.weapon == Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Res"))
         {
             def += defensor.netos_stats["Res"];
         }
@@ -207,24 +212,26 @@ public class ManejadorFollowUp
     }
     public int spdFollowJugador { get; private set; }
     public int spdFollowRival { get; private set; }
-    public void realizarFollowUp(Personaje player, Personaje rival, int atk_player, int atk_rival)
+
+    public int velocidadAdicionalFollowUp { get; private set; } = 5; 
+    public void realizarFollowUp(Personaje player, Personaje rival, int ataque_player, int ataque_rival)
     {
-        definirFollowUpAtk(player, rival, atk_player, atk_rival);
+        definirFollowUpAtk(player, rival, ataque_player, ataque_rival);
         definirFollowUpSpd(player, rival);
         
-        if (spdFollowJugador >= spdFollowRival + 5)
+        if (spdFollowJugador >= spdFollowRival + velocidadAdicionalFollowUp)
         {
             rival.HP -= AtkFollowJugador;
         }
-        else if (spdFollowJugador + 5 <= spdFollowRival)
+        else if (spdFollowJugador + velocidadAdicionalFollowUp <= spdFollowRival)
         {
             player.HP -= AtkFollowRival;
         }
     }
-    private void definirFollowUpAtk(Personaje player, Personaje rival, int atk_player, int atk_rival)
+    private void definirFollowUpAtk(Personaje player, Personaje rival, int ataque_player, int ataque_rival)
     {
-        AtkFollowJugador = atk_player + player.atk_follow;
-        AtkFollowRival = atk_rival + rival.atk_follow;
+        AtkFollowJugador = ataque_player + player.atk_follow;
+        AtkFollowRival = ataque_rival + rival.atk_follow;
     }
     private void definirFollowUpSpd(Personaje player, Personaje rival)
     {

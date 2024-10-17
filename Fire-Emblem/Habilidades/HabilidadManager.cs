@@ -37,8 +37,8 @@ public class HabilidadManager
 
     private void ordenarBonusEnDiccionarioListas()
     {
-        _jugador.OrdenarContenedores();
-        _rival.OrdenarContenedores();
+        _jugador.ordenarContenedores();
+        _rival.ordenarContenedores();
     }
 }
 

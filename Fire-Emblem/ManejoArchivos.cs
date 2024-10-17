@@ -2,45 +2,45 @@ namespace Fire_Emblem;
 using System.Text.Json;
 public class ManejoArchivos
 {
-    private FileReader _fileReader;
-    private TeamBuilder _teamBuilder;
-    private TeamManager _teamManager;
+    private LectorDeArchivo _leactorDeArchivo;
+    private ConstructorDeEquipo _constructorDeEquipo;
+    private ManejadorDeEquipo _manejadorDeEquipo;
 
-    public ManejoArchivos(string teamFolder, string selectedFile)
+    public ManejoArchivos(string carpetaEquipo, string archivoSeleccionado)
     {
-        _fileReader = new FileReader(teamFolder, selectedFile);
-        _teamBuilder = new TeamBuilder();
-        _teamManager = new TeamManager();
+        _leactorDeArchivo = new LectorDeArchivo(carpetaEquipo, archivoSeleccionado);
+        _constructorDeEquipo = new ConstructorDeEquipo();
+        _manejadorDeEquipo = new ManejadorDeEquipo();
     }
 
-    public void GuardarEquipo()
+    public void guardarEquipo()
     {
-        var fileLines = _fileReader.ReadFile();
-        _teamManager.SaveTeams(fileLines);
+        var lineasArchivo = _leactorDeArchivo.leerArchivo();
+        _manejadorDeEquipo.guardarEquipos(lineasArchivo);
     }
 
-    public List<Personaje> CrearEquipo(bool isPlayerTeam)
+    public List<Personaje> crearEquipo(bool isPlayerTeam)
     {
-        var teamData = isPlayerTeam ? _teamManager.GetPlayerTeam() : _teamManager.GetRivalTeam();
-        return _teamBuilder.CreateTeam(_fileReader.LoadJsonCharacter(), teamData);
+        var dataEquipo = isPlayerTeam ? _manejadorDeEquipo.getPlayerTeam() : _manejadorDeEquipo.getRivalTeam();
+        return _constructorDeEquipo.crearEquipo(_leactorDeArchivo.LoadJsonCharacter(), dataEquipo);
     }
 }
 
-public class FileReader
+public class LectorDeArchivo
 {
-    private string _teamFolder;
-    private string _selectedFile;
+    private string _carpetaEquipo;
+    private string _archivoSeleccionado;
 
-    public FileReader(string teamFolder, string selectedFile)
+    public LectorDeArchivo(string carpetaEquipo, string archivoSeleccionado)
     {
-        _teamFolder = teamFolder;
-        _selectedFile = selectedFile;
+        _carpetaEquipo = carpetaEquipo;
+        _archivoSeleccionado = archivoSeleccionado;
     }
 
-    public string[] ReadFile()
+    public string[] leerArchivo()
     {
-        string fileNumber = _selectedFile.PadLeft(3, '0');
-        var fullPath = Directory.GetFiles(_teamFolder)
+        string fileNumber = _archivoSeleccionado.PadLeft(3, '0');
+        var fullPath = Directory.GetFiles(_carpetaEquipo)
             .FirstOrDefault(file => Path.GetFileName(file).Contains(fileNumber));
         return fullPath != null ? File.ReadAllLines(fullPath) : Array.Empty<string>();
     }
@@ -53,12 +53,12 @@ public class FileReader
         return todos_personajes; 
     }
 }
-public class TeamManager
+public class ManejadorDeEquipo
 {
     private List<string> _playerTeam = new List<string>();
     private List<string> _rivalTeam = new List<string>();
 
-    public void SaveTeams(string[] fileLines)
+    public void guardarEquipos(string[] fileLines)
     {
         bool cambiar_otro_equipo = false;
         foreach (string line in fileLines)
@@ -77,48 +77,48 @@ public class TeamManager
         _rivalTeam.RemoveAt(0);
     }
 
-    public List<string> GetPlayerTeam() => _playerTeam;
-    public List<string> GetRivalTeam() => _rivalTeam;
+    public List<string> getPlayerTeam() => _playerTeam;
+    public List<string> getRivalTeam() => _rivalTeam;
 }
 
-public class TeamBuilder
+public class ConstructorDeEquipo
 {
-    public List<Personaje> CreateTeam(List<JsonContent> all_characters, List<string> player_data)
+    public List<Personaje> crearEquipo(List<JsonContent> todosPersonajes, List<string> dataJugador)
     {
-        var team = new List<Personaje>();
-        foreach (string character in player_data)
+        var equipo = new List<Personaje>();
+        foreach (string lineaPersonajeArchivo in dataJugador)
         {
-            var (name, abilities) = SliceHabilidadesPersonaje(character);
-            AddCharacterToTeam(all_characters, name, abilities, team);
+            var (nombre, habilidades) = sliceHabilidadesPerosnaje(lineaPersonajeArchivo);
+            agregarPersonajeEquipo(todosPersonajes, nombre, habilidades, equipo);
         }
-        return team;
+        return equipo;
     }
-    private (string, string[]) SliceHabilidadesPersonaje(string personaje)
+    private (string, string[]) sliceHabilidadesPerosnaje(string personaje)
     {
-        int start_index = personaje.IndexOf('(');
-        int end_index = personaje.IndexOf(')');
+        int startIndex = personaje.IndexOf('(');
+        int endIndex = personaje.IndexOf(')');
 
-        if (start_index == -1 || end_index == -1)
+        if (startIndex == -1 || endIndex == -1)
         {
             string name = personaje.Trim();
             return (name, Array.Empty<string>());
         }
         else
         {
-            string nombre = personaje.Substring(0, start_index).Trim();
-            string string_con_habilidades = personaje.Substring(start_index + 1, end_index - start_index - 1);
-            string[] habilidades = string_con_habilidades.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string nombre = personaje.Substring(0, startIndex).Trim();
+            string stringConHabilidades = personaje.Substring(startIndex + 1, endIndex - startIndex - 1);
+            string[] habilidades = stringConHabilidades.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             return (nombre, habilidades);
         }
     }
-    private void AddCharacterToTeam(List<JsonContent> allCharacters, string name, string[] abilities, List<Personaje> team)
+    private void agregarPersonajeEquipo(List<JsonContent> todosPersonajes, string nombre, string[] habilidades, List<Personaje> equipo)
     {
-        var characterData = allCharacters.FirstOrDefault(c => c.Name == name);
-        if (characterData != null)
+        var dataPersonajes = todosPersonajes.FirstOrDefault(c => c.Name == nombre);
+        if (dataPersonajes != null)
         {
-            team.Add(new Personaje(characterData.Name, characterData.Weapon, characterData.Gender, characterData.DeathQuote,
-                Convert.ToInt32(characterData.HP), Convert.ToInt32(characterData.Atk), Convert.ToInt32(characterData.Spd),
-                Convert.ToInt32(characterData.Def), Convert.ToInt32(characterData.Res), abilities));
+            equipo.Add(new Personaje(dataPersonajes.Name, dataPersonajes.Weapon, dataPersonajes.Gender, dataPersonajes.DeathQuote,
+                Convert.ToInt32(dataPersonajes.HP), Convert.ToInt32(dataPersonajes.Atk), Convert.ToInt32(dataPersonajes.Spd),
+                Convert.ToInt32(dataPersonajes.Def), Convert.ToInt32(dataPersonajes.Res), habilidades));
         }
     }
 }
