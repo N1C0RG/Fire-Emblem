@@ -19,9 +19,9 @@ public class ManejoArchivos
         _manejadorDeEquipo.guardarEquipos(lineasArchivo);
     }
 
-    public List<Personaje> crearEquipo(bool isPlayerTeam)
+    public List<Personaje> crearEquipo(bool esEquipoDelJugador)
     {
-        var dataEquipo = isPlayerTeam ? _manejadorDeEquipo.getPlayerTeam() : _manejadorDeEquipo.getRivalTeam();
+        var dataEquipo = esEquipoDelJugador ? _manejadorDeEquipo.getPlayerTeam() : _manejadorDeEquipo.getRivalTeam();
         return _constructorDeEquipo.crearEquipo(_leactorDeArchivo.LoadJsonCharacter(), dataEquipo);
     }
 }

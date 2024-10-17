@@ -2,7 +2,7 @@ namespace Fire_Emblem.Habilidades;
 
 public interface ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival); 
+    public bool condicionHabilidad(Personaje jugador, Personaje rival); 
 }
 public abstract class CondicionArma : ICondicion
 {
@@ -11,9 +11,9 @@ public abstract class CondicionArma : ICondicion
     {
         Weapon = weapon; 
     }
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.weapon == Weapon)
+        if (jugador.weapon == Weapon)
         {
             return true; 
         }
@@ -27,9 +27,9 @@ public abstract class CondicionVida : ICondicion
     {
         Hp = hp; 
     }
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.HP <= (int)Math.Floor(Convert.ToDecimal(player.hp_original) * Hp))
+        if (jugador.HP <= (int)Math.Floor(Convert.ToDecimal(jugador.hp_original) * Hp))
         {
             return true; 
         }
@@ -70,7 +70,7 @@ public class HpMenos80 : CondicionVida
 }
 public class CondicionFullVidaRival : ICondicion//TODO: arreglar esto 
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         if (rival.hp_original == rival.HP)
         {
@@ -79,22 +79,22 @@ public class CondicionFullVidaRival : ICondicion//TODO: arreglar esto
         return false;
     }
 }
-public class CondicionNotFullVidaPlayer : ICondicion
+public class CondicionNoVidaCompletaJugador : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.HP != player.hp_original)
+        if (jugador.HP != jugador.hp_original)
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionRivalHPvsPlayerHP : ICondicion
+public class CondicionRivalHPvsJugadorHP : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.HP >= rival.HP + 3)
+        if (jugador.HP >= rival.HP + 3)
         {
             return true; 
         }
@@ -103,7 +103,7 @@ public class CondicionRivalHPvsPlayerHP : ICondicion
 }
 public class CondicionRivalHP75 : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         if (rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.hp_original) * 0.75m))
         {
@@ -114,9 +114,9 @@ public class CondicionRivalHP75 : ICondicion
 }
 public class CondicionInicioCombate : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.inicia_round)
+        if (jugador.inicia_round)
         {
             return true; 
         }
@@ -125,9 +125,9 @@ public class CondicionInicioCombate : ICondicion
 }
 public class CondicionNoInicia : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.inicia_round == false)
+        if (jugador.inicia_round == false)
         {
             return true; 
         }
@@ -136,17 +136,17 @@ public class CondicionNoInicia : ICondicion
 }
 public class NoHayCondicion : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         return true; 
     }
 }
 public class CondicionChaos : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if ((player.weapon != "Magic" && rival.weapon == "Magic") ||
-            (rival.weapon != "Magic" && player.weapon == "Magic"))
+        if ((jugador.weapon != "Magic" && rival.weapon == "Magic") ||
+            (rival.weapon != "Magic" && jugador.weapon == "Magic"))
         {
             return true; 
         }
@@ -155,7 +155,7 @@ public class CondicionChaos : ICondicion
 }
 public class CondicionClose : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         if (rival.weapon != "Magic" && rival.weapon != "Bow")
         {
@@ -166,7 +166,7 @@ public class CondicionClose : ICondicion
 }
 public class CondicionDistant : ICondicion
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         if (rival.weapon == "Magic" || rival.weapon == "Bow")
         {
@@ -177,21 +177,21 @@ public class CondicionDistant : ICondicion
 }
 public class CondicionFirstAtk : ICondicion//TODO: arreglar esto 
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.first_atack == 1)
+        if (jugador.first_atack == 1)
         {
-            player.habilidad_first_atack.Add("Atk"); 
+            jugador.habilidad_first_atack.Add("Atk"); 
             return true; 
         }
         return false;
     }
 }
-public class CondicionPreviousRival : ICondicion//TODO: arreglar esto 
+public class CondicionRivalPrevio : ICondicion//TODO: arreglar esto 
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (player.oponente_previo == rival.name)
+        if (jugador.oponente_previo == rival.name)
         {
             return true; 
         }
@@ -200,7 +200,7 @@ public class CondicionPreviousRival : ICondicion//TODO: arreglar esto
 }
 public class CondicionRivalEsHombre: ICondicion//TODO: arreglar esto 
 {
-    public bool condicionHabilidad(Personaje player, Personaje rival)
+    public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         if (rival.gender == "Male")
         {

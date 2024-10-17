@@ -30,8 +30,9 @@ public class HabilidadManager
     {
         foreach (var habilidad in jugador.habilidades)
         {
-            var aplicador = new FabricaHabilidad(habilidad, jugador, rival);
-            aplicador.crearHabilidad();
+            var fabricaHabilidad = new FabricaHabilidad(habilidad, jugador, rival);
+            fabricaHabilidad.crearHabilidad();
+            fabricaHabilidad.aplicarHabilidad();
         }
     }
 
@@ -59,26 +60,26 @@ public class NeutralizadorEfectos
         neutralizarBonusPenalty(_rival);
         neutralizarFollowBonusPenalty(_rival);
     }
-    private void neutralizarBonusPenalty(Personaje player)
+    private void neutralizarBonusPenalty(Personaje jugador)
     {
-        foreach (var stat in player.bonus_neutralizados)
+        foreach (var stat in jugador.bonus_neutralizados)
         {
-            player.bonus_stats[stat] = 0;
+            jugador.bonus_stats[stat] = 0;
         }
-        foreach (var stat in player.penalty_neutralizados)
+        foreach (var stat in jugador.penalty_neutralizados)
         {
-            player.penalty_stats[stat] = 0;
+            jugador.penalty_stats[stat] = 0;
         }
     }
-    private void neutralizarFollowBonusPenalty(Personaje player)
+    private void neutralizarFollowBonusPenalty(Personaje jugador)
     {
-        if (player.atk_follow > 0 && player.bonus_neutralizados.Contains("Atk"))
+        if (jugador.atk_follow > 0 && jugador.bonus_neutralizados.Contains("Atk"))
         {
-            player.atk_follow = 0;
+            jugador.atk_follow = 0;
         }
-        if (player.atk_follow < 0 && player.penalty_neutralizados.Contains("Atk"))
+        if (jugador.atk_follow < 0 && jugador.penalty_neutralizados.Contains("Atk"))
         {
-            player.atk_follow = 0;
+            jugador.atk_follow = 0;
         }
     }
 }
@@ -104,49 +105,49 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printBonusPenaltyNeutralizados(_rival);
     }
 
-    private void printJugadorBonusPenalty(Personaje player)
+    private void printJugadorBonusPenalty(Personaje jugador)
     {
-        foreach (var stat in player.bonus_stats)
+        foreach (var stat in jugador.bonus_stats)
         {
-            printBonusPenalty(player, stat, stat.Value > 0 ? "+" : "");
+            printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
 
-        foreach (var stat in player.penalty_stats)
+        foreach (var stat in jugador.penalty_stats)
         {
             if (stat.Value < 0)
             {
-                printBonusPenalty(player, stat, "");
+                printBonusPenalty(jugador, stat, "");
             }
         }
     }
 
-    private void printBonusPenalty(Personaje player, KeyValuePair<string, int> stat, string sign)
+    private void printBonusPenalty(Personaje jugador, KeyValuePair<string, int> stat, string sign)
     {
-        var mensaje = (player.first_atack == 1 && player.habilidad_first_atack.Contains(stat.Key))
-            ? $"{player.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
-            : $"{player.name} obtiene {stat.Key}{sign}{stat.Value}";
+        var mensaje = (jugador.first_atack == 1 && jugador.habilidad_first_atack.Contains(stat.Key))
+            ? $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
+            : $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value}";
 
         _view.WriteLine(mensaje);
     }
     
-    private void printBonusPenaltyNeutralizados(Personaje player)
+    private void printBonusPenaltyNeutralizados(Personaje jugador)
     {  
-        foreach (var bonus in player.bonus_neutralizados)
+        foreach (var bonus in jugador.bonus_neutralizados)
         {
-            _view.WriteLine($"Los bonus de {bonus} de {player.name} fueron neutralizados");
+            _view.WriteLine($"Los bonus de {bonus} de {jugador.name} fueron neutralizados");
         }
 
-        foreach (var penalty in player.penalty_neutralizados)
+        foreach (var penalty in jugador.penalty_neutralizados)
         {
-            _view.WriteLine($"Los penalty de {penalty} de {player.name} fueron neutralizados");
+            _view.WriteLine($"Los penalty de {penalty} de {jugador.name} fueron neutralizados");
         }
     }
-    private void printFollowUpAtk(Personaje player)
+    private void printFollowUpAtk(Personaje jugador)
     {
-        if (player.atk_follow != 0)
+        if (jugador.atk_follow != 0)
         {
-            var sign = player.atk_follow > 0 ? "+" : "";
-            _view.WriteLine($"{player.name} obtiene Atk{sign}{player.atk_follow} en su Follow-Up");
+            var sign = jugador.atk_follow > 0 ? "+" : "";
+            _view.WriteLine($"{jugador.name} obtiene Atk{sign}{jugador.atk_follow} en su Follow-Up");
         }
     }
     

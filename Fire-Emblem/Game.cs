@@ -22,9 +22,9 @@ namespace Fire_Emblem
 
         public void Play()
         {
-            InicializacionPlay();
-            var validation = new Validacion(_jugadorPlayer, _rivalPlayer);
-            if (!validation.EquipoValido())
+            inicializacionPlay();
+            var validacion = new Validacion(_jugadorPlayer, _rivalPlayer);
+            if (!validacion.EquipoValido())
             {
                 _view.WriteLine("Archivo de equipos no válido");
                 return;
@@ -33,7 +33,7 @@ namespace Fire_Emblem
             _turno = 1;
             while (true)
             {
-                EjecutarTurno();
+                ejecutarTurno();
                 if (_jugadorPlayer.Perdio())
                 {
                     _view.WriteLine("Player 2 ganó");
@@ -48,103 +48,103 @@ namespace Fire_Emblem
             }
         }
 
-        private void InicializacionPlay()
+        private void inicializacionPlay()
         {
-            PrintEquipos();
-            string selectedFile = _view.ReadLine();
-            var fileHandler = new ManejoArchivos(_teamsFolder, selectedFile);
-            fileHandler.guardarEquipo();
-            _jugadorPlayer = new Player(fileHandler.crearEquipo(true), 1);
-            _rivalPlayer = new Player(fileHandler.crearEquipo(false), 2);
+            printEquipos();
+            string erchivoSeleccionado = _view.ReadLine();
+            var manejoArchivos = new ManejoArchivos(_teamsFolder, erchivoSeleccionado);
+            manejoArchivos.guardarEquipo();
+            _jugadorPlayer = new Player(manejoArchivos.crearEquipo(true), 1);
+            _rivalPlayer = new Player(manejoArchivos.crearEquipo(false), 2);
         }
 
-        private void EjecutarTurno()
+        private void ejecutarTurno()
         {
             if (_turno % 2 != 0)
             {
-                ProcesarTurno(_jugadorPlayer, _rivalPlayer);
+                procesarTurno(_jugadorPlayer, _rivalPlayer);
             }
             else
             {
-                ProcesarTurno(_rivalPlayer, _jugadorPlayer);
+                procesarTurno(_rivalPlayer, _jugadorPlayer);
             }
         }
 
-        private void ProcesarTurno(Player currentPlayer, Player opponent)
+        private void procesarTurno(Player jugadorActual, Player rival)
         {
-            IniciarTurno(currentPlayer, opponent);
+            iniciarTurno(jugadorActual, rival);
             _batalla.realizarAtaque(_playerPersonaje, _rivalPersonaje, _batalla.AtkPlayer);
             if (_rivalPersonaje.HP == 0)
             {
-                EndRound();
+                finRonda();
                 return;
             }
             _batalla.realizarAtaque(_rivalPersonaje, _playerPersonaje, _batalla.AtkRival);
             _batalla.definirAtaque();
             if (_playerPersonaje.HP == 0)
             {
-                EndRound();
+                finRonda();
             }
             else
             {
                 _batalla.realizarFollowUp();
                 _batalla.printFollowUp();
-                EndRound();
+                finRonda();
             }
 
-            ResetearValoresPersonajeTurno();
+            resetearValoresPersonajeTurno();
         }
 
-        private void IniciarTurno(Player currentPlayer, Player opponent)
+        private void iniciarTurno(Player jugadorActual, Player rival)
         {
-            InicializarTurno(currentPlayer, opponent);
-            InicializarBatalla(currentPlayer, opponent);
-            AplicarAbilities();
+            inicializarTurno(jugadorActual, rival);
+            inicializarBatalla(jugadorActual, rival);
+            aplicarHabilidades();
             _batalla.definirAtaque();
         }
 
-        private void InicializarTurno(Player currentPlayer, Player opponent)
+        private void inicializarTurno(Player jugadorActual, Player rival)
         {
-            PrintOpciones(currentPlayer, currentPlayer.tipo);
-            int playerInput = Convert.ToInt32(_view.ReadLine());
+            printOpciones(jugadorActual, jugadorActual.tipo);
+            int jugadorActualInput = Convert.ToInt32(_view.ReadLine());
 
-            PrintOpciones(opponent, opponent.tipo);
-            int opponentInput = Convert.ToInt32(_view.ReadLine());
+            printOpciones(rival, rival.tipo);
+            int rivalInput = Convert.ToInt32(_view.ReadLine());
 
-            _playerPersonaje = currentPlayer.equipo[playerInput];
-            _rivalPersonaje = opponent.equipo[opponentInput];
+            _playerPersonaje = jugadorActual.equipo[jugadorActualInput];
+            _rivalPersonaje = rival.equipo[rivalInput];
 
-            _view.WriteLine($"Round {_turno}: {_playerPersonaje.name} (Player {currentPlayer.tipo}) comienza");
+            _view.WriteLine($"Round {_turno}: {_playerPersonaje.name} (Player {jugadorActual.tipo}) comienza");
         }
 
-        private void InicializarBatalla(Player currentPlayer, Player opponent)
+        private void inicializarBatalla(Player jugadorActual, Player rival)
         {
-            _batalla = new Batalla(_playerPersonaje, _rivalPersonaje, _view, currentPlayer, opponent);
+            _batalla = new Batalla(_playerPersonaje, _rivalPersonaje, _view, jugadorActual, rival);
             _batalla.calcularVentajas();
             _batalla.printVentaja();
         }
 
-        private void AplicarAbilities()
+        private void aplicarHabilidades()
         {
             _playerPersonaje.inicia_round = true;
             _playerPersonaje.resetearContenedoresDeStats();
             _rivalPersonaje.resetearContenedoresDeStats();
 
-            var abilityExecutor = new HabilidadManager(_playerPersonaje, _rivalPersonaje, _view);
-            abilityExecutor.aplicarTodo();
+            var manejadorHabilidades = new HabilidadManager(_playerPersonaje, _rivalPersonaje, _view);
+            manejadorHabilidades.aplicarTodo();
             
             _playerPersonaje.calcularNetosStats();
             _rivalPersonaje.calcularNetosStats();
             _playerPersonaje.inicia_round = false;
         }
 
-        private void EndRound()
+        private void finRonda()
         {
             _batalla.printVidaEndRound();
             _batalla.removerJugador();
         }
 
-        private void ResetearValoresPersonajeTurno()
+        private void resetearValoresPersonajeTurno()
         {
             _playerPersonaje.first_atack = 1;
             _rivalPersonaje.first_atack = 1;
@@ -152,7 +152,7 @@ namespace Fire_Emblem
             _rivalPersonaje.oponente_previo = _playerPersonaje.name;
         }
 
-        private void PrintEquipos()
+        private void printEquipos()
         {
             _view.WriteLine("Elige un archivo para cargar los equipos");
             string[] teamFiles = Directory.GetFiles(_teamsFolder, "*.txt");
@@ -162,7 +162,7 @@ namespace Fire_Emblem
             }
         }
 
-        private void PrintOpciones(Player player, int playerNumber)
+        private void printOpciones(Player player, int playerNumber)
         {
             _view.WriteLine($"Player {playerNumber} selecciona una opción");
             for (int i = 0; i < player.equipo.Count; i++)

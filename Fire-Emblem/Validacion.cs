@@ -4,16 +4,16 @@ using Fire_Emblem_View;
 
 public class Validacion
 {
-    private Player _player;
+    private Player _jugador;
     private Player _rival;
-    public Validacion(Player player, Player rival)
+    public Validacion(Player jugador, Player rival)
     {
-        _player = player;
+        _jugador = jugador;
         _rival = rival; 
     }
-    private bool ValidacionLargo()
+    private bool validacionLargo()
     {
-        if (_player.equipo.Count > 3 || _player.equipo.Count < 1 || _rival.equipo.Count > 3 || _rival.equipo.Count < 1)
+        if (_jugador.equipo.Count > 3 || _jugador.equipo.Count < 1 || _rival.equipo.Count > 3 || _rival.equipo.Count < 1)
         {
             return false; 
         }
@@ -22,9 +22,9 @@ public class Validacion
             return true; 
         }
     }
-    private bool ValidacionRepetidosYCantidadHabilidad(Player player) 
+    private bool validacionRepetidosYCantidadHabilidad(Player jugador) 
     { 
-        foreach (Personaje personaje in player.equipo)
+        foreach (Personaje personaje in jugador.equipo)
         {
             if (personaje.habilidades.Length > 2)
             {
@@ -38,27 +38,27 @@ public class Validacion
         return true; 
     }
     
-    private bool ValidacionRepetidosNombre(Player player) 
+    private bool validacionRepetidosNombre(Player jugador) 
     {
-        List<string> prueba = new List<string>(); 
+        List<string> nombreNoRepetidos = new List<string>(); 
         
-        foreach (Personaje personaje in player.equipo) 
+        foreach (Personaje personaje in jugador.equipo) 
         {
-            if (prueba.Contains(personaje.name))
+            if (nombreNoRepetidos.Contains(personaje.name))
             {
                 return false; 
             }
-            prueba.Add(personaje.name);
+            nombreNoRepetidos.Add(personaje.name);
         }
         return true; 
     }
     public bool EquipoValido()
     {
-        if (ValidacionLargo() == false 
-            || ValidacionRepetidosYCantidadHabilidad(_player) == false 
-            || ValidacionRepetidosYCantidadHabilidad(_rival) == false
-            || ValidacionRepetidosNombre(_player) == false
-            || ValidacionRepetidosNombre(_rival) == false)
+        if (validacionLargo() == false 
+            || validacionRepetidosYCantidadHabilidad(_jugador) == false 
+            || validacionRepetidosYCantidadHabilidad(_rival) == false
+            || validacionRepetidosNombre(_jugador) == false
+            || validacionRepetidosNombre(_rival) == false)
         {
             return false; 
         }

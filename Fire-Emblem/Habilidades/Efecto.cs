@@ -1,13 +1,13 @@
 namespace Fire_Emblem.Habilidades;
 public interface IEfecto
 {
-    public void efecto(Personaje player, Personaje rival); 
+    public void efecto(Personaje jugador, Personaje rival); 
 }
-public abstract class StatEffectPlayer : IEfecto
+public abstract class EfectoStatJugador : IEfecto
 {
     protected string StatKey;
     protected int Cantidad; 
-    protected StatEffectPlayer(string statKey, int cantidad)
+    protected EfectoStatJugador(string statKey, int cantidad)
     {
         StatKey = statKey;
         this.Cantidad = cantidad;
@@ -27,11 +27,11 @@ public abstract class StatEffectPlayer : IEfecto
         }
     }
 }
-public abstract class StatEffectRival : IEfecto
+public abstract class EfectoStatRival : IEfecto
 {
     protected string StatKey;
     protected int Cantidad; 
-    protected StatEffectRival(string statKey, int cantidad)
+    protected EfectoStatRival(string statKey, int cantidad)
     {
         StatKey = statKey;
         this.Cantidad = cantidad;
@@ -62,35 +62,35 @@ public abstract class AplicarCancelacionBonus : IEfecto
         rival.bonus_neutralizados.Add(StatKey);
     }
 }
-public class AtkUp : StatEffectPlayer
+public class AtkUp : EfectoStatJugador
 {
     public AtkUp(int cantidad) : base("Atk", cantidad) { }
 }
-public class SpdUp : StatEffectPlayer
+public class SpdUp : EfectoStatJugador
 {
     public SpdUp(int cantidad) : base("Spd", cantidad) { }
 }
-public class DefUp : StatEffectPlayer
+public class DefUp : EfectoStatJugador
 {
     public DefUp(int cantidad) : base("Def", cantidad) { }
 }
-public class ResUp : StatEffectPlayer
+public class ResUp : EfectoStatJugador
 {
     public ResUp(int cantidad) : base("Res", cantidad) { }
 }
-public class RivalAtkUp : StatEffectRival
+public class RivalAtkUp : EfectoStatRival
 {
     public RivalAtkUp(int cantidad) : base("Atk", cantidad) { }
 }
-public class RivalSpdUp : StatEffectRival
+public class RivalSpdUp : EfectoStatRival
 {
     public RivalSpdUp(int cantidad) : base("Spd", cantidad) { }
 }
-public class RivalDefUp : StatEffectRival
+public class RivalDefUp : EfectoStatRival
 {
     public RivalDefUp(int cantidad) : base("Def", cantidad) { }
 }
-public class RivalResUp : StatEffectRival
+public class RivalResUp : EfectoStatRival
 {
     public RivalResUp(int cantidad) : base("Res", cantidad) { }
 }
