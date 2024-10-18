@@ -64,8 +64,8 @@ public class Batalla
     public void definirAtaque()  
     
     {
-        AtkPlayer = _manejadorDeAtaques.CalcularAtaque(player, rival, _ventaja.ventajaPlayer);
-        AtkRival = _manejadorDeAtaques.CalcularAtaque(rival, player, _ventaja.ventajaRival);
+        AtkPlayer = _manejadorDeAtaques.calcularAtaque(player, rival, _ventaja.ventajaPlayer);
+        AtkRival = _manejadorDeAtaques.calcularAtaque(rival, player, _ventaja.ventajaRival);
     }
     
     public void realizarAtaque(Personaje player, Personaje rival, int dano)
@@ -170,26 +170,39 @@ public class Ventaja
 }
 public class ManejadorDeAtaques
 {
-    public int CalcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
+    private int _defensa; 
+    
+    public int calcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
     {
         
         //TODO: arreglar esto
         atacante.ResetearStatsPorFirstAtack();
         defensor.ResetearStatsPorFirstAtack(); 
+        
+        calcularDefensa(atacante, defensor);
 
-        int def = (atacante.weapon == Armas.Magic.ToString()) ? defensor.res : defensor.def;
+        int ataque =
+            (int)Math.Floor(Convert.ToDecimal(atacante.atk +
+                              (atacante.netos_stats.ContainsKey("Atk")
+                                  ? atacante.netos_stats["Atk"]
+                                  : 0)) * ventaja) - _defensa;
+        return ataque;
+    }
+
+    private void calcularDefensa(Personaje atacante, Personaje defensor)
+    {
+        _defensa = (atacante.weapon == Armas.Magic.ToString()) ? defensor.res : defensor.def;
         
         if (atacante.weapon != Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Def"))
         {
-            def += defensor.netos_stats["Def"];
+            _defensa += defensor.netos_stats["Def"];
         }
         if (atacante.weapon == Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Res"))
         {
-            def += defensor.netos_stats["Res"];
+            _defensa += defensor.netos_stats["Res"];
         }
-        
-        return (int)Math.Floor(Convert.ToDecimal(atacante.atk + (atacante.netos_stats.ContainsKey("Atk") ? atacante.netos_stats["Atk"] : 0)) * ventaja) - def;
     }
+    
     public void accionAtacar(Personaje atacante, Personaje defensor, int dano)
     {
         defensor.HP -= dano;

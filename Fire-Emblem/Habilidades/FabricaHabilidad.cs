@@ -15,7 +15,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
         _rival = rival;
     }
     
-    public void aplicarHabilidad()
+    public void aplicarHabilidad() //TODO: meter esto en otra clase, tiene mas de una responsabilidad 
     {
         _habilidad.aplicarHabilidad();
         if (_habiliaddSegundaCondicion != null)

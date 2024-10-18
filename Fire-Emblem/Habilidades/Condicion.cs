@@ -1,9 +1,18 @@
+using Fire_Emblem.Encapsulado;
+
 namespace Fire_Emblem.Habilidades;
 
 public interface ICondicion
 {
     public bool condicionHabilidad(Personaje jugador, Personaje rival); 
 }
+
+public abstract class CondicionGenerica : ICondicion
+{
+    protected CondicionesHabilidadEncapsuladas condicion = new CondicionesHabilidadEncapsuladas();
+    public abstract bool condicionHabilidad(Personaje jugador, Personaje rival);
+}
+
 public abstract class CondicionArma : ICondicion
 {
     protected string Weapon; 
@@ -68,55 +77,55 @@ public class HpMenos80 : CondicionVida
 {
     public HpMenos80() : base(0.8m){}
 }
-public class CondicionFullVidaRival : ICondicion//TODO: arreglar esto 
+public class CondicionFullVidaRival : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (rival.hp_original == rival.HP)
+        if (condicion.tieneFullVidaRival(rival))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionNoVidaCompletaJugador : ICondicion
+public class CondicionNoVidaCompletaJugador : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.HP != jugador.hp_original)
+        if (condicion.tieneNoVidaCompletaJugador(jugador))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionRivalHPvsJugadorHP : ICondicion
+public class CondicionRivalHPvsJugadorHP : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.HP >= rival.HP + 3)
+        if (condicion.tieneRivalHPvsJugadorHP(jugador, rival))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionRivalHP75 : ICondicion
+public class CondicionRivalHP75 : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.hp_original) * 0.75m))
+        if (condicion.tieneRivalHP75(rival))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionInicioCombate : ICondicion
+public class CondicionInicioCombate : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.inicia_round)
+        if (condicion.inicioCombate(jugador))
         {
             return true; 
         }
@@ -141,12 +150,11 @@ public class NoHayCondicion : ICondicion
         return true; 
     }
 }
-public class CondicionChaos : ICondicion
+public class CondicionChaos : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if ((jugador.weapon != "Magic" && rival.weapon == "Magic") ||
-            (rival.weapon != "Magic" && jugador.weapon == "Magic"))
+        if (condicion.tieneChaos(jugador, rival))
         {
             return true; 
         }
