@@ -23,11 +23,7 @@ public abstract class CondicionArma : CondicionGenerica
     }
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneArmaWeapon(jugador, Weapon))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneArmaWeapon(jugador, Weapon); 
     }
 }
 public abstract class CondicionVida : CondicionGenerica
@@ -39,11 +35,7 @@ public abstract class CondicionVida : CondicionGenerica
     }
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.cantidadVidaMenorIgualOriginal(jugador, Hp))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.cantidadVidaMenorIgualOriginal(jugador, Hp); 
     }
 }
 public class CondicionSword : CondicionArma
@@ -82,66 +74,42 @@ public class CondicionFullVidaRival : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneFullVidaRival(rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneFullVidaRival(rival); 
     }
 }
 public class CondicionNoVidaCompletaJugador : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneNoVidaCompletaJugador(jugador))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneNoVidaCompletaJugador(jugador); 
     }
 }
 public class CondicionRivalHPvsJugadorHP : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneRivalHPvsJugadorHP(jugador, rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneRivalHPvsJugadorHP(jugador, rival); 
     }
 }
 public class CondicionRivalHP75 : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneRivalHP75(rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneRivalHP75(rival); 
     }
 }
 public class CondicionInicioCombate : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.inicioCombate(jugador))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.inicioCombate(jugador); 
     }
 }
-public class CondicionNoInicia : ICondicion
+public class CondicionNoInicia : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.inicia_round == false)
-        {
-            return true; 
-        }
-        return false;
+        return !condicion.inicioCombate(jugador); 
     }
 }
 public class NoHayCondicion : ICondicion
@@ -155,33 +123,21 @@ public class CondicionChaos : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.tieneChaos(jugador, rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.tieneChaos(jugador, rival); 
     }
 }
 public class CondicionClose : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.ataqueClose(rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.ataqueClose(rival); 
     }
 }
 public class CondicionDistant : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.ataqueDistant(rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.ataqueDistant(rival); 
     }
 }
 public class CondicionFirstAtk : ICondicion//TODO: arreglar esto 
@@ -200,22 +156,14 @@ public class CondicionRivalPrevio : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.esRivalPrevio(jugador, rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.esRivalPrevio(jugador, rival); 
     }
 }
 public class CondicionRivalEsHombre: CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (condicion.rivalEsHombre(rival))
-        {
-            return true; 
-        }
-        return false;
+        return condicion.rivalEsHombre(rival); 
     }
 }
 

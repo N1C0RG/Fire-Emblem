@@ -67,4 +67,9 @@ public class CondicionesHabilidadEncapsuladas
         bool condicion = jugador.weapon == weapon;
         return condicion; 
     }
+    public bool jugadorIniciaRound(Personaje jugador)
+    {
+        bool condicion = jugador.inicia_round;
+        return condicion; 
+    }
 }
