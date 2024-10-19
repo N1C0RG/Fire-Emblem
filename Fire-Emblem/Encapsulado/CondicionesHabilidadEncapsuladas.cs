@@ -35,9 +35,36 @@ public class CondicionesHabilidadEncapsuladas
         return condicion; 
     }
 
-    public bool CondicionClose(Personaje rival)
+    public bool ataqueClose(Personaje rival)
+    {
+        bool condicion = rival.weapon != Armas.Magic.ToString() && rival.weapon != Armas.Bow.ToString();
+        return condicion; 
+    }
+    public bool ataqueDistant(Personaje rival)
     {
         bool condicion = rival.weapon == Armas.Magic.ToString() || rival.weapon == Armas.Bow.ToString();
+        return condicion; 
+    }
+    public bool esRivalPrevio(Personaje jugador, Personaje rival)
+    {
+        bool condicion = jugador.oponente_previo == rival.name; 
+        return condicion; 
+    }
+
+    public bool rivalEsHombre(Personaje rival)
+    {
+        bool condicion = rival.gender == "Male";
+        return condicion; 
+    }
+
+    public bool cantidadVidaMenorIgualOriginal(Personaje jugador, decimal Hp)
+    {
+        bool condicion = jugador.HP <= (int)Math.Floor(Convert.ToDecimal(jugador.hp_original) * Hp);
+        return condicion; 
+    }
+    public bool tieneArmaWeapon(Personaje jugador, string weapon)
+    {
+        bool condicion = jugador.weapon == weapon;
         return condicion; 
     }
 }

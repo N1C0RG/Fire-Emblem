@@ -7,38 +7,39 @@ public interface ICondicion
     public bool condicionHabilidad(Personaje jugador, Personaje rival); 
 }
 
-public abstract class CondicionGenerica : ICondicion
+//TOOD: cambiar el nombre de esta clase
+public abstract class CondicionGenerica : ICondicion 
 {
     protected CondicionesHabilidadEncapsuladas condicion = new CondicionesHabilidadEncapsuladas();
     public abstract bool condicionHabilidad(Personaje jugador, Personaje rival);
 }
 
-public abstract class CondicionArma : ICondicion
+public abstract class CondicionArma : CondicionGenerica
 {
     protected string Weapon; 
     protected CondicionArma(string weapon)
     {
         Weapon = weapon; 
     }
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.weapon == Weapon)
+        if (condicion.tieneArmaWeapon(jugador, Weapon))
         {
             return true; 
         }
         return false;
     }
 }
-public abstract class CondicionVida : ICondicion
+public abstract class CondicionVida : CondicionGenerica
 {
     protected decimal Hp; 
     protected CondicionVida(decimal hp)
     {
         Hp = hp; 
     }
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.HP <= (int)Math.Floor(Convert.ToDecimal(jugador.hp_original) * Hp))
+        if (condicion.cantidadVidaMenorIgualOriginal(jugador, Hp))
         {
             return true; 
         }
@@ -47,35 +48,35 @@ public abstract class CondicionVida : ICondicion
 }
 public class CondicionSword : CondicionArma
 {
-    public CondicionSword() : base("Sword"){}
+    public CondicionSword() : base(Armas.Sword.ToString()){}
 }
 public class CondicionLance : CondicionArma
 {
-    public CondicionLance() : base("Lance"){}
+    public CondicionLance() : base(Armas.Lance.ToString()){}
 }
 public class CondicionAxe : CondicionArma
 {
-    public CondicionAxe() : base("Axe"){}
+    public CondicionAxe() : base(Armas.Axe.ToString()){}
 }
 public class CondicionBow : CondicionArma
 {
-    public CondicionBow() : base("Bow"){}
+    public CondicionBow() : base(Armas.Bow.ToString()){}
 }
 public class CondicionMagic : CondicionArma
 {
-    public CondicionMagic() : base("Magic"){}
+    public CondicionMagic() : base(Armas.Magic.ToString()){}
 }
 public class HpMenos75 : CondicionVida
 {
-    public HpMenos75() : base(0.75m){}
+    public HpMenos75() : base(TipoVida.Values["Hp75%"]){}
 }
 public class HpMenos50 : CondicionVida
 {
-    public HpMenos50() : base(0.5m){}
+    public HpMenos50() : base(TipoVida.Values["Hp50%"]){}
 }
 public class HpMenos80 : CondicionVida
 {
-    public HpMenos80() : base(0.8m){}
+    public HpMenos80() : base(TipoVida.Values["Hp80%"]){}
 }
 public class CondicionFullVidaRival : CondicionGenerica
 {
@@ -161,22 +162,22 @@ public class CondicionChaos : CondicionGenerica
         return false;
     }
 }
-public class CondicionClose : ICondicion
+public class CondicionClose : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (rival.weapon != "Magic" && rival.weapon != "Bow")
+        if (condicion.ataqueClose(rival))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionDistant : ICondicion
+public class CondicionDistant : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (rival.weapon == "Magic" || rival.weapon == "Bow")
+        if (condicion.ataqueDistant(rival))
         {
             return true; 
         }
@@ -195,22 +196,22 @@ public class CondicionFirstAtk : ICondicion//TODO: arreglar esto
         return false;
     }
 }
-public class CondicionRivalPrevio : ICondicion//TODO: arreglar esto 
+public class CondicionRivalPrevio : CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.oponente_previo == rival.name)
+        if (condicion.esRivalPrevio(jugador, rival))
         {
             return true; 
         }
         return false;
     }
 }
-public class CondicionRivalEsHombre: ICondicion//TODO: arreglar esto 
+public class CondicionRivalEsHombre: CondicionGenerica
 {
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (rival.gender == "Male")
+        if (condicion.rivalEsHombre(rival))
         {
             return true; 
         }
