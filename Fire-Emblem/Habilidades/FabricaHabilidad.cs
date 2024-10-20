@@ -7,21 +7,16 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
     private Personaje _jugador;
     private Personaje _rival;
     private Habilidad _habilidad;
-    private Habilidad _habiliaddSegundaCondicion;
+    private Habilidad _habilidadSegundaCondicion;
     public FabricaHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival)
     {
         _nombre_habilidad = nombreHabilidad;
         _jugador = jugador;
         _rival = rival;
     }
-    
-    public void aplicarHabilidad() //TODO: meter esto en otra clase, tiene mas de una responsabilidad 
+    public AplicadorHabilidad crearAplicador()
     {
-        _habilidad.aplicarHabilidad();
-        if (_habiliaddSegundaCondicion != null)
-        {
-            _habiliaddSegundaCondicion.aplicarHabilidad();
-        }
+        return new AplicadorHabilidad(_habilidad, _habilidadSegundaCondicion);
     }
     public void crearHabilidad()
     {
@@ -378,7 +373,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador,
                 _rival);
             
-            _habiliaddSegundaCondicion = new Habilidad(
+            _habilidadSegundaCondicion = new Habilidad(
                 new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondicion> { new CondicionRivalHP75(), new CondicionInicioCombate() },
                 _jugador,
@@ -420,7 +415,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             
-            _habiliaddSegundaCondicion = new Habilidad (
+            _habilidadSegundaCondicion = new Habilidad (
                 new List<IEfecto> {new AtkUp(-2)}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
@@ -498,7 +493,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             
-            _habiliaddSegundaCondicion = new Habilidad (
+            _habilidadSegundaCondicion = new Habilidad (
                 new List<IEfecto> {new ResUp(-5) }, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
@@ -559,7 +554,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
             
-            _habiliaddSegundaCondicion = new Habilidad (
+            _habilidadSegundaCondicion = new Habilidad (
                 new List<IEfecto> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
                 new List<ICondicion> { new CondicionFullVidaRival(), new CondicionInicioCombate()}, 
                 _jugador, 

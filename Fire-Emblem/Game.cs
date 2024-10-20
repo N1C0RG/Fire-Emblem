@@ -74,14 +74,14 @@ namespace Fire_Emblem
         {
             iniciarTurno(jugadorActual, rival);
             _batalla.realizarAtaque(_playerPersonaje, _rivalPersonaje, _batalla.AtaqueJugador);
-            if (_rivalPersonaje.HP == 0)
+            if (_rivalPersonaje.getHp() == 0)
             {
                 finRonda();
                 return;
             }
             _batalla.realizarAtaque(_rivalPersonaje, _playerPersonaje, _batalla.AtaqueRival);
             _batalla.definirAtaque();
-            if (_playerPersonaje.HP == 0)
+            if (_playerPersonaje.getHp() == 0)
             {
                 finRonda();
             }
@@ -111,10 +111,10 @@ namespace Fire_Emblem
             printOpciones(rival, rival.tipo);
             int rivalInput = Convert.ToInt32(_view.ReadLine());
 
-            _playerPersonaje = jugadorActual.equipo[jugadorActualInput];
-            _rivalPersonaje = rival.equipo[rivalInput];
+            _playerPersonaje = jugadorActual.getPersonaje(jugadorActualInput);
+            _rivalPersonaje = rival.getPersonaje(rivalInput);
 
-            _view.WriteLine($"Round {_turno}: {_playerPersonaje.name} (Player {jugadorActual.tipo}) comienza");
+            _view.WriteLine($"Round {_turno}: {_playerPersonaje.getNombre()} (Player {jugadorActual.getTipo()}) comienza");
         }
 
         private void inicializarBatalla(Player jugadorActual, Player rival)
@@ -126,7 +126,7 @@ namespace Fire_Emblem
 
         private void aplicarHabilidades()
         {
-            _playerPersonaje.inicia_round = true;
+            _playerPersonaje.setIniciaTurno(true);
             _playerPersonaje.resetearContenedoresDeStats();
             _rivalPersonaje.resetearContenedoresDeStats();
 
@@ -135,7 +135,7 @@ namespace Fire_Emblem
             
             _playerPersonaje.calcularNetosStats();
             _rivalPersonaje.calcularNetosStats();
-            _playerPersonaje.inicia_round = false;
+            _playerPersonaje.setIniciaTurno(false);
         }
 
         private void finRonda()
@@ -165,9 +165,9 @@ namespace Fire_Emblem
         private void printOpciones(Player player, int playerNumber)
         {
             _view.WriteLine($"Player {playerNumber} selecciona una opción");
-            for (int i = 0; i < player.equipo.Count; i++)
+            for (int i = 0; i < player.getEquipo().Count; i++)
             {
-                _view.WriteLine($"{i}: {player.equipo[i].name}");
+                _view.WriteLine($"{i}: {player.getNombrePersonaje(i)}");
             }
         }
     }

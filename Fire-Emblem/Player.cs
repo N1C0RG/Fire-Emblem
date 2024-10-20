@@ -25,4 +25,23 @@ public class Player
     {
         equipo.Remove(personaje);
     }
+
+    public int getTipo()
+    {
+        return tipo; 
+    }
+
+    public Personaje getPersonaje(int indice)
+    {
+        return equipo[indice];
+    }
+    public string getNombrePersonaje(int indice)
+    {
+        return equipo[indice].getNombre();
+    }
+
+    public List<Personaje> getEquipo()
+    {
+        return equipo; 
+    }
 }

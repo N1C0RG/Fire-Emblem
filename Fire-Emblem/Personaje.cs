@@ -93,31 +93,29 @@ public class Personaje
     {
         return netos_stats.ContainsKey(stat) ? netos_stats[stat] : 0;
     }
-    
-    //decimal ataque =
-    //     Convert.ToDecimal(atk +
-    //                       (netos_stats.ContainsKey("Atk")
-    //                           ? netos_stats["Atk"]
-    //                           : 0));
-    // public decimal obtenerAtaque(decimal ventaja)//TODO ver este metodo 
-    // {
-    //     decimal ataque =
-    //     Convert.ToDecimal(atk +
-    //                       (netos_stats.ContainsKey("Atk")
-    //                           ? netos_stats["Atk"]
-    //                           : 0));
-    //     return ataque; 
-    // }
-    // public int obtenerDefensa(bool esAtaqueMagico)
-    // {
-    //     return esAtaqueMagico ? res + (netos_stats.ContainsKey("Res") ? netos_stats["Res"] : 0) : def + (netos_stats.ContainsKey("Def") ? netos_stats["Def"] : 0);
-    // }
 
+    public string getArma()
+    {
+        return weapon; 
+    }
+
+    public string getNombre()
+    {
+        return name; 
+    }
+    public int getHp()
+    {
+        return hp; 
+    }
     public void incrementarAtaques()
     {
         first_atack += 1;
     }
-    
+
+    public void setIniciaTurno(bool valor)
+    {
+        inicia_round = valor; 
+    }
 
     public void calcularNetosStats()
     {

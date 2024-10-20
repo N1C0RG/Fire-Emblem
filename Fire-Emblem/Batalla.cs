@@ -2,7 +2,7 @@ using Fire_Emblem_View;
 using Fire_Emblem.Habilidades;
 namespace Fire_Emblem;
 
-public class Batalla
+public class Batalla //TODO: batalla hace muchas cosas sin razon alguna 
 {
     public Personaje jugador;
     public Personaje rival;
@@ -102,11 +102,11 @@ public class ImpresoraVentajaVidaAtaque
     {
         if (ventajaJugador == 1.2m)
         {
-            _view.WriteLine($"{jugador.name} ({jugador.weapon}) tiene ventaja con respecto a {rival.name} ({rival.weapon})");
+            _view.WriteLine($"{jugador.getNombre()} ({jugador.getArma()}) tiene ventaja con respecto a {rival.getNombre()} ({rival.getArma()})");
         }
         else if (ventajaJugador == 0.8m)
         {
-            _view.WriteLine($"{rival.name} ({rival.weapon}) tiene ventaja con respecto a {jugador.name} ({jugador.weapon})");
+            _view.WriteLine($"{rival.getNombre()} ({rival.getArma()}) tiene ventaja con respecto a {jugador.getNombre()} ({jugador.getArma()})");
         }
         else
         {
@@ -116,18 +116,18 @@ public class ImpresoraVentajaVidaAtaque
 
     public void printVidaEndRound(Personaje jugador, Personaje rival)
     {
-        _view.WriteLine($"{jugador.name} ({jugador.HP}) : {rival.name} ({rival.HP})");
+        _view.WriteLine($"{jugador.getNombre()} ({jugador.getHp()}) : {rival.getNombre()} ({rival.getHp()})");
     }
 
     public void printFollowUp(DataFollowUp dataFollowUp, Personaje jugador, Personaje rival)
     {
         if (dataFollowUp.velocidadFollowJugador >= dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
         {
-            _view.WriteLine($"{jugador.name} ataca a {rival.name} con {dataFollowUp.AtkFollowJugador} de daño");
+            _view.WriteLine($"{jugador.getNombre()} ataca a {rival.getNombre()} con {dataFollowUp.AtkFollowJugador} de daño");
         }
         else if (dataFollowUp.velocidadFollowJugador + dataFollowUp.velocidadAdicionalFollowUp <= dataFollowUp.velocidadFollowRival)
         {
-            _view.WriteLine($"{rival.name} ataca a {jugador.name} con {dataFollowUp.AtkFollowRival} de daño");
+            _view.WriteLine($"{rival.getNombre()} ataca a {jugador.getNombre()} con {dataFollowUp.AtkFollowRival} de daño");
         }
         else
         {
@@ -136,7 +136,7 @@ public class ImpresoraVentajaVidaAtaque
     }
     public void printAtaque(Personaje jugador, Personaje rival, int dano)
     {
-        _view.WriteLine($"{jugador.name} ataca a {rival.name} con {dano} de daño");
+        _view.WriteLine($"{jugador.getNombre()} ataca a {rival.getNombre()} con {dano} de daño");
     }
 }
 public class Ventaja
@@ -152,16 +152,16 @@ public class Ventaja
 
     public void calcularVentaja(Personaje jugador, Personaje rival)
     {
-        if (jugador.weapon == Armas.Sword.ToString() && rival.weapon == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
-            jugador.weapon == Armas.Lance.ToString() && rival.weapon == Armas.Sword.ToString() ||
-            jugador.weapon == Armas.Axe.ToString() && rival.weapon == Armas.Lance.ToString())
+        if (jugador.getArma() == Armas.Sword.ToString() && rival.getArma() == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
+            jugador.getArma() == Armas.Lance.ToString() && rival.getArma() == Armas.Sword.ToString() ||
+            jugador.getArma() == Armas.Axe.ToString() && rival.getArma() == Armas.Lance.ToString())
         {
             ventajaJugador = multiplicadorVentaja;
             ventajaRival = multiplicadorDesventaja;
         }
-        else if (rival.weapon == Armas.Sword.ToString() && jugador.weapon == Armas.Axe.ToString() ||
-                 rival.weapon == Armas.Lance.ToString() && jugador.weapon == Armas.Sword.ToString() ||
-                 rival.weapon == Armas.Axe.ToString() && jugador.weapon == Armas.Lance.ToString())
+        else if (rival.getArma() == Armas.Sword.ToString() && jugador.getArma() == Armas.Axe.ToString() ||
+                 rival.getArma() == Armas.Lance.ToString() && jugador.getArma() == Armas.Sword.ToString() ||
+                 rival.getArma() == Armas.Axe.ToString() && jugador.getArma() == Armas.Lance.ToString())
         {
             ventajaJugador = multiplicadorDesventaja;
             ventajaRival = multiplicadorVentaja;
@@ -184,7 +184,7 @@ public class ManejadorDeAtaques
         defensor.ResetearStatsPorFirstAtack(); 
         
         decimal ataque = Convert.ToDecimal(atacante.getAtaque() + atacante.getNetoStats("Atk"));
-        bool esAtaqueMagico = atacante.weapon == Armas.Magic.ToString();
+        bool esAtaqueMagico = atacante.getArma() == Armas.Magic.ToString();
         int defensa = esAtaqueMagico ? defensor.getResistencia() + defensor.getNetoStats("Res") 
             : defensor.getDefensa() + defensor.getNetoStats("Def");
         int ataqueFinal =  (int)Math.Floor(ataque * ventaja) - defensa;

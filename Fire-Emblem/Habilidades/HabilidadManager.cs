@@ -32,7 +32,8 @@ public class HabilidadManager
         {
             var fabricaHabilidad = new FabricaHabilidad(habilidad, jugador, rival);
             fabricaHabilidad.crearHabilidad();
-            fabricaHabilidad.aplicarHabilidad();
+            var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
+            aplicadorHabilidad.aplicarHabilidad();
         }
     }
 
