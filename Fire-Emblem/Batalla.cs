@@ -4,36 +4,36 @@ namespace Fire_Emblem;
 
 public class Batalla
 {
-    public Personaje player;
+    public Personaje jugador;
     public Personaje rival;
     private View _view;
-    public Player player_team;
-    public Player rival_team;
+    public Player equipoJugador;
+    public Player equipoRival;
     private Ventaja _ventaja;
     private ImpresoraVentajaVidaAtaque _impresoraVentajaVidaAtaque;
     private ManejadorDeAtaques _manejadorDeAtaques;
     private ManejadorFollowUp _manejadorFollowUp;
     private RemoverJugador _removerJugador;
     
-    private int _atkPlayer;
-    public int AtkPlayer
+    private int _ataqueJugador;
+    public int AtaqueJugador
     {
-        get { return _atkPlayer; }
-        private set { _atkPlayer = value < 0 ? 0 : value; }
+        get { return _ataqueJugador; }
+        private set { _ataqueJugador = value < 0 ? 0 : value; }
     }
-    private int _atkRival;
-    public int AtkRival
+    private int _ataqueRival;
+    public int AtaqueRival
     {
-        get { return _atkRival; }
-        private set { _atkRival = value < 0 ? 0 : value; }
+        get { return _ataqueRival; }
+        private set { _ataqueRival = value < 0 ? 0 : value; }
     }
-    public Batalla(Personaje player, Personaje rival, View view, Player player_team, Player rival_team)
+    public Batalla(Personaje player, Personaje rival, View view, Player equipoJugador, Player equipoRival)
     {
-        this.player = player;
+        this.jugador = player;
         this.rival = rival;
         _view = view;
-        this.player_team = player_team;
-        this.rival_team = rival_team;
+        this.equipoJugador = equipoJugador;
+        this.equipoRival = equipoRival;
         _ventaja = new Ventaja();
         _impresoraVentajaVidaAtaque = new ImpresoraVentajaVidaAtaque(view);
         _manejadorDeAtaques = new ManejadorDeAtaques();
@@ -43,45 +43,45 @@ public class Batalla
 
     public void calcularVentajas()
     {
-        _ventaja.calcularVentaja(player, rival);
+        _ventaja.calcularVentaja(jugador, rival);
     }
 
     public void printVentaja()
     {
-        _impresoraVentajaVidaAtaque.printVentaja(player, rival, _ventaja.ventajaPlayer);
+        _impresoraVentajaVidaAtaque.printVentaja(jugador, rival, _ventaja.ventajaJugador);
     }
 
     public void printVidaEndRound()
     {
-        _impresoraVentajaVidaAtaque.printVidaEndRound(player, rival);
+        _impresoraVentajaVidaAtaque.printVidaEndRound(jugador, rival);
     }
     
     public void printFollowUp()
     {
-        _impresoraVentajaVidaAtaque.printFollowUp(_manejadorFollowUp, player, rival);
+        _impresoraVentajaVidaAtaque.printFollowUp(_manejadorFollowUp, jugador, rival);
     }
 
     public void definirAtaque()  
     
     {
-        AtkPlayer = _manejadorDeAtaques.calcularAtaque(player, rival, _ventaja.ventajaPlayer);
-        AtkRival = _manejadorDeAtaques.calcularAtaque(rival, player, _ventaja.ventajaRival);
+        AtaqueJugador = _manejadorDeAtaques.calcularAtaque(jugador, rival, _ventaja.ventajaJugador);
+        AtaqueRival = _manejadorDeAtaques.calcularAtaque(rival, jugador, _ventaja.ventajaRival);
     }
     
-    public void realizarAtaque(Personaje player, Personaje rival, int dano)
+    public void realizarAtaque(Personaje jugador, Personaje rival, int dano)
     {
-        _manejadorDeAtaques.accionAtacar(player, rival, dano);
-        _impresoraVentajaVidaAtaque.printAtaque(player, rival, dano);
+        _manejadorDeAtaques.accionAtacar(jugador, rival, dano);
+        _impresoraVentajaVidaAtaque.printAtaque(jugador, rival, dano);
     }
 
     public void realizarFollowUp()
     {
-        _manejadorFollowUp.realizarFollowUp(player, rival, AtkPlayer, AtkRival);
+        _manejadorFollowUp.realizarFollowUp(jugador, rival, AtaqueJugador, AtaqueRival);
     }
 
     public void removerJugador()
     {
-        _removerJugador.removerJugador(player, rival, player_team, rival_team);
+        _removerJugador.removerJugador(jugador, rival, equipoJugador, equipoRival);
     }
 }
 public class ImpresoraVentajaVidaAtaque
@@ -93,15 +93,15 @@ public class ImpresoraVentajaVidaAtaque
         _view = view;
     }
 
-    public void printVentaja(Personaje player, Personaje rival, decimal ventaja_player)
+    public void printVentaja(Personaje jugador, Personaje rival, decimal ventajaJugador)
     {
-        if (ventaja_player == 1.2m)
+        if (ventajaJugador == 1.2m)
         {
-            _view.WriteLine($"{player.name} ({player.weapon}) tiene ventaja con respecto a {rival.name} ({rival.weapon})");
+            _view.WriteLine($"{jugador.name} ({jugador.weapon}) tiene ventaja con respecto a {rival.name} ({rival.weapon})");
         }
-        else if (ventaja_player == 0.8m)
+        else if (ventajaJugador == 0.8m)
         {
-            _view.WriteLine($"{rival.name} ({rival.weapon}) tiene ventaja con respecto a {player.name} ({player.weapon})");
+            _view.WriteLine($"{rival.name} ({rival.weapon}) tiene ventaja con respecto a {jugador.name} ({jugador.weapon})");
         }
         else
         {
@@ -109,34 +109,34 @@ public class ImpresoraVentajaVidaAtaque
         }
     }
 
-    public void printVidaEndRound(Personaje player, Personaje rival)
+    public void printVidaEndRound(Personaje jugador, Personaje rival)
     {
-        _view.WriteLine($"{player.name} ({player.HP}) : {rival.name} ({rival.HP})");
+        _view.WriteLine($"{jugador.name} ({jugador.HP}) : {rival.name} ({rival.HP})");
     }
 
-    public void printFollowUp(ManejadorFollowUp follow, Personaje player, Personaje rival)
+    public void printFollowUp(ManejadorFollowUp follow, Personaje jugador, Personaje rival)
     {
         if (follow.spdFollowJugador >= follow.spdFollowRival + follow.velocidadAdicionalFollowUp)
         {
-            _view.WriteLine($"{player.name} ataca a {rival.name} con {follow.AtkFollowJugador} de daño");
+            _view.WriteLine($"{jugador.name} ataca a {rival.name} con {follow.AtkFollowJugador} de daño");
         }
         else if (follow.spdFollowJugador + follow.velocidadAdicionalFollowUp <= follow.spdFollowRival)
         {
-            _view.WriteLine($"{rival.name} ataca a {player.name} con {follow.AtkFollowRival} de daño");
+            _view.WriteLine($"{rival.name} ataca a {jugador.name} con {follow.AtkFollowRival} de daño");
         }
         else
         {
             _view.WriteLine("Ninguna unidad puede hacer un follow up"); 
         }
     }
-    public void printAtaque(Personaje player, Personaje rival, int dano)
+    public void printAtaque(Personaje jugador, Personaje rival, int dano)
     {
-        _view.WriteLine($"{player.name} ataca a {rival.name} con {dano} de daño");
+        _view.WriteLine($"{jugador.name} ataca a {rival.name} con {dano} de daño");
     }
 }
 public class Ventaja
 {
-    public decimal ventajaPlayer { get; private set; } = 1;
+    public decimal ventajaJugador { get; private set; } = 1;
     public decimal ventajaRival { get; private set; } = 1;
     
     public decimal multiplicadorVentaja { get; private set; } = 1.2m;
@@ -145,25 +145,25 @@ public class Ventaja
     
     public decimal multiplicadorDefault { get; private set; } = 1m;
 
-    public void calcularVentaja(Personaje player, Personaje rival)
+    public void calcularVentaja(Personaje jugador, Personaje rival)
     {
-        if (player.weapon == Armas.Sword.ToString() && rival.weapon == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
-            player.weapon == Armas.Lance.ToString() && rival.weapon == Armas.Sword.ToString() ||
-            player.weapon == Armas.Axe.ToString() && rival.weapon == Armas.Lance.ToString())
+        if (jugador.weapon == Armas.Sword.ToString() && rival.weapon == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
+            jugador.weapon == Armas.Lance.ToString() && rival.weapon == Armas.Sword.ToString() ||
+            jugador.weapon == Armas.Axe.ToString() && rival.weapon == Armas.Lance.ToString())
         {
-            ventajaPlayer = multiplicadorVentaja;
+            ventajaJugador = multiplicadorVentaja;
             ventajaRival = multiplicadorDesventaja;
         }
-        else if (rival.weapon == Armas.Sword.ToString() && player.weapon == Armas.Axe.ToString() ||
-                 rival.weapon == Armas.Lance.ToString() && player.weapon == Armas.Sword.ToString() ||
-                 rival.weapon == Armas.Axe.ToString() && player.weapon == Armas.Lance.ToString())
+        else if (rival.weapon == Armas.Sword.ToString() && jugador.weapon == Armas.Axe.ToString() ||
+                 rival.weapon == Armas.Lance.ToString() && jugador.weapon == Armas.Sword.ToString() ||
+                 rival.weapon == Armas.Axe.ToString() && jugador.weapon == Armas.Lance.ToString())
         {
-            ventajaPlayer = multiplicadorDesventaja;
+            ventajaJugador = multiplicadorDesventaja;
             ventajaRival = multiplicadorVentaja;
         }
         else
         {
-            ventajaPlayer = multiplicadorDefault;
+            ventajaJugador = multiplicadorDefault;
             ventajaRival = multiplicadorDefault;
         }
     }
@@ -227,10 +227,10 @@ public class ManejadorFollowUp
     public int spdFollowRival { get; private set; }
 
     public int velocidadAdicionalFollowUp { get; private set; } = 5; 
-    public void realizarFollowUp(Personaje player, Personaje rival, int ataque_player, int ataque_rival)
+    public void realizarFollowUp(Personaje jugador, Personaje rival, int ataqueJugador, int ataqueRival)
     {
-        definirFollowUpAtk(player, rival, ataque_player, ataque_rival);
-        definirFollowUpSpd(player, rival);
+        definirFollowUpAtk(jugador, rival, ataqueJugador, ataqueRival);
+        definirFollowUpSpd(jugador, rival);
         
         if (spdFollowJugador >= spdFollowRival + velocidadAdicionalFollowUp)
         {
@@ -238,22 +238,22 @@ public class ManejadorFollowUp
         }
         else if (spdFollowJugador + velocidadAdicionalFollowUp <= spdFollowRival)
         {
-            player.HP -= AtkFollowRival;
+            jugador.HP -= AtkFollowRival;
         }
     }
-    private void definirFollowUpAtk(Personaje player, Personaje rival, int ataque_player, int ataque_rival)
+    private void definirFollowUpAtk(Personaje jugador, Personaje rival, int ataque_player, int ataque_rival)
     {
-        AtkFollowJugador = ataque_player + player.atk_follow;
+        AtkFollowJugador = ataque_player + jugador.atk_follow;
         AtkFollowRival = ataque_rival + rival.atk_follow;
     }
-    private void definirFollowUpSpd(Personaje player, Personaje rival)
+    private void definirFollowUpSpd(Personaje jugador, Personaje rival)
     {
-        spdFollowJugador = player.spd;
+        spdFollowJugador = jugador.spd;
         spdFollowRival = rival.spd;
         
-        if (player.netos_stats.ContainsKey("Spd"))
+        if (jugador.netos_stats.ContainsKey("Spd"))
         {
-            spdFollowJugador += player.netos_stats["Spd"];
+            spdFollowJugador += jugador.netos_stats["Spd"];
         }
         if (rival.netos_stats.ContainsKey("Spd"))
         {
@@ -263,15 +263,15 @@ public class ManejadorFollowUp
 }
 public class RemoverJugador
 {
-    public void removerJugador(Personaje player, Personaje rival, Player playerTeam, Player rivalTeam)
+    public void removerJugador(Personaje jugador, Personaje rival, Player euqipoJugador, Player equipoRival)
     {
-        if (player.HP == 0)
+        if (jugador.HP == 0)
         {
-            playerTeam.equipo.Remove(player);
+            euqipoJugador.equipo.Remove(jugador);
         }
         else if (rival.HP == 0)
         {
-            rivalTeam.equipo.Remove(rival);
+            equipoRival.equipo.Remove(rival);
         }
     }
 }

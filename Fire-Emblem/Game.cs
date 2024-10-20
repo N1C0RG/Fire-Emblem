@@ -73,13 +73,13 @@ namespace Fire_Emblem
         private void procesarTurno(Player jugadorActual, Player rival)
         {
             iniciarTurno(jugadorActual, rival);
-            _batalla.realizarAtaque(_playerPersonaje, _rivalPersonaje, _batalla.AtkPlayer);
+            _batalla.realizarAtaque(_playerPersonaje, _rivalPersonaje, _batalla.AtaqueJugador);
             if (_rivalPersonaje.HP == 0)
             {
                 finRonda();
                 return;
             }
-            _batalla.realizarAtaque(_rivalPersonaje, _playerPersonaje, _batalla.AtkRival);
+            _batalla.realizarAtaque(_rivalPersonaje, _playerPersonaje, _batalla.AtaqueRival);
             _batalla.definirAtaque();
             if (_playerPersonaje.HP == 0)
             {

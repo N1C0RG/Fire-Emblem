@@ -20,4 +20,9 @@ public class Player
         }
         return false; 
     }
+    
+    public void eliminarPersonaje(Personaje personaje)
+    {
+        equipo.Remove(personaje);
+    }
 }
