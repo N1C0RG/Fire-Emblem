@@ -68,6 +68,41 @@ public class Personaje
             }
         }
     }
+    //TODO: ver este metodo, la clase tiene muchos metodos publicos 
+    public bool estaMuerto()
+    {
+        return HP == 0; 
+    }
+
+    public void recivirDano(int cantidad)
+    {
+        HP -= cantidad; 
+    }
+    public int obtenerAtaqueConVentaja(decimal ventaja)//TODO ver este metodo 
+    {
+        return (int)Math.Floor(Convert.ToDecimal(atk + obtenerBonoAtaque()) * ventaja);
+    }
+
+    public int obtenerBonoAtaque()
+    {
+        return netos_stats.ContainsKey("Atk") ? netos_stats["Atk"] : 0;
+    }
+
+    public int obtenerDefensa(bool esAtaqueMagico)
+    {
+        return esAtaqueMagico ? res : def + (netos_stats.ContainsKey("Def") ? netos_stats["Def"] : 0);
+    }
+
+    public int obtenerResistencia()
+    {
+        return netos_stats.ContainsKey("Res") ? netos_stats["Res"] : res;
+    }
+
+    public void incrementarAtaques()
+    {
+        first_atack += 1;
+    }
+    
 
     public void calcularNetosStats()
     {
