@@ -179,39 +179,22 @@ public class ManejadorDeAtaques
     
     public int calcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
     {
-        
         //TODO: arreglar esto
         atacante.ResetearStatsPorFirstAtack();
         defensor.ResetearStatsPorFirstAtack(); 
         
-        calcularDefensa(atacante, defensor);
+        decimal ataque = Convert.ToDecimal(atacante.getAtaque() + atacante.getNetoStats("Atk"));
+        bool esAtaqueMagico = atacante.weapon == Armas.Magic.ToString();
+        int defensa = esAtaqueMagico ? defensor.getResistencia() + defensor.getNetoStats("Res") 
+            : defensor.getDefensa() + defensor.getNetoStats("Def");
+        int ataqueFinal =  (int)Math.Floor(ataque * ventaja) - defensa;
 
-        int ataque =
-            (int)Math.Floor(Convert.ToDecimal(atacante.atk +
-                              (atacante.netos_stats.ContainsKey("Atk")
-                                  ? atacante.netos_stats["Atk"]
-                                  : 0)) * ventaja) - _defensa;
-        return ataque;
+        return ataqueFinal < 0 ? 0 : ataqueFinal;
     }
-
-    private void calcularDefensa(Personaje atacante, Personaje defensor)
-    {
-        _defensa = (atacante.weapon == Armas.Magic.ToString()) ? defensor.res : defensor.def;
-        
-        if (atacante.weapon != Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Def"))
-        {
-            _defensa += defensor.netos_stats["Def"];
-        }
-        if (atacante.weapon == Armas.Magic.ToString() && defensor.netos_stats.ContainsKey("Res"))
-        {
-            _defensa += defensor.netos_stats["Res"];
-        }
-    }
-    
     public void accionAtacar(Personaje atacante, Personaje defensor, int dano)
     {
-        defensor.HP -= dano;
-        atacante.first_atack += 1;
+        defensor.recivirDano(dano);
+        atacante.incrementarAtaques(); 
     }
 }
 

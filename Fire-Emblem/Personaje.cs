@@ -77,26 +77,41 @@ public class Personaje
     public void recivirDano(int cantidad)
     {
         HP -= cantidad; 
-    }
-    public int obtenerAtaqueConVentaja(decimal ventaja)//TODO ver este metodo 
+    }public int getAtaque()
     {
-        return (int)Math.Floor(Convert.ToDecimal(atk + obtenerBonoAtaque()) * ventaja);
+        return atk; 
     }
-
-    public int obtenerBonoAtaque()
+    public int getResistencia()
     {
-        return netos_stats.ContainsKey("Atk") ? netos_stats["Atk"] : 0;
+        return res; 
     }
-
-    public int obtenerDefensa(bool esAtaqueMagico)
+    public int getDefensa()
     {
-        return esAtaqueMagico ? res : def + (netos_stats.ContainsKey("Def") ? netos_stats["Def"] : 0);
+        return def; 
     }
-
-    public int obtenerResistencia()
+    public int getNetoStats(string stat)
     {
-        return netos_stats.ContainsKey("Res") ? netos_stats["Res"] : res;
+        return netos_stats.ContainsKey(stat) ? netos_stats[stat] : 0;
     }
+    
+    //decimal ataque =
+    //     Convert.ToDecimal(atk +
+    //                       (netos_stats.ContainsKey("Atk")
+    //                           ? netos_stats["Atk"]
+    //                           : 0));
+    // public decimal obtenerAtaque(decimal ventaja)//TODO ver este metodo 
+    // {
+    //     decimal ataque =
+    //     Convert.ToDecimal(atk +
+    //                       (netos_stats.ContainsKey("Atk")
+    //                           ? netos_stats["Atk"]
+    //                           : 0));
+    //     return ataque; 
+    // }
+    // public int obtenerDefensa(bool esAtaqueMagico)
+    // {
+    //     return esAtaqueMagico ? res + (netos_stats.ContainsKey("Res") ? netos_stats["Res"] : 0) : def + (netos_stats.ContainsKey("Def") ? netos_stats["Def"] : 0);
+    // }
 
     public void incrementarAtaques()
     {
