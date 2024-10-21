@@ -9,10 +9,10 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     private View _view;
     public Player equipoJugador;
     public Player equipoRival;
-    private Ventaja _ventaja;
+    public Ventaja _ventaja;
     private ImpresoraVentajaVidaAtaque _impresoraVentajaVidaAtaque;
     private ManejadorDeAtaques _manejadorDeAtaques;
-    private ManejadorFollowUp _manejadorFollowUp;
+    public ManejadorFollowUp _manejadorFollowUp;
     private RemoverJugador _removerJugador;
     
     private int _ataqueJugador;
