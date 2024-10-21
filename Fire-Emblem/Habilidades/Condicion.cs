@@ -144,9 +144,9 @@ public class CondicionFirstAtk : ICondicion//TODO: arreglar esto
 {
     public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        if (jugador.first_atack == 1)
+        if (jugador.getContadorAtaques() == 1)
         {
-            jugador.habilidad_first_atack.Add("Atk"); 
+            jugador.addHabilidadPrimerAtaque("Atk");
             return true; 
         }
         return false;

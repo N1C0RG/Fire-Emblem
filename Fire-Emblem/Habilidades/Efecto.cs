@@ -15,7 +15,7 @@ public abstract class EfectoStatJugador : IEfecto
 
     public void efecto(Personaje player, Personaje rival)
     {
-        var stats = Cantidad > 0 ? player.bonus_stats : player.penalty_stats;
+        var stats = Cantidad > 0 ? player.bonusStats : player.penaltyStats;
 
         if (stats.ContainsKey(StatKey))
         {
@@ -38,7 +38,7 @@ public abstract class EfectoStatRival : IEfecto
     }
     public void efecto(Personaje player, Personaje rival)
     {
-        var stats = Cantidad > 0 ? rival.bonus_stats : rival.penalty_stats;
+        var stats = Cantidad > 0 ? rival.bonusStats : rival.penaltyStats;
 
         if (stats.ContainsKey(StatKey))
         {
@@ -59,7 +59,7 @@ public abstract class AplicarCancelacionBonus : IEfecto
     }
     public void efecto(Personaje player, Personaje rival)
     {
-        rival.bonus_neutralizados.Add(StatKey);
+        rival.bonusNeutralizados.Add(StatKey);
     }
 }
 public class AtkUp : EfectoStatJugador
@@ -115,23 +115,23 @@ public class AplicarCancelacionPenalty : IEfecto
 {
     public void efecto(Personaje player, Personaje rival)
     {
-        player.penalty_neutralizados.Add("Atk");
-        player.penalty_neutralizados.Add("Spd");
-        player.penalty_neutralizados.Add("Def");
-        player.penalty_neutralizados.Add("Res");
+        player.addPenaltyNeutralizados("Atk");
+        player.addPenaltyNeutralizados("Spd");
+        player.addPenaltyNeutralizados("Def");
+        player.addPenaltyNeutralizados("Res");
     }
 }
 public class Up50Atack: IEfecto
 {
     public  void efecto(Personaje player, Personaje rival)
     {
-        if (player.bonus_stats.ContainsKey("Atk"))
+        if (player.bonusStats.ContainsKey("Atk"))
         {
-            player.bonus_stats["Atk"] += (int)Math.Floor(Convert.ToDecimal(player.atk) * 0.5m);
+            player.bonusStats["Atk"] += (int)Math.Floor(Convert.ToDecimal(player.atk) * 0.5m);
         }
         else
         {
-            player.bonus_stats.Add("Atk", (int)Math.Floor(Convert.ToDecimal(player.atk) * 0.5m));
+            player.bonusStats.Add("Atk", (int)Math.Floor(Convert.ToDecimal(player.atk) * 0.5m));
         } 
     }
 }
@@ -140,7 +140,7 @@ public class Sandstorm : IEfecto
 {
     public  void efecto(Personaje player, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
     {
-        player.atk_follow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk;
+        player.ataqueFollow = (int)Math.Floor(Convert.ToDecimal(player.def) * 1.5m) - player.atk; //TODO: ver esto 
     }
 }
 
@@ -148,8 +148,8 @@ public class EfectoLuna : IEfecto
 {
     public  void efecto(Personaje player, Personaje rival)
     {
-        rival.habilidad_first_atack.Add("Def");
-        rival.habilidad_first_atack.Add("Res");
+        rival.habilidadPrimerAtaque.Add("Def"); //TODO: ver esto 
+        rival.habilidadPrimerAtaque.Add("Res");
     }
 }
 

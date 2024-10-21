@@ -4,7 +4,7 @@ public class CondicionesHabilidadEncapsuladas
 {
     public bool tieneRivalHP75(Personaje rival)
     {
-        bool condicion = rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.hp_original) * 0.75m); 
+        bool condicion = rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.getHpOriginal()) * 0.75m); 
         return condicion;
     }
     public bool tieneRivalHPvsJugadorHP(Personaje jugador, Personaje rival)
@@ -20,56 +20,56 @@ public class CondicionesHabilidadEncapsuladas
     }
     public bool tieneNoVidaCompletaJugador(Personaje jugador)
     {
-        bool condicion = jugador.HP < jugador.hp_original; 
+        bool condicion = jugador.HP < jugador.getHpOriginal(); 
         return condicion; 
     }
 
     public bool tieneFullVidaRival(Personaje rival)
     {
-        bool condicion = rival.HP == rival.hp_original;
+        bool condicion = rival.HP == rival.getHpOriginal();
         return condicion; 
     }
     public bool inicioCombate(Personaje jugador)
     {
-        bool condicion = jugador.inicia_round; 
+        bool condicion = jugador.getIniciaTurno(); 
         return condicion; 
     }
 
     public bool ataqueClose(Personaje rival)
     {
-        bool condicion = rival.weapon != Armas.Magic.ToString() && rival.weapon != Armas.Bow.ToString();
+        bool condicion = rival.getArma() != Armas.Magic.ToString() && rival.getArma() != Armas.Bow.ToString();
         return condicion; 
     }
     public bool ataqueDistant(Personaje rival)
     {
-        bool condicion = rival.weapon == Armas.Magic.ToString() || rival.weapon == Armas.Bow.ToString();
+        bool condicion = rival.getArma() == Armas.Magic.ToString() || rival.getArma() == Armas.Bow.ToString();
         return condicion; 
     }
     public bool esRivalPrevio(Personaje jugador, Personaje rival)
     {
-        bool condicion = jugador.oponente_previo == rival.name; 
+        bool condicion = jugador.getOponentePrevio() == rival.getNombre(); 
         return condicion; 
     }
 
     public bool rivalEsHombre(Personaje rival)
     {
-        bool condicion = rival.gender == "Male";
+        bool condicion = rival.getGenero() == "Male";
         return condicion; 
     }
 
     public bool cantidadVidaMenorIgualOriginal(Personaje jugador, decimal Hp)
     {
-        bool condicion = jugador.HP <= (int)Math.Floor(Convert.ToDecimal(jugador.hp_original) * Hp);
+        bool condicion = jugador.HP <= (int)Math.Floor(Convert.ToDecimal(jugador.getHpOriginal()) * Hp);
         return condicion; 
     }
     public bool tieneArmaWeapon(Personaje jugador, string weapon)
     {
-        bool condicion = jugador.weapon == weapon;
+        bool condicion = jugador.getArma() == weapon;
         return condicion; 
     }
     public bool jugadorIniciaRound(Personaje jugador)
     {
-        bool condicion = jugador.inicia_round;
+        bool condicion = jugador.getIniciaTurno();
         return condicion; 
     }
 }

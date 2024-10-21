@@ -330,7 +330,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
         else if (_nombre_habilidad == "Wrath")
         {
             //TODO; mover esto a efecto ? 
-            int cantidad = _jugador.hp_original - _jugador.HP > 30 ? 30 : _jugador.hp_original - _jugador.HP;
+            int cantidad = _jugador.getHpOriginal() - _jugador.HP > 30 ? 30 : _jugador.getHpOriginal() - _jugador.HP;
             _habilidad = new Habilidad(
                 new List<IEfecto> { new AtkUp(cantidad), new SpdUp(cantidad) },
                 new List<ICondicion> { new CondicionNoVidaCompletaJugador() },

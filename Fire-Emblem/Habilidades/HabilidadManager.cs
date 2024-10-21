@@ -61,26 +61,26 @@ public class NeutralizadorEfectos
         neutralizarBonusPenalty(_rival);
         neutralizarFollowBonusPenalty(_rival);
     }
-    private void neutralizarBonusPenalty(Personaje jugador)
+    private void neutralizarBonusPenalty(Personaje jugador) //TODO ver esto 
     {
-        foreach (var stat in jugador.bonus_neutralizados)
+        foreach (var stat in jugador.bonusNeutralizados)
         {
-            jugador.bonus_stats[stat] = 0;
+            jugador.bonusStats[stat] = 0;
         }
-        foreach (var stat in jugador.penalty_neutralizados)
+        foreach (var stat in jugador.penaltyNeutralizados)
         {
-            jugador.penalty_stats[stat] = 0;
+            jugador.penaltyStats[stat] = 0;
         }
     }
     private void neutralizarFollowBonusPenalty(Personaje jugador)
     {
-        if (jugador.atk_follow > 0 && jugador.bonus_neutralizados.Contains("Atk"))
+        if (jugador.getAtaqueFollow() > 0 && jugador.bonusNeutralizados.Contains("Atk"))
         {
-            jugador.atk_follow = 0;
+            jugador.ataqueFollow = 0;
         }
-        if (jugador.atk_follow < 0 && jugador.penalty_neutralizados.Contains("Atk"))
+        if (jugador.getAtaqueFollow() < 0 && jugador.penaltyNeutralizados.Contains("Atk"))
         {
-            jugador.atk_follow = 0;
+            jugador.ataqueFollow = 0;
         }
     }
 }
@@ -108,12 +108,12 @@ public class ImpresoraBonusPenaltyNeutralizaciones
 
     private void printJugadorBonusPenalty(Personaje jugador)
     {
-        foreach (var stat in jugador.bonus_stats)
+        foreach (var stat in jugador.bonusStats)
         {
             printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
 
-        foreach (var stat in jugador.penalty_stats)
+        foreach (var stat in jugador.penaltyStats)
         {
             if (stat.Value < 0)
             {
@@ -124,7 +124,7 @@ public class ImpresoraBonusPenaltyNeutralizaciones
 
     private void printBonusPenalty(Personaje jugador, KeyValuePair<string, int> stat, string sign)
     {
-        var mensaje = (jugador.first_atack == 1 && jugador.habilidad_first_atack.Contains(stat.Key))
+        var mensaje = (jugador.getContadorAtaques() == 1 && jugador.habilidadPrimerAtaque.Contains(stat.Key))
             ? $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
             : $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value}";
 
@@ -133,22 +133,22 @@ public class ImpresoraBonusPenaltyNeutralizaciones
     
     private void printBonusPenaltyNeutralizados(Personaje jugador)
     {  
-        foreach (var bonus in jugador.bonus_neutralizados)
+        foreach (var bonus in jugador.bonusNeutralizados)
         {
             _view.WriteLine($"Los bonus de {bonus} de {jugador.name} fueron neutralizados");
         }
 
-        foreach (var penalty in jugador.penalty_neutralizados)
+        foreach (var penalty in jugador.penaltyNeutralizados)
         {
             _view.WriteLine($"Los penalty de {penalty} de {jugador.name} fueron neutralizados");
         }
     }
     private void printFollowUpAtk(Personaje jugador)
     {
-        if (jugador.atk_follow != 0)
+        if (jugador.getAtaqueFollow() != 0)
         {
-            var sign = jugador.atk_follow > 0 ? "+" : "";
-            _view.WriteLine($"{jugador.name} obtiene Atk{sign}{jugador.atk_follow} en su Follow-Up");
+            var sign = jugador.getAtaqueFollow() > 0 ? "+" : "";
+            _view.WriteLine($"{jugador.name} obtiene Atk{sign}{jugador.getAtaqueFollow()} en su Follow-Up");
         }
     }
     

@@ -1,5 +1,6 @@
-namespace Fire_Emblem.Vista;
+using Fire_Emblem.Encapsulado;
 
+namespace Fire_Emblem.Vista;
 using Fire_Emblem_View;
 
 public class VistaBatalla

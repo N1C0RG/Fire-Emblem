@@ -204,7 +204,7 @@ public class ControladorTurno
     {
         _batalla = new Batalla(_personajeJugador, _personajeRival, _view, jugadorActual, rival);
         var vistaBatalla = new VistaBatalla(_view);
-        _controladorBatalla = new ControladorBatalla(_batalla, vistaBatalla, _personajeJugador, _personajeRival);
+        _controladorBatalla = new ControladorBatalla(_batalla, vistaBatalla);
         _controladorBatalla.IniciarBatalla();
     }
 
@@ -224,9 +224,9 @@ public class ControladorTurno
     
     private void resetearValoresPersonajeTurno()
     {
-        _personajeJugador.first_atack = 1;
-        _personajeRival.first_atack = 1;
-        _personajeJugador.oponente_previo = _personajeRival.name;
-        _personajeRival.oponente_previo = _personajeJugador.name;
+        _personajeJugador.setContadorAtaques(1);
+        _personajeRival.setContadorAtaques(1);
+        _personajeJugador.setOponentePrevio(_personajeRival.getNombre()); 
+        _personajeRival.setOponentePrevio(_personajeJugador.getNombre());
     }
 }
