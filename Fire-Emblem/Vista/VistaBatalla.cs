@@ -15,15 +15,15 @@ public class VistaBatalla
     {
         if (ventajaJugador == 1.2m)
         {
-            _view.WriteLine($"{jugador.getNombre()} tiene ventaja sobre {rival.getNombre()}");
+            _view.WriteLine($"{jugador.getNombre()} ({jugador.getArma()}) tiene ventaja con respecto a {rival.getNombre()} ({rival.getArma()})");
         }
         else if (ventajaJugador == 0.8m)
         {
-            _view.WriteLine($"{jugador.getNombre()} tiene desventaja contra {rival.getNombre()}");
+            _view.WriteLine($"{rival.getNombre()} ({rival.getArma()}) tiene ventaja con respecto a {jugador.getNombre()} ({jugador.getArma()})");
         }
         else
         {
-            _view.WriteLine($"{jugador.getNombre()} y {rival.getNombre()} están equilibrados");
+            _view.WriteLine("Ninguna unidad tiene ventaja con respecto a la otra");
         }
     }
 
@@ -36,15 +36,15 @@ public class VistaBatalla
     {
         if (dataFollowUp.velocidadFollowJugador >= dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
         {
-            _view.WriteLine($"{jugador.getNombre()} realiza un follow-up contra {rival.getNombre()}");
+            _view.WriteLine($"{jugador.getNombre()} ataca a {rival.getNombre()} con {dataFollowUp.AtkFollowJugador} de daño");
         }
         else if (dataFollowUp.velocidadFollowJugador + dataFollowUp.velocidadAdicionalFollowUp <= dataFollowUp.velocidadFollowRival)
         {
-            _view.WriteLine($"{rival.getNombre()} realiza un follow-up contra {jugador.getNombre()}");
+            _view.WriteLine($"{rival.getNombre()} ataca a {jugador.getNombre()} con {dataFollowUp.AtkFollowRival} de daño");
         }
         else
         {
-            _view.WriteLine("No hay follow-up");
+            _view.WriteLine("Ninguna unidad puede hacer un follow up");
         }
     }
 
