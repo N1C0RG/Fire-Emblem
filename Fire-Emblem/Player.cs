@@ -44,4 +44,9 @@ public class Player
     {
         return equipo; 
     }
+    
+    public List<string> getNombrePersonajes()
+    {
+        return equipo.Select(personaje => personaje.getNombre()).ToList();
+    }
 }
