@@ -15,6 +15,11 @@ public class VistaJuego
         _view.WriteLine("Elige un archivo para cargar los equipos");
     }
 
+    public string leerInput()
+    {
+        return _view.ReadLine(); 
+    }
+
     public void mensajeTodosArchivos(string[] filesEquipo)
     {
         for (int i = 0; i < filesEquipo.Length; i++)

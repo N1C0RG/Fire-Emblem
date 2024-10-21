@@ -10,8 +10,6 @@ namespace Fire_Emblem
         private readonly View _view;
         private readonly string _teamsFolder;
         
-        private Personaje _playerPersonaje;
-        private Personaje _rivalPersonaje;
         private Player _jugadorPlayer;
         private Player _rivalPlayer;
 
@@ -29,7 +27,7 @@ namespace Fire_Emblem
             inicializacionPlay();
             
             var controladorJuego =
-                new ControladorJuego(_view, _jugadorPlayer, _rivalPlayer, _playerPersonaje, _rivalPersonaje); 
+                new ControladorJuego(_view, _jugadorPlayer, _rivalPlayer); 
             controladorJuego.Play();
         }
         private void inicializacionPlay()
