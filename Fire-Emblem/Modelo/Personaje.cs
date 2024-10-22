@@ -35,7 +35,8 @@ public class Personaje
     public int contadorAtaques = 1;
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
-    public string oponentePrevio = ""; 
+    public string oponentePrevio = "";
+    public decimal reduccionDanoPorcentual = 0m; 
 
     public Personaje(string name, string weapon, string gender, string deathQuote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades)

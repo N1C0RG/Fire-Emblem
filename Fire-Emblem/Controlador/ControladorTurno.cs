@@ -228,5 +228,7 @@ public class ControladorTurno
         _personajeRival.setContadorAtaques(1);
         _personajeJugador.setOponentePrevio(_personajeRival.getNombre()); 
         _personajeRival.setOponentePrevio(_personajeJugador.getNombre());
+        _personajeJugador.reduccionDanoPorcentual = 0m; //TODO: redefinir esto con un metodo que lo encapsule 
+        _personajeRival.reduccionDanoPorcentual = 0m; 
     }
 }

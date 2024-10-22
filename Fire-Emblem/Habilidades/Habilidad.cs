@@ -35,3 +35,11 @@ public class Habilidad
     }
     
 }
+
+
+public class HabilidadesPostEfectosNormales : Habilidad
+{
+    public HabilidadesPostEfectosNormales(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival) : base(efecto, condicion, jugador, rival)
+    {
+    }
+}

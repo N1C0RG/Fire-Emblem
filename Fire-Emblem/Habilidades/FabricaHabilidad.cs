@@ -692,5 +692,21 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _rival);
             
         }
+        else if (_nombre_habilidad == "Dodge")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentual()}, 
+                new List<ICondicion> { new CondicionSpdDanoPorcentual() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Dragon Wall")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualRes()}, 
+                new List<ICondicion> { new CondicionResDanoPorcentual() }, 
+                _jugador, 
+                _rival);
+        }
     }
 }

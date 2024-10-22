@@ -104,6 +104,9 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printBonusPenaltyNeutralizados(_jugador);
         printJugadorBonusPenalty(_rival);
         printBonusPenaltyNeutralizados(_rival);
+        
+        printReduccionDanoPorcentual(_jugador); 
+        printReduccionDanoPorcentual(_rival);
     }
 
     private void printJugadorBonusPenalty(Personaje jugador)
@@ -149,6 +152,15 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         {
             var sign = jugador.getAtaqueFollow() > 0 ? "+" : "";
             _view.WriteLine($"{jugador.name} obtiene Atk{sign}{jugador.getAtaqueFollow()} en su Follow-Up");
+        }
+    }
+
+    private void printReduccionDanoPorcentual(Personaje jugador)
+    {
+        
+        if (jugador.reduccionDanoPorcentual > 0)
+        {
+            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.reduccionDanoPorcentual * 100)}%");
         }
     }
     

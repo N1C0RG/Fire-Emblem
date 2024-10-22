@@ -161,3 +161,22 @@ public class HpUp : IEfecto
     }
 }
 
+public class ReduccionDanoPorcentual : IEfecto
+{
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        decimal reduccionDano = ((jugador.spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((jugador.spd - rival.spd) * 4) / 100m;
+        jugador.reduccionDanoPorcentual += reduccionDano;
+    }
+}
+
+public class ReduccionDanoPorcentualRes : IEfecto
+{
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        decimal reduccionDano = ((jugador.res - rival.res) * 4) / 100m > 0.4m ? 0.4m : ((jugador.res - rival.res) * 4) / 100m;
+        jugador.reduccionDanoPorcentual += reduccionDano;
+    }
+}
+
+
