@@ -708,5 +708,14 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
         }
+        else if (_nombre_habilidad == "Gentility")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+        }
+        
     }
 }

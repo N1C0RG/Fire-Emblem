@@ -19,7 +19,7 @@ public class ControladorBatalla
     {
         _dataBatalla = _batalla.obtenerDataBatalla();
     }
-    public void IniciarBatalla()
+    public void iniciarBatalla()
     {
         _batalla.calcularVentajas();
         actualizarDataBatalla();
@@ -29,14 +29,17 @@ public class ControladorBatalla
 
     public void combateBatalla()
     {
+        
         actualizarDataBatalla();
         _batalla.realizarAtaque(_dataBatalla.jugador, _dataBatalla.rival, _batalla.AtaqueJugador);
         _vistaBatalla.mostrarAtaque(_dataBatalla.jugador, _dataBatalla.rival, _batalla.AtaqueJugador);
+        
         if (_dataBatalla.rival.getHp() == 0)
         {
             finRonda();
             return;
         }
+        
         actualizarDataBatalla();
         _batalla.realizarAtaque(_dataBatalla.rival, _dataBatalla.jugador, _batalla.AtaqueRival);
         _vistaBatalla.mostrarAtaque(_dataBatalla.rival, _dataBatalla.jugador, _batalla.AtaqueRival);

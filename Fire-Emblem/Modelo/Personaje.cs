@@ -36,7 +36,9 @@ public class Personaje
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
     public string oponentePrevio = "";
-    public decimal reduccionDanoPorcentual = 0m; 
+    public decimal reduccionDanoPorcentual = 0m;
+    public int reduccionDanoAbsoluta = 0; 
+    public bool habilidadHpUp = true;  //TODO: arreglaar esto 
 
     public Personaje(string name, string weapon, string gender, string deathQuote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades)

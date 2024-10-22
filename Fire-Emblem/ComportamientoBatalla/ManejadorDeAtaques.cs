@@ -1,5 +1,5 @@
 namespace Fire_Emblem;
-
+using Fire_Emblem_View;
 public class ManejadorDeAtaques
 {
     private int _defensa; 
@@ -17,11 +17,11 @@ public class ManejadorDeAtaques
             : defensor.getDefensa() + defensor.getNetoStats("Def");
         
         int ataqueFinal = (int)Math.Floor(ataque * ventaja) - defensa;
-        ataqueFinal = (int)(ataqueFinal * (1 - defensor.reduccionDanoPorcentual));
+        ataqueFinal = (int)(ataqueFinal * (1 - defensor.reduccionDanoPorcentual)) + defensor.reduccionDanoAbsoluta;
 
         return ataqueFinal < 0 ? 0 : ataqueFinal;
     }
-    public void accionAtacar(Personaje atacante, Personaje defensor, int dano)
+    public void accionAtacar(Personaje atacante, Personaje defensor, int dano)//sacar view y comentario
     {
         defensor.recivirDano(dano);
         atacante.incrementarAtaques(); 

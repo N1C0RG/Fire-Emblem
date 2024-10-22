@@ -155,9 +155,13 @@ public class EfectoLuna : IEfecto
 
 public class HpUp : IEfecto
 {
-    public  void efecto(Personaje jugador, Personaje rival)
+    public  void efecto(Personaje jugador, Personaje rival) //TODO: arreglar esto, mala practica 
     {
-        jugador.HP += 15; 
+        if (jugador.habilidadHpUp)
+        {
+            jugador.HP += 15;
+            jugador.habilidadHpUp = false;
+        } 
     }
 }
 
@@ -178,5 +182,19 @@ public class ReduccionDanoPorcentualRes : IEfecto
         jugador.reduccionDanoPorcentual += reduccionDano;
     }
 }
+
+public class ReduccionDanoAbsoluta : IEfecto
+{
+    private int cantidad;
+    public ReduccionDanoAbsoluta(int cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.reduccionDanoAbsoluta += cantidad;
+    }
+}
+
 
 

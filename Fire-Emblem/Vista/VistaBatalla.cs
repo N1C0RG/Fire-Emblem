@@ -53,4 +53,8 @@ public class VistaBatalla
     {
         _view.WriteLine($"{atacante.getNombre()} ataca a {defensor.getNombre()} con {dano} de daño");
     }
+    public void mostrarMensajePrueba(string mensaje)
+    {
+        _view.WriteLine(mensaje);
+    }
 }

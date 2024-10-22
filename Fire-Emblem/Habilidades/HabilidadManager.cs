@@ -20,7 +20,7 @@ public class HabilidadManager
     public void aplicarTodo()
     {
         aplicarHabilidades(_jugador, _rival);
-        aplicarHabilidades(_rival, _jugador);
+        aplicarHabilidades(_rival, _jugador);//TODO: tremendo problema aca 
         ordenarBonusEnDiccionarioListas();
         _impresoraHabilidades.printTodoBonusPenaltyNeutralizaciones();
         _neutralizadorEfectos.aplicarNeutralizadores();
@@ -107,6 +107,8 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         
         printReduccionDanoPorcentual(_jugador); 
         printReduccionDanoPorcentual(_rival);
+        printReduccionDanoAbsoluto(_jugador);
+        printReduccionDanoAbsoluto(_rival);
     }
 
     private void printJugadorBonusPenalty(Personaje jugador)
@@ -163,5 +165,11 @@ public class ImpresoraBonusPenaltyNeutralizaciones
             _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.reduccionDanoPorcentual * 100)}%");
         }
     }
-    
+    private void printReduccionDanoAbsoluto(Personaje jugador)
+        {
+            if (jugador.reduccionDanoAbsoluta != 0)
+            {
+                _view.WriteLine($"{jugador.name} recibirá {jugador.reduccionDanoAbsoluta} daño en cada ataque");
+            }
+        }
 }

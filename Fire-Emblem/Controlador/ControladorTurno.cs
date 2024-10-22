@@ -173,6 +173,7 @@ public class ControladorTurno
         _controladorBatalla.combateBatalla();
         
         resetearValoresPersonajeTurno();
+        
     }
 
     private void iniciarTurno(Player jugadorActual, Player rival)
@@ -205,7 +206,7 @@ public class ControladorTurno
         _batalla = new Batalla(_personajeJugador, _personajeRival, _view, jugadorActual, rival);
         var vistaBatalla = new VistaBatalla(_view);
         _controladorBatalla = new ControladorBatalla(_batalla, vistaBatalla);
-        _controladorBatalla.IniciarBatalla();
+        _controladorBatalla.iniciarBatalla();
     }
 
     private void aplicarHabilidades()
@@ -228,7 +229,10 @@ public class ControladorTurno
         _personajeRival.setContadorAtaques(1);
         _personajeJugador.setOponentePrevio(_personajeRival.getNombre()); 
         _personajeRival.setOponentePrevio(_personajeJugador.getNombre());
+        
         _personajeJugador.reduccionDanoPorcentual = 0m; //TODO: redefinir esto con un metodo que lo encapsule 
         _personajeRival.reduccionDanoPorcentual = 0m; 
+        _personajeJugador.reduccionDanoAbsoluta = 0;
+        _personajeRival.reduccionDanoAbsoluta = 0;
     }
 }
