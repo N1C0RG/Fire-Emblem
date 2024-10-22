@@ -36,9 +36,14 @@ public class Personaje
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
     public string oponentePrevio = "";
+    
+    
     public decimal reduccionDanoPorcentual = 0m;
     public int reduccionDanoAbsoluta = 0; 
     public bool habilidadHpUp = true;  //TODO: arreglaar esto 
+    public int danoAdicional = 0;
+    public Dictionary<string, decimal> ReduccionDanoPorcentualDictionary = new Dictionary<string, decimal>{ {"primerAtaque", 0}, {"followUp", 0}, {"todosAtaques", 0} }; //TODO: aplicar esto a la logica del juego 
+    public Dictionary<string, int> DanoAdicionalDictionary = new Dictionary<string, int>{ {"primerAtaque", 0}, {"followUp", 0}, {"todosAtaques", 0} };
 
     public Personaje(string name, string weapon, string gender, string deathQuote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades)

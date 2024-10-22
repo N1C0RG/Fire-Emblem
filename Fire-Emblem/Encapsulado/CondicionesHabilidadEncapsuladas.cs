@@ -72,4 +72,11 @@ public class CondicionesHabilidadEncapsuladas
         bool condicion = jugador.getIniciaTurno();
         return condicion; 
     }
+    public bool tieneVentajaArma(Personaje jugador, Personaje rival)
+    {
+        var ventaja = new Ventaja(); 
+        ventaja.calcularVentaja(jugador, rival);
+        bool condicion = ventaja.ventajaJugador != 0; 
+        return condicion; 
+    }
 }

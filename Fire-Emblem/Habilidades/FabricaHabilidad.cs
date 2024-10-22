@@ -716,6 +716,89 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
         }
+        else if (_nombre_habilidad == "Arms Shield")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-7)}, 
+                new List<ICondicion> { new CondicionTieneVentaja() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Bow Guard")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new CondicionRivalArma(Armas.Bow) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Axe Guard")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new CondicionRivalArma(Armas.Axe) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Magic Guard")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new CondicionRivalArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Lance Guard")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new CondicionRivalArma(Armas.Lance) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Sympathetic")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new CondicionNoInicia(), new HpMenos50() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
         
+        // habilidades dano extra 
+        
+        else if (_nombre_habilidad == "Bravery")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new EfectoDanoExtra(5)}, 
+                new List<ICondicion> { new CondicionNoTienArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Lunar Brace")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new EfectoLunarBrace()}, 
+                new List<ICondicion> { new CondicionNoTienArma(Armas.Magic), new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Back at You")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new EfectoBackAtYou()}, 
+                new List<ICondicion> { new CondicionNoInicia() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        //hibridas 
+        else if (_nombre_habilidad == "Blue Skies")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new EfectoDanoExtra(5), new ReduccionDanoAbsoluta(-5)}, 
+                new List<ICondicion> { new NoHayCondicion() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
     }
 }

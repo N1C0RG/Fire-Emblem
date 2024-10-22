@@ -184,4 +184,37 @@ public class CondicionResDanoPorcentual: CondicionGenerica
     }
 }
 
+public class CondicionTieneVentaja : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return condicion.tieneVentajaArma(jugador, rival); 
+    }
+}
+
+public class CondicionRivalArma : CondicionGenerica
+{
+    private Armas arma; 
+    public CondicionRivalArma(Armas arma)
+    {
+        this.arma = arma; 
+    }
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return condicion.tieneArmaWeapon(rival, arma.ToString()); 
+    }
+}
+
+public class CondicionNoTienArma : CondicionGenerica
+{
+    private Armas arma; 
+    public CondicionNoTienArma(Armas arma)
+    {
+        this.arma = arma; 
+    }
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return !condicion.tieneArmaWeapon(jugador, arma.ToString()); 
+    }
+}
 

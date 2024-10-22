@@ -197,4 +197,31 @@ public class ReduccionDanoAbsoluta : IEfecto
 }
 
 
+public class EfectoLunarBrace : IEfecto
+{
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.DanoAdicionalDictionary["todosAtaques"] += (int)(rival.def * 0.3m); 
+    }
+}
 
+public class EfectoDanoExtra : IEfecto
+{
+    private int cantidad; 
+    public EfectoDanoExtra(int cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.DanoAdicionalDictionary["todosAtaques"] += cantidad; 
+    }
+}
+
+public class EfectoBackAtYou : IEfecto
+{
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.DanoAdicionalDictionary["todosAtaques"] += (jugador.hpOriginal - jugador.HP)/2; 
+    }
+}

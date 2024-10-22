@@ -234,5 +234,16 @@ public class ControladorTurno
         _personajeRival.reduccionDanoPorcentual = 0m; 
         _personajeJugador.reduccionDanoAbsoluta = 0;
         _personajeRival.reduccionDanoAbsoluta = 0;
+        _personajeJugador.danoAdicional = 0; 
+        _personajeRival.danoAdicional = 0; 
+        
+        foreach (var key in _personajeJugador.DanoAdicionalDictionary.Keys.ToList())
+        {
+            _personajeJugador.DanoAdicionalDictionary[key] = 0;
+        }
+        foreach (var key in _personajeRival.DanoAdicionalDictionary.Keys.ToList())
+        {
+            _personajeRival.DanoAdicionalDictionary[key] = 0;
+        }
     }
 }

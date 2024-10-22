@@ -109,6 +109,8 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printReduccionDanoPorcentual(_rival);
         printReduccionDanoAbsoluto(_jugador);
         printReduccionDanoAbsoluto(_rival);
+        printDanoExtra(_jugador);
+        printDanoExtra(_rival);
     }
 
     private void printJugadorBonusPenalty(Personaje jugador)
@@ -172,4 +174,12 @@ public class ImpresoraBonusPenaltyNeutralizaciones
                 _view.WriteLine($"{jugador.name} recibirá {jugador.reduccionDanoAbsoluta} daño en cada ataque");
             }
         }
+
+    private void printDanoExtra(Personaje jugador)
+    {
+        if (jugador.DanoAdicionalDictionary["todosAtaques"] != 0)
+        {
+            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["todosAtaques"]} daño extra en cada ataque");
+        }
+    }
 }
