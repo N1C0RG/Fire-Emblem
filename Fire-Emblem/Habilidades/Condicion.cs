@@ -205,6 +205,20 @@ public class CondicionRivalArma : CondicionGenerica
     }
 }
 
+public class CondicionRivalNoTienArma : CondicionGenerica
+{
+    private Armas arma; 
+    public CondicionRivalNoTienArma(Armas arma)
+    {
+        this.arma = arma; 
+    }
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return !condicion.tieneArmaWeapon(rival, arma.ToString()); 
+    }
+}
+
+
 public class CondicionNoTienArma : CondicionGenerica
 {
     private Armas arma; 
@@ -224,5 +238,13 @@ public class CondicionFullVidaJugador : CondicionGenerica
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         return jugador.HP == jugador.hpOriginal; 
+    }
+}
+
+public class CondicionRivalHP50 : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.getHpOriginal()) * 0.5m); 
     }
 }

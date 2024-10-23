@@ -979,8 +979,46 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 new List<ICondicion> { new CondicionDistant(), new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
-
         }
+        else if (_nombre_habilidad == "Extra Chivalry")
+        {
+            //TODO: crear una logica separada 
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5), new RivalDefUp(-5) }, 
+                new List<ICondicion> { new CondicionRivalHP50() }, 
+                _jugador, 
+                _rival);
+            decimal porcentajeHP = Math.Floor((_rival.HP / (decimal)_rival.hpOriginal) * 100);
+            decimal cantidad = (porcentajeHP * 0.5m) / 100m;
+            _habilidadSegundaCondicion = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentual(cantidad)}, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Bushido")
+        {
+            //TODO: crear una logica separada 
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new EfectoDanoExtra(7)}, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+            _habilidadSegundaCondicion = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualSpd() }, 
+                new List<ICondicion> { new CondicionSpdDanoPorcentual() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Golden Lotus")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
+                new List<ICondicion> { new CondicionRivalNoTienArma(Armas.Magic) }, 
+                _jugador, 
+                _rival);
+        }
+        
         
     }
 }

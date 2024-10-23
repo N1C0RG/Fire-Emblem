@@ -109,9 +109,10 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printBonusPenaltyNeutralizados(_jugador);
         
         printReduccionDanoPorcentual(_jugador); 
-        printReduccionDanoAbsoluto(_jugador);
         printReduccionDanoPorcentualPrimerAtaque(_jugador); 
         printReduccionDanoPorcentualFollowUp(_jugador);
+        printReduccionDanoAbsoluto(_jugador);
+
         
         printJugadorBonus(_rival);
         printDanoExtra(_rival);
@@ -122,15 +123,13 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         
         
         printReduccionDanoPorcentual(_rival);
-        
+        printReduccionDanoPorcentualPrimerAtaque(_rival);
+        printReduccionDanoPorcentualFollowUp(_rival);
         
         printReduccionDanoAbsoluto(_rival);
 
         
-        printReduccionDanoPorcentualPrimerAtaque(_rival);
-        
-        
-        printReduccionDanoPorcentualFollowUp(_rival);
+
         
 
     }
