@@ -27,7 +27,6 @@ public class ManejadorFollowUp
     {
         actualizarDanoFollowUp(ataque_jugador, ataque_rival, dataFollowUp, jugador, rival);
         //TODO: cambiar esto para que no se acceda directamente a la info del rival y jugador metiendolo a follow up data o algo asi 
-        //view.WriteLine($"{jugador.name} {dataFollowUp.AtkFollowJugador - rival.reduccionDanoAbsoluta} {dataFollowUp.AtkFollowJugador * (1 - rival.ReduccionDanoPorcentualDictionary["followUp"])}");
         int ataqueRival = (int)((dataFollowUp.AtkFollowRival - jugador.reduccionDanoAbsoluta) * (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"])) + jugador.reduccionDanoAbsoluta; 
         int ataqueJugador = (int)((dataFollowUp.AtkFollowJugador - rival.reduccionDanoAbsoluta) * (1 - rival.ReduccionDanoPorcentualDictionary["followUp"])) + rival.reduccionDanoAbsoluta; 
 

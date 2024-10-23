@@ -11,6 +11,7 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     public Player equipoJugador;
     public Player equipoRival;
     public Ventaja _ventaja;
+    private CalculadorDeAtaque _calculadorDeAtaque;
     private ManejadorDeAtaques _manejadorDeAtaques;
     public ManejadorFollowUp _manejadorFollowUp;
     private RemoverJugador _removerJugador;
@@ -38,6 +39,8 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
         _manejadorDeAtaques = new ManejadorDeAtaques();
         _manejadorFollowUp = new ManejadorFollowUp();
         _removerJugador = new RemoverJugador();
+
+        _calculadorDeAtaque = new CalculadorDeAtaque(); 
     }
 
     public void calcularVentajas()
@@ -47,8 +50,8 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     public void definirAtaque()  
     
     {
-        AtaqueJugador = _manejadorDeAtaques.calcularAtaque(jugador, rival, _ventaja.ventajaJugador);
-        AtaqueRival = _manejadorDeAtaques.calcularAtaque(rival, jugador, _ventaja.ventajaRival);
+        AtaqueJugador = _calculadorDeAtaque.calcularAtaque(jugador, rival, _ventaja.ventajaJugador);
+        AtaqueRival = _calculadorDeAtaque.calcularAtaque(rival, jugador, _ventaja.ventajaRival);
     }
     
     public void realizarAtaque(Personaje jugador, Personaje rival, int dano)
