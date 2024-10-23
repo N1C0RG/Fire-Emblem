@@ -1,13 +1,15 @@
+using System.Security.Cryptography;
+
 namespace Fire_Emblem;
 
 public class CalculadorDeAtaque
 {
-    private decimal _ataque;
-    private decimal _ventaja;
-    private int _defensa;
-    private Personaje _atacante;
-    private decimal _reduccionTotal;
-    private Personaje _defensor;
+    protected decimal _ataque;
+    protected decimal _ventaja;
+    protected int _defensa;
+    protected Personaje _atacante;
+    protected decimal _reduccionTotal;
+    protected Personaje _defensor;
 
     public int calcularAtaque(Personaje atacante, Personaje defensor, decimal ventaja)
     {
@@ -71,3 +73,4 @@ public class CalculadorDeAtaque
         return ataqueFinal < 0 ? 0 : ataqueFinal;
     }
 }
+

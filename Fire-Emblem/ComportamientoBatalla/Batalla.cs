@@ -61,6 +61,8 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     
     public void realizarFollowUp()
     {
+        var calculadorFollowUp = new CalculadorFollowUp();
+        var xd = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador); 
         var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival); 
         _manejadorFollowUp.realizarFollowUp(jugador, rival, AtaqueJugador, AtaqueRival, dataFollow, _view);
     }
