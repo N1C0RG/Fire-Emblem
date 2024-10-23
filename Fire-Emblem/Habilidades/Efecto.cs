@@ -287,3 +287,16 @@ public class ReduccionDanoPorcentual : IEfecto
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - cantidad);
     }
 }
+
+public class EfectoDanoExtraPrimerAtaque : IEfecto
+{
+    private int cantidad; 
+    public EfectoDanoExtraPrimerAtaque(int cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.DanoAdicionalDictionary["primerAtaque"] += cantidad; 
+    }
+}

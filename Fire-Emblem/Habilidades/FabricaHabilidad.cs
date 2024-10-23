@@ -8,6 +8,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
     private Personaje _rival;
     private Habilidad _habilidad;
     private Habilidad _habilidadSegundaCondicion;
+    private Habilidad _habilidadTerceraCondicion; //TODO: eliminar esta blsfemia 
     public FabricaHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival)
     {
         _nombre_habilidad = nombreHabilidad;
@@ -16,7 +17,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
     }
     public AplicadorHabilidad crearAplicador()
     {
-        return new AplicadorHabilidad(_habilidad, _habilidadSegundaCondicion);
+        return new AplicadorHabilidad(_habilidad, _habilidadSegundaCondicion, _habilidadTerceraCondicion);
     }
     public void crearHabilidad()
     {
@@ -933,6 +934,52 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 new List<ICondicion> { new NoHayCondicion() }, 
                 _jugador, 
                 _rival);
+        }
+        
+        else if (_nombre_habilidad == "Chivalry")
+        {
+            //TODO: crear una logica separada 
+            int def = -(int)(_jugador.def * 0.5);
+            int res = -(int)(_jugador.res * 0.5);
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoAbsoluta(-2), new EfectoDanoExtra(2) }, 
+                new List<ICondicion> { new CondicionInicioCombate(), new CondicionFullVidaJugador() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Dragon's Wrath")
+        {
+            //TODO: crear una logica separada 
+            int cantidad = 0; 
+            if (_jugador.atk > _rival.res)
+            {
+                cantidad = (int)((_jugador.atk - _rival.res)/4);
+            }
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.25m), new EfectoDanoExtraPrimerAtaque(cantidad) }, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Prescience")
+        {
+            //TODO: crear una logica separada 
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new RivalAtkUp(-5), new RivalResUp(-5) }, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+            _habilidadSegundaCondicion = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
+                new List<ICondicion> { new CondicionInicioCombate() }, 
+                _jugador, 
+                _rival);
+            _habilidadTerceraCondicion = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
+                new List<ICondicion> { new CondicionDistant(), new CondicionNoInicia() }, 
+                _jugador, 
+                _rival);
+
         }
         
     }

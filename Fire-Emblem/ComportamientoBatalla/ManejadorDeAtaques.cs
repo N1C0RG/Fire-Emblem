@@ -33,8 +33,14 @@ public class ManejadorDeAtaques
                 reduccionTotal *= (1 - reduccion.Value);
             }
         }
-
+        //me podria traer problemaas el orden en que aplicos los 3 nuevos tipos de efectos 
         int ataqueFinal = (int)Math.Floor(ataque * ventaja) - defensa + atacante.DanoAdicionalDictionary["todosAtaques"];
+        
+        if (atacante.contadorAtaques == 1)
+        {
+            ataqueFinal += atacante.DanoAdicionalDictionary["primerAtaque"];
+        }
+        
         ataqueFinal = (int)(ataqueFinal * (reduccionTotal)) + defensor.reduccionDanoAbsoluta;
 
         return ataqueFinal < 0 ? 0 : ataqueFinal;

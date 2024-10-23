@@ -103,6 +103,7 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         
         printJugadorBonus(_jugador);
         printDanoExtra(_jugador);
+        printDanoExtraPrimerAtaque(_jugador);
         printJugadorPenalty(_jugador);
         
         printBonusPenaltyNeutralizados(_jugador);
@@ -114,6 +115,7 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         
         printJugadorBonus(_rival);
         printDanoExtra(_rival);
+        printDanoExtraPrimerAtaque(_rival);
         printJugadorPenalty(_rival);
         
         printBonusPenaltyNeutralizados(_rival);
@@ -142,7 +144,6 @@ public class ImpresoraBonusPenaltyNeutralizaciones
 
         
     }
-
     private void printJugadorPenalty(Personaje jugador)
     {
         foreach (var stat in jugador.penaltyStats)
@@ -222,6 +223,13 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         if (jugador.ReduccionDanoPorcentualDictionary["followUp"] > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["followUp"] * 100)}%");
+        }
+    }
+    private void printDanoExtraPrimerAtaque(Personaje jugador)
+    {
+        if (jugador.DanoAdicionalDictionary["primerAtaque"] != 0)
+        {
+            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["primerAtaque"]} daño extra en su primer ataque");
         }
     }
 }

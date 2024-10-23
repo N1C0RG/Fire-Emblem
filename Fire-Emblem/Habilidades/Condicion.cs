@@ -218,3 +218,11 @@ public class CondicionNoTienArma : CondicionGenerica
     }
 }
 
+public class CondicionFullVidaJugador : CondicionGenerica 
+{
+    //TODO: meter esta logica en el encapsulado 
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return jugador.HP == jugador.hpOriginal; 
+    }
+}
