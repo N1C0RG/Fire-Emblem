@@ -20,27 +20,27 @@ public class CalculadorDeAtaque
         _atacante.ResetearStatsPorFirstAtack();
         _defensor.ResetearStatsPorFirstAtack();
 
-        _ataque = calcularAtaqueBase();
-        _defensa = calcularDefensa();
-        _reduccionTotal = calcularReduccionTotal();
+        calcularAtaqueBase();
+        calcularDefensa();
+        calcularReduccionTotal();
 
         return calcularAtaqueFinal();
         
     }
 
-    private decimal calcularAtaqueBase()
+    private void calcularAtaqueBase()
     {
-        return Convert.ToDecimal(_atacante.getAtaque() + _atacante.getNetoStats("Atk"));
+        _ataque = Convert.ToDecimal(_atacante.getAtaque() + _atacante.getNetoStats("Atk"));
     }
 
-    private int calcularDefensa()
+    private void calcularDefensa()
     {
         bool esAtaqueMagico = _atacante.getArma() == Armas.Magic.ToString();
-        return esAtaqueMagico ? _defensor.getResistencia() + _defensor.getNetoStats("Res")
+        _defensa = esAtaqueMagico ? _defensor.getResistencia() + _defensor.getNetoStats("Res")
                               : _defensor.getDefensa() + _defensor.getNetoStats("Def");
     }
 
-    private decimal calcularReduccionTotal()
+    private void calcularReduccionTotal()
     {
         decimal reduccionTotal = 1;
 
@@ -56,7 +56,7 @@ public class CalculadorDeAtaque
             }
         }
 
-        return reduccionTotal;
+        _reduccionTotal =  reduccionTotal;
     }
 
     private int calcularAtaqueFinal()

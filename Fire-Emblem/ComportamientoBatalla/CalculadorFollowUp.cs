@@ -6,8 +6,15 @@ public class CalculadorFollowUp : CalculadorDeAtaque
 {
     private int calcularFollowUp(Personaje atacante, Personaje defensor, decimal ventaja) 
     {
-        var ataque = calcularAtaque(atacante, defensor, ventaja);
-        return ataque; 
+        var calculadorAtaque = calcularAtaque(atacante, defensor, ventaja);
+        
+        var ataque = _ataque + atacante.getAtaqueFollow();
+        
+        int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa + _atacante.DanoAdicionalDictionary["todosAtaques"] + _atacante.DanoAdicionalDictionary["followUp"];
+        
+        var reduccionTotal = _reduccionTotal * (1 - atacante.ReduccionDanoPorcentualDictionary["followUp"]);
+        
+        return (int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta;
     }
     
     public DataFollowUp obtenerDatosFollowUp(Personaje jugador, Personaje rival, decimal ventaja) 
