@@ -16,7 +16,7 @@ public class ManejadorDeAtaques
         int defensa = esAtaqueMagico ? defensor.getResistencia() + defensor.getNetoStats("Res") 
             : defensor.getDefensa() + defensor.getNetoStats("Def");
 
-        
+        //TODO: arreglar esta logica 
         decimal reduccionTotal = 1;
 
         foreach (var reduccion in defensor.ReduccionDanoPorcentualDictionary)
@@ -28,7 +28,7 @@ public class ManejadorDeAtaques
                     reduccionTotal *= (1 - reduccion.Value);
                 }
             }
-            else
+            else if(reduccion.Key == "todosAtaques")
             {
                 reduccionTotal *= (1 - reduccion.Value);
             }

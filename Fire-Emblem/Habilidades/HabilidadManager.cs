@@ -100,13 +100,21 @@ public class ImpresoraBonusPenaltyNeutralizaciones
     {
         printFollowUpAtk(_jugador);
         printFollowUpAtk(_rival);
-        printJugadorBonusPenalty(_jugador);
+        
+        printJugadorBonus(_jugador);
+        printDanoExtra(_jugador);
+        printJugadorPenalty(_jugador);
+        
         printBonusPenaltyNeutralizados(_jugador);
-        printJugadorBonusPenalty(_rival);
+        
+        printJugadorBonus(_rival);
+        printDanoExtra(_rival);
+        printJugadorPenalty(_rival);
+        
         printBonusPenaltyNeutralizados(_rival);
         
-        printDanoExtra(_jugador);
-        printDanoExtra(_rival);
+
+
         
         printReduccionDanoPorcentual(_jugador); 
         printReduccionDanoPorcentual(_rival);
@@ -117,16 +125,24 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printReduccionDanoPorcentualPrimerAtaque(_jugador); 
         printReduccionDanoPorcentualPrimerAtaque(_rival);
         
+        printReduccionDanoPorcentualFollowUp(_jugador);
+        printReduccionDanoPorcentualFollowUp(_rival);
+        
 
     }
 
-    private void printJugadorBonusPenalty(Personaje jugador)
+    private void printJugadorBonus(Personaje jugador)
     {
         foreach (var stat in jugador.bonusStats)
         {
             printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
 
+        
+    }
+
+    private void printJugadorPenalty(Personaje jugador)
+    {
         foreach (var stat in jugador.penaltyStats)
         {
             if (stat.Value < 0)
@@ -135,6 +151,8 @@ public class ImpresoraBonusPenaltyNeutralizaciones
             }
         }
     }
+    
+    
 
     private void printBonusPenalty(Personaje jugador, KeyValuePair<string, int> stat, string sign)
     {
@@ -195,6 +213,13 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         if (jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] * 100)}%");
+        }
+    }
+    private void printReduccionDanoPorcentualFollowUp(Personaje jugador)
+    {
+        if (jugador.ReduccionDanoPorcentualDictionary["followUp"] > 0)
+        {
+            _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["followUp"] * 100)}%");
         }
     }
 }

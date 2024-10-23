@@ -22,16 +22,19 @@ public class ManejadorFollowUp
         dataFollowUp.AtkFollowJugador = ataqueJugador + jugador.getAtaqueFollow();
         dataFollowUp.AtkFollowRival = ataqueRival + rival.getAtaqueFollow();
     }
-    public void realizarFollowUp(Personaje jugador, Personaje rival, int ataque_jugador, int ataque_rival, DataFollowUp dataFollowUp, View view)
+    public void realizarFollowUp(Personaje jugador, Personaje rival, int ataque_jugador, int ataque_rival, DataFollowUp dataFollowUp, View view) //TODO: sacar el view 
     {
         actualizarDanoFollowUp(ataque_jugador, ataque_rival, dataFollowUp, jugador, rival);
+        //TODO: cambiar esto para que no se acceda directamente a la info del rival y jugador metiendolo a follow up data o algo asi 
+        int ataqueRival = (int)(dataFollowUp.AtkFollowRival * (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"])); 
+        int ataqueJugador = (int)(dataFollowUp.AtkFollowJugador * (1 - rival.ReduccionDanoPorcentualDictionary["followUp"])); 
         if (dataFollowUp.velocidadFollowJugador >= dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
         {
-            rival.recivirDano(dataFollowUp.AtkFollowJugador);
+            rival.recivirDano(ataqueJugador);
         }
         else if (dataFollowUp.velocidadFollowJugador + dataFollowUp.velocidadAdicionalFollowUp <= dataFollowUp.velocidadFollowRival)
         {
-            jugador.recivirDano(dataFollowUp.AtkFollowRival);
+            jugador.recivirDano(ataque_rival);
         }
     }
 }

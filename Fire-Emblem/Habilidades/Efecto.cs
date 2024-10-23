@@ -239,3 +239,16 @@ public class ReduccionDanoPorcentualPrimerAtaque : IEfecto
         jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["primerAtaque"]) * (1 - cantidad);
     }
 }
+
+public class ReduccionDanoPorcentualFollowUo : IEfecto
+{
+    private decimal cantidad;
+    public ReduccionDanoPorcentualFollowUo(decimal cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.ReduccionDanoPorcentualDictionary["followUp"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"]) * (1 - cantidad);
+    }
+}
