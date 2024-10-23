@@ -3,12 +3,12 @@ using Fire_Emblem_View;
 
 public class FabricaHabilidad //TODO: dividir esto en mas claes 
 {
-    private string _nombre_habilidad;
-    private Personaje _jugador;
-    private Personaje _rival;
-    private Habilidad _habilidad;
-    private Habilidad _habilidadSegundaCondicion;
-    private Habilidad _habilidadTerceraCondicion; //TODO: eliminar esta blsfemia 
+    protected string _nombre_habilidad;
+    protected Personaje _jugador;
+    protected Personaje _rival;
+    protected Habilidad _habilidad;
+    protected Habilidad _habilidadSegundaCondicion;
+    protected Habilidad _habilidadTerceraCondicion; //TODO: eliminar esta blsfemia 
     public FabricaHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival)
     {
         _nombre_habilidad = nombreHabilidad;

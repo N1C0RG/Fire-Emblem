@@ -169,7 +169,14 @@ public class ReduccionDanoPorcentualSpd : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        decimal reduccionDano = ((jugador.spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((jugador.spd - rival.spd) * 4) / 100m;
+        //TODO: cambiar la forma en que proceso habilidades, hay habilidades en esta entrega que tengo que aplicar sobre los stats de unaunidad normal, hay que hacer cambios (parche temporal)
+        int spd = jugador.spd; 
+        if (jugador.bonusStats.ContainsKey("Spd"))
+        {
+            spd += jugador.bonusStats["Spd"]; 
+        }
+        
+        decimal reduccionDano = ((spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((spd - rival.spd) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
 
     }

@@ -36,8 +36,8 @@ public class VistaBatalla
     public void MostrarFollowUp(DataFollowUp dataFollowUp, Personaje jugador, Personaje rival)
     {
         //TODO: arreglar esto con lo de la parte de manejo follow 
-        int ataqueRival = (int)Math.Truncate(dataFollowUp.AtkFollowRival * (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"])); 
-        int ataqueJugador = (int)Math.Truncate(dataFollowUp.AtkFollowJugador * (1 - rival.ReduccionDanoPorcentualDictionary["followUp"])); 
+        int ataqueRival = (int)((dataFollowUp.AtkFollowRival - jugador.reduccionDanoAbsoluta) * (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"])) + jugador.reduccionDanoAbsoluta; 
+        int ataqueJugador = (int)((dataFollowUp.AtkFollowJugador - rival.reduccionDanoAbsoluta) * (1 - rival.ReduccionDanoPorcentualDictionary["followUp"])) + rival.reduccionDanoAbsoluta; 
         
         if (dataFollowUp.velocidadFollowJugador >= dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
         {
@@ -56,9 +56,5 @@ public class VistaBatalla
     public void mostrarAtaque(Personaje atacante, Personaje defensor, int dano)
     {
         _view.WriteLine($"{atacante.getNombre()} ataca a {defensor.getNombre()} con {dano} de daño");
-    }
-    public void mostrarMensajePrueba(string mensaje)
-    {
-        _view.WriteLine(mensaje);
     }
 }
