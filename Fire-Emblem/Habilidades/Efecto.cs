@@ -165,7 +165,7 @@ public class HpUp : IEfecto
     }
 }
 
-public class ReduccionDanoPorcentual : IEfecto
+public class ReduccionDanoPorcentualSpd : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
@@ -250,5 +250,40 @@ public class ReduccionDanoPorcentualFollowUo : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         jugador.ReduccionDanoPorcentualDictionary["followUp"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"]) * (1 - cantidad);
+    }
+}
+
+//TODO: arreglar toda esta part ede las cancelacion de los bonus del jugador 
+public abstract class AplicarCancelacionBonusJugador : IEfecto
+{
+    protected string StatKey;
+    protected AplicarCancelacionBonusJugador(string statKey)
+    {
+        StatKey = statKey;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.bonusNeutralizados.Add(StatKey);
+    }
+}
+public class AplicarCancelacionDefJugador : AplicarCancelacionBonusJugador
+{
+    public AplicarCancelacionDefJugador() : base("Def") { }
+}
+public class AplicarCancelacionResJugador : AplicarCancelacionBonusJugador
+{
+    public AplicarCancelacionResJugador() : base("Res") { }
+}
+
+public class ReduccionDanoPorcentual : IEfecto
+{
+    private decimal cantidad;
+    public ReduccionDanoPorcentual(decimal cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - cantidad);
     }
 }

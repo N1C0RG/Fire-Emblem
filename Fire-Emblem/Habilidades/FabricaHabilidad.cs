@@ -695,7 +695,7 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
         else if (_nombre_habilidad == "Dodge")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentual()}, 
+                new List<IEfecto> { new ReduccionDanoPorcentualSpd()}, 
                 new List<ICondicion> { new CondicionSpdDanoPorcentual() }, 
                 _jugador, 
                 _rival);
@@ -919,6 +919,17 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
             int cantidad = (int)(_rival.atk * 0.15); 
             _habilidad = new Habilidad (
                 new List<IEfecto> { new RivalSpdUp(-4), new EfectoDanoExtra(cantidad)}, 
+                new List<ICondicion> { new NoHayCondicion() }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Laguz Friend")
+        {
+            //TODO: crear una logica separada 
+            int def = -(int)(_jugador.def * 0.5);
+            int res = -(int)(_jugador.res * 0.5);
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new DefUp(def), new ResUp(res), new AplicarCancelacionDefJugador(), new AplicarCancelacionResJugador(), new ReduccionDanoPorcentual(0.5m)}, 
                 new List<ICondicion> { new NoHayCondicion() }, 
                 _jugador, 
                 _rival);
