@@ -15,10 +15,27 @@ public class ManejadorDeAtaques
         bool esAtaqueMagico = atacante.getArma() == Armas.Magic.ToString();
         int defensa = esAtaqueMagico ? defensor.getResistencia() + defensor.getNetoStats("Res") 
             : defensor.getDefensa() + defensor.getNetoStats("Def");
+
         
+        decimal reduccionTotal = 1;
+
+        foreach (var reduccion in defensor.ReduccionDanoPorcentualDictionary)
+        {
+            if (reduccion.Key == "primerAtaque")
+            {
+                if (atacante.contadorAtaques == 1)
+                {
+                    reduccionTotal *= (1 - reduccion.Value);
+                }
+            }
+            else
+            {
+                reduccionTotal *= (1 - reduccion.Value);
+            }
+        }
 
         int ataqueFinal = (int)Math.Floor(ataque * ventaja) - defensa + atacante.DanoAdicionalDictionary["todosAtaques"];
-        ataqueFinal = (int)(ataqueFinal * (1 - defensor.reduccionDanoPorcentual)) + defensor.reduccionDanoAbsoluta;
+        ataqueFinal = (int)(ataqueFinal * (reduccionTotal)) + defensor.reduccionDanoAbsoluta;
 
         return ataqueFinal < 0 ? 0 : ataqueFinal;
     }

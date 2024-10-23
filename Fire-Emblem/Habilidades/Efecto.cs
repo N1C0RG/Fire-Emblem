@@ -170,7 +170,8 @@ public class ReduccionDanoPorcentual : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         decimal reduccionDano = ((jugador.spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((jugador.spd - rival.spd) * 4) / 100m;
-        jugador.reduccionDanoPorcentual += reduccionDano;
+        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
+
     }
 }
 
@@ -179,7 +180,7 @@ public class ReduccionDanoPorcentualRes : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         decimal reduccionDano = ((jugador.res - rival.res) * 4) / 100m > 0.4m ? 0.4m : ((jugador.res - rival.res) * 4) / 100m;
-        jugador.reduccionDanoPorcentual += reduccionDano;
+        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
     }
 }
 
@@ -223,5 +224,18 @@ public class EfectoBackAtYou : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         jugador.DanoAdicionalDictionary["todosAtaques"] += (jugador.hpOriginal - jugador.HP)/2; 
+    }
+}
+
+public class ReduccionDanoPorcentualPrimerAtaque : IEfecto
+{
+    private decimal cantidad;
+    public ReduccionDanoPorcentualPrimerAtaque(decimal cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["primerAtaque"]) * (1 - cantidad);
     }
 }

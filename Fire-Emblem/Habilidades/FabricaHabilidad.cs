@@ -800,5 +800,38 @@ public class FabricaHabilidad //TODO: dividir esto en mas claes
                 _jugador, 
                 _rival);
         }
+        
+        else if (_nombre_habilidad == "Aegis Shield")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new DefUp(6), new ResUp(3), new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
+                new List<ICondicion> { new NoHayCondicion() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Remote Sparrow")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new AtkUp(7), new SpdUp(7), new ReduccionDanoPorcentualPrimerAtaque(0.3m)}, 
+                new List<ICondicion> { new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Remote Mirror")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new AtkUp(7), new ResUp(10), new ReduccionDanoPorcentualPrimerAtaque(0.3m)}, 
+                new List<ICondicion> { new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Remote Sturdy")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new AtkUp(7), new DefUp(10), new ReduccionDanoPorcentualPrimerAtaque(0.3m)}, 
+                new List<ICondicion> { new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                _jugador, 
+                _rival);
+        }
     }
 }

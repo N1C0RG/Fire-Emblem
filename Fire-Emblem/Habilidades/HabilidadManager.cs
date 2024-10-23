@@ -105,12 +105,19 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printJugadorBonusPenalty(_rival);
         printBonusPenaltyNeutralizados(_rival);
         
-        printReduccionDanoPorcentual(_jugador); 
-        printReduccionDanoPorcentual(_rival);
-        printReduccionDanoAbsoluto(_jugador);
-        printReduccionDanoAbsoluto(_rival);
         printDanoExtra(_jugador);
         printDanoExtra(_rival);
+        
+        printReduccionDanoPorcentual(_jugador); 
+        printReduccionDanoPorcentual(_rival);
+        
+        printReduccionDanoAbsoluto(_jugador);
+        printReduccionDanoAbsoluto(_rival);
+
+        printReduccionDanoPorcentualPrimerAtaque(_jugador); 
+        printReduccionDanoPorcentualPrimerAtaque(_rival);
+        
+
     }
 
     private void printJugadorBonusPenalty(Personaje jugador)
@@ -162,9 +169,9 @@ public class ImpresoraBonusPenaltyNeutralizaciones
     private void printReduccionDanoPorcentual(Personaje jugador)
     {
         
-        if (jugador.reduccionDanoPorcentual > 0)
+        if (jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] > 0)
         {
-            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.reduccionDanoPorcentual * 100)}%");
+            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
         }
     }
     private void printReduccionDanoAbsoluto(Personaje jugador)
@@ -180,6 +187,14 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         if (jugador.DanoAdicionalDictionary["todosAtaques"] != 0)
         {
             _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["todosAtaques"]} daño extra en cada ataque");
+        }
+    }
+    private void printReduccionDanoPorcentualPrimerAtaque(Personaje jugador)
+    {
+        
+        if (jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] > 0)
+        {
+            _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] * 100)}%");
         }
     }
 }
