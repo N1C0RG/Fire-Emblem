@@ -55,8 +55,6 @@ public class ControladorBatalla
             actualizarDataBatalla();
             _batalla.realizarFollowUp();
             
-            //var dataFollow = _batalla._manejadorFollowUp.obtenerDatosFollowUp(_dataBatalla.jugador, _dataBatalla.rival);
-            //_batalla._manejadorFollowUp.actualizarDanoFollowUp(_batalla.AtaqueJugador, _batalla.AtaqueRival, dataFollow, _dataBatalla.jugador, _dataBatalla.rival);
             _vistaBatalla.MostrarFollowUp(_dataBatalla.dataFollowUp, _dataBatalla.jugador, _dataBatalla.rival);
             finRonda();
         }

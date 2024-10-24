@@ -7,7 +7,6 @@ public class CalculadorFollowUp : CalculadorDeAtaque
 {
     private int calcularFollowUp(Personaje atacante, Personaje defensor, decimal ventaja, View view) 
     {
-        //resetearPrametrosClase();
         
         var calculadorAtaque = calcularAtaque(atacante, defensor, ventaja);
         
@@ -21,14 +20,6 @@ public class CalculadorFollowUp : CalculadorDeAtaque
         //.WriteLine($"  {atacante.name}  el ataque con ventaja    {(int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta}");
         return (int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta;
     }
-    private void resetearPrametrosClase()
-    {
-        _ataque = 0;
-        _ventaja = 0; 
-        _defensa = 0;
-        _reduccionTotal = 0;
-    }
-    
     public DataFollowUp obtenerDatosFollowUp(Personaje jugador, Personaje rival, decimal ventajaJugador, decimal ventajaRival, View view) 
     {
         var dataFollowUp = new DataFollowUp
