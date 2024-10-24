@@ -60,7 +60,7 @@ public class HabilidadManager
         //_view.WriteLine($"los stats jugador  {jugador.primerCombateInicia} {jugador.primeraVexDefiende}" );
         // }
         
-        //_view.WriteLine($"los stats jugador  {jugador.postEfecto["Def"]}");
+        //_view.WriteLine($"los stats jugador  {jugador.DanoAdicionalDictionary["followUp"]}");
         
         foreach (var habilidad in jugador.habilidades)
         {
@@ -83,29 +83,6 @@ public class HabilidadManager
             } catch {}
         }
     }
-    public void SumarBonusYPenaltyEnPostEfecto(Personaje jugador)
-    {
-        //jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
-
-        foreach (var bonus in jugador.bonusStats)
-        {
-            if (!jugador.postEfecto.ContainsKey(bonus.Key))
-            {
-                jugador.postEfecto[bonus.Key] = 0;
-            }
-            jugador.postEfecto[bonus.Key] += bonus.Value;
-        }
-
-        foreach (var penalty in jugador.penaltyStats)
-        {
-            if (!jugador.postEfecto.ContainsKey(penalty.Key))
-            {
-                jugador.postEfecto[penalty.Key] = 0;
-            }
-            jugador.postEfecto[penalty.Key] += penalty.Value;
-        }
-    }
-
     private void ordenarBonusEnDiccionarioListas()
     {
         _jugador.ordenarContenedores();
@@ -172,13 +149,15 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         
         printJugadorBonus(_jugador);
         
-        printDanoExtra(_jugador);
-        printDanoExtraPrimerAtaque(_jugador);
+
 
         printJugadorPenalty(_jugador);
         
         printBonusPenaltyNeutralizados(_jugador);
         
+        printDanoExtra(_jugador);
+        printDanoExtraPrimerAtaque(_jugador);
+        printDanoExtraFollowUp(_jugador);
         printReduccionDanoPorcentual(_jugador); 
         printReduccionDanoPorcentualPrimerAtaque(_jugador); 
         printReduccionDanoPorcentualFollowUp(_jugador);
@@ -188,12 +167,17 @@ public class ImpresoraBonusPenaltyNeutralizaciones
 
         
         printJugadorBonus(_rival);
-        printDanoExtra(_rival);
-        printDanoExtraPrimerAtaque(_rival);
+        
+        
         printJugadorPenalty(_rival);
+        
+        
         
         printBonusPenaltyNeutralizados(_rival);
         
+        printDanoExtra(_rival);
+        printDanoExtraPrimerAtaque(_rival);
+        printDanoExtraFollowUp(_rival);
         
         printReduccionDanoPorcentual(_rival);
         printReduccionDanoPorcentualPrimerAtaque(_rival);
@@ -302,6 +286,13 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         if (jugador.DanoAdicionalDictionary["primerAtaque"] != 0)
         {
             _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["primerAtaque"]} daño extra en su primer ataque");
+        }
+    }
+    private void printDanoExtraFollowUp(Personaje jugador)
+    {
+        if (jugador.DanoAdicionalDictionary["followUp"] != 0)
+        {
+            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["followUp"]} daño extra en su Follow-Up");
         }
     }
 }

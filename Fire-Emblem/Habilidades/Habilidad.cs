@@ -38,7 +38,6 @@ public class Habilidad
 
 public class MoonTwinWing : Habilidad
 {
-    private bool cumple_todas_condicion = true;
     private int descunto = 0; 
     public MoonTwinWing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
@@ -63,8 +62,6 @@ public class MoonTwinWing : Habilidad
 }
 public class GuardBearing : Habilidad
 {
-    private bool cumple_todas_condicion = true;
-    private int descunto = 0; 
     public GuardBearing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
@@ -74,9 +71,7 @@ public class GuardBearing : Habilidad
 
         new RivalSpdUp(-4).efecto(jugador, rival);
         new RivalDefUp(-4).efecto(jugador, rival);
-
-        // if ((jugador.primerCombateInicia == false && new CondicionInicioCombate().condicionHabilidad(jugador, rival)) ||
-        //     (rival.primerCombateInicia == false && new CondicionNoInicia().condicionHabilidad(jugador, rival)))
+        
         if ((jugador.primerCombateInicia == false && new CondicionInicioCombate().condicionHabilidad(jugador, rival)) ||
             (jugador.primeraVexDefiende == false && new CondicionNoInicia().condicionHabilidad(jugador, rival)))
         {
@@ -85,6 +80,51 @@ public class GuardBearing : Habilidad
         else
         {
             new ReduccionDanoPorcentual(0.3m).efecto(jugador, rival); 
+        }
+    }
+}
+
+public class DivineRecreation : Habilidad
+{
+    public DivineRecreation(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
+        : base(efecto, condicion, jugador, rival)
+    {
+    }
+
+    public override void aplicarHabilidad()
+    {
+        if (new CondicionRivalHP50().condicionHabilidad(jugador, rival))
+            new RivalAtkUp(-4).efecto(jugador, rival);
+        new RivalSpdUp(-4).efecto(jugador, rival);
+        new RivalDefUp(-4).efecto(jugador, rival);
+        new RivalResUp(-4).efecto(jugador, rival);
+
+
+        rival.postEfecto["Atk"] += -4; 
+        foreach (var i in rival.postEfecto)
+        {
+            rival.netosStats.Add(i.Key, i.Value);
+        }
+
+        var c = new CalculadorDeAtaque();
+        var v = new Ventaja(); 
+        v.calcularVentaja(jugador, rival); 
+        var atk = c.calcularAtaque(rival, jugador, v.ventajaRival);
+
+        int cantidad = atk - jugador.reduccionDanoAbsoluta;
+        int result = (int)(cantidad * 0.3m);
+        
+        new ReduccionDanoPorcentualPrimerAtaque(0.3m).efecto(jugador, rival);
+
+        if (new CondicionInicioCombate().condicionHabilidad(jugador, rival))
+        {
+            // new EfectoDanoExtraPrimerAtaque(atk).efecto(jugador, rival);
+            // new ReduccionDanoPorcentualPrimerAtaque(x).efecto(jugador, rival);
+            new EfectoDanoExtraFollowUp(result).efecto(jugador, rival);
+        }
+        else
+        {
+            new EfectoDanoExtraPrimerAtaque(result).efecto(jugador, rival);
         }
     }
 }

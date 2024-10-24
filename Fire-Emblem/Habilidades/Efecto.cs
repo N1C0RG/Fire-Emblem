@@ -309,14 +309,19 @@ public class EfectoDanoExtraPrimerAtaque : IEfecto
         jugador.DanoAdicionalDictionary["primerAtaque"] += cantidad; 
     }
 }
-
-public class DivineRecreation : IEfecto
+public class EfectoDanoExtraFollowUp : IEfecto
 {
+    private int cantidad; 
+    public EfectoDanoExtraFollowUp(int cantidad)
+    {
+        this.cantidad = cantidad;
+    }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.HP = jugador.hpOriginal; 
+        jugador.DanoAdicionalDictionary["followUp"] += cantidad; 
     }
 }
+
 
 public class ReduccionDanoSpd : IEfecto
 {

@@ -32,7 +32,11 @@ public class Personaje
     public Dictionary<string, int> bonusStats= new Dictionary<string, int>();
     public Dictionary<string, int> penaltyStats= new Dictionary<string, int>();
     public Dictionary<string, int> netosStats= new Dictionary<string, int>();
+    
     public Dictionary<string, int> postEfecto =  new Dictionary<string, int>{ {"Atk", 0}, {"Spd", 0}, {"Def", 0}, {"Res", 0}  };
+    public Dictionary<string, int> statsDivineRecreation =  new Dictionary<string, int>{ {"Atk", 0}, {"Spd", 0}, {"Def", 0}, {"Res", 0}  };
+    
+    
     public int contadorAtaques = 1;
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
@@ -236,6 +240,35 @@ public class Personaje
         return orden.Where(neutralizations.Contains);
     }
     public void SumarBonusYPenaltyEnPostEfecto()
+    {
+        //jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
+
+        foreach (var bonus in bonusStats)
+        {
+            if (!postEfecto.ContainsKey(bonus.Key))
+            {
+                postEfecto[bonus.Key] = 0;
+            }
+            if (!bonusNeutralizados.Contains(bonus.Key))
+            {
+                postEfecto[bonus.Key] += bonus.Value;
+            }
+            
+        }
+
+        foreach (var penalty in penaltyStats)
+        {
+            if (!postEfecto.ContainsKey(penalty.Key))
+            {
+                postEfecto[penalty.Key] = 0;
+            }
+            if (!penaltyNeutralizados.Contains(penalty.Key))
+            {
+                postEfecto[penalty.Key] += penalty.Value;
+            }
+        }
+    }
+    public void CalcularstatsDivineRecreation()
     {
         //jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
 

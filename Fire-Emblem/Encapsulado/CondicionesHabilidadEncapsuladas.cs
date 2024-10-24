@@ -76,7 +76,7 @@ public class CondicionesHabilidadEncapsuladas
     {
         var ventaja = new Ventaja(); 
         ventaja.calcularVentaja(jugador, rival);
-        bool condicion = ventaja.ventajaJugador != 0; 
+        bool condicion = ventaja.ventajaJugador == 1.2m; 
         return condicion; 
     }
 }
