@@ -62,9 +62,10 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     public void realizarFollowUp()
     {
         var calculadorFollowUp = new CalculadorFollowUp();
-        var xd = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador); 
-        var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival); 
-        _manejadorFollowUp.realizarFollowUp(jugador, rival, AtaqueJugador, AtaqueRival, dataFollow, _view);
+        var xd = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador, _ventaja.ventajaRival, _view); 
+        //_view.WriteLine($"{jugador.getNombre()} {xd.AtkFollowJugador} y {rival.getNombre()} {xd.AtkFollowRival}");
+        //var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival); 
+        _manejadorFollowUp.realizarFollowUp(jugador, rival, AtaqueJugador, AtaqueRival, xd, _view);
     }
 
     public void removerJugador()
@@ -75,8 +76,10 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
 
     public DataBatalla obtenerDataBatalla()
     {
-        var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival);
-        return new DataBatalla(jugador, rival, _ventaja.ventajaJugador, AtaqueJugador, AtaqueRival, dataFollow);
+        //var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival);
+        var calculadorFollowUp = new CalculadorFollowUp();
+        var xd = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador, _ventaja.ventajaRival, _view); 
+        return new DataBatalla(jugador, rival, _ventaja.ventajaJugador, AtaqueJugador, AtaqueRival, xd);
     }
 }
 

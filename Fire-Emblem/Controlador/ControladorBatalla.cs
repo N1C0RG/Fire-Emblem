@@ -1,3 +1,4 @@
+using Fire_Emblem_View;
 using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem.Controlador;
@@ -51,11 +52,12 @@ public class ControladorBatalla
         }
         else
         {
+            actualizarDataBatalla();
             _batalla.realizarFollowUp();
             
-            var dataFollow = _batalla._manejadorFollowUp.obtenerDatosFollowUp(_dataBatalla.jugador, _dataBatalla.rival);
-            _batalla._manejadorFollowUp.actualizarDanoFollowUp(_batalla.AtaqueJugador, _batalla.AtaqueRival, dataFollow, _dataBatalla.jugador, _dataBatalla.rival);
-            _vistaBatalla.MostrarFollowUp(dataFollow, _dataBatalla.jugador, _dataBatalla.rival);
+            //var dataFollow = _batalla._manejadorFollowUp.obtenerDatosFollowUp(_dataBatalla.jugador, _dataBatalla.rival);
+            //_batalla._manejadorFollowUp.actualizarDanoFollowUp(_batalla.AtaqueJugador, _batalla.AtaqueRival, dataFollow, _dataBatalla.jugador, _dataBatalla.rival);
+            _vistaBatalla.MostrarFollowUp(_dataBatalla.dataFollowUp, _dataBatalla.jugador, _dataBatalla.rival);
             finRonda();
         }
         
