@@ -30,10 +30,20 @@ public class HabilidadManager
     {
         foreach (var habilidad in jugador.habilidades)
         {
-            var fabricaHabilidad = new FabricaHabilidad(habilidad, jugador, rival);
-            fabricaHabilidad.crearHabilidad();
-            var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
-            aplicadorHabilidad.aplicarHabilidad();
+            var fabricaHabilidad = new FabricaHabilidadIndependienteStats(habilidad, jugador, rival);
+            try
+            {
+                fabricaHabilidad.crearHabilidad();
+                var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
+                aplicadorHabilidad.aplicarHabilidad();
+            } catch {}
+            var fabricaHabilidad2 = new FabricaHabilidadesDependientesStats(habilidad, jugador, rival);
+            try 
+            {
+                fabricaHabilidad2.crearHabilidad();
+                var aplicadorHabilidad2 = fabricaHabilidad2.crearAplicador();
+                aplicadorHabilidad2.aplicarHabilidad();
+            } catch {}
         }
     }
 
