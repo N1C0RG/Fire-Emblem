@@ -253,7 +253,7 @@ public class HpMas25 : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        return jugador.HP >= (int)Math.Floor(Convert.ToDecimal(jugador.getHpOriginal()) * 0.25m); 
+        return Math.Round((double)jugador.HP / jugador.hpOriginal, 2) >= 0.25;
     }
 }
 

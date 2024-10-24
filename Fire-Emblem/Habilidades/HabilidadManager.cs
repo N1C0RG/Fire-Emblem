@@ -28,6 +28,8 @@ public class HabilidadManager
 
     private void aplicarHabilidades(Personaje jugador, Personaje rival)
     {
+        
+        //_view.WriteLine($"los stats rival  {rival.primerCombateInicia} {jugador.primerCombateInicia}" );
         foreach (var habilidad in jugador.habilidades)
         {
             var fabricaHabilidad = new FabricaHabilidadIndependienteStats(habilidad, jugador, rival);
@@ -49,8 +51,16 @@ public class HabilidadManager
             } catch {}
         }
 
-        SumarBonusYPenaltyEnPostEfecto(jugador); 
-        SumarBonusYPenaltyEnPostEfecto(rival);
+        jugador.SumarBonusYPenaltyEnPostEfecto(); 
+        rival.SumarBonusYPenaltyEnPostEfecto();
+
+        // if (jugador.name == "Camilla" || rival.name == "Camilla")
+        // {
+        //_view.WriteLine($"los stats rival  {rival.primerCombateInicia} {rival.primeraVexDefiende}" );
+        //_view.WriteLine($"los stats jugador  {jugador.primerCombateInicia} {jugador.primeraVexDefiende}" );
+        // }
+        
+        //_view.WriteLine($"los stats jugador  {jugador.postEfecto["Def"]}");
         
         foreach (var habilidad in jugador.habilidades)
         {
@@ -75,7 +85,7 @@ public class HabilidadManager
     }
     public void SumarBonusYPenaltyEnPostEfecto(Personaje jugador)
     {
-        jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
+        //jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
 
         foreach (var bonus in jugador.bonusStats)
         {

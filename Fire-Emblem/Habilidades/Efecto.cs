@@ -173,6 +173,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
         int spd = jugador.spd; 
         spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
         
+        
         decimal reduccionDano = ((spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((spd - rival.spd) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
 
@@ -314,5 +315,28 @@ public class DivineRecreation : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         jugador.HP = jugador.hpOriginal; 
+    }
+}
+
+public class ReduccionDanoSpd : IEfecto
+{
+    private int spdRival;
+    private int spdJugador; 
+    public ReduccionDanoSpd(int spdRival, int spdJugador)
+    {
+        this.spdRival = spdRival;
+        this.spdJugador = spdJugador; 
+    }
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        //TODO: cambiar la forma en que proceso habilidades, hay habilidades en esta entrega que tengo que aplicar sobre los stats de unaunidad normal, hay que hacer cambios (parche temporal)
+        int spd = jugador.spd; 
+        spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
+        
+        int speedRival = rival.spd + spdRival;
+        
+        decimal reduccionDano = ((spd - speedRival) * 4) / 100m > 0.4m ? 0.4m : ((spd - speedRival) * 4) / 100m;
+        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
+
     }
 }

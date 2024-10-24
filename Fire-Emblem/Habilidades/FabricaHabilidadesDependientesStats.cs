@@ -226,14 +226,6 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
                 _jugador, 
                 _rival);
         }
-        else if (_nombre_habilidad == "Golden Lotus")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
-                new List<ICondicion> { new CondicionRivalNoTienArma(Armas.Magic) }, 
-                _jugador, 
-                _rival);
-        }
         else if (_nombre_habilidad == "Divine Recreation")
         {
             _habilidad = new Habilidad (
@@ -241,6 +233,20 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
                 new List<ICondicion> { new CondicionRivalHP50() }, 
                 _jugador, 
                 _rival);
+        }
+        else if (_nombre_habilidad == "Moon-Twin Wing")
+        {
+            // _habilidad = new Habilidad (
+            //     new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5)}, 
+            //     new List<ICondicion> { new HpMas25() }, 
+            //     _jugador, 
+            //     _rival);
+            // _habilidadSegundaCondicion = new Habilidad (
+            //     new List<IEfecto> { new ReduccionDanoSpd(-5, -5)}, 
+            //     new List<ICondicion> { new JugadorMasSpd() }, 
+            //     _jugador, 
+            //     _rival);
+            _habilidad = new MoonTwinWing(new List<IEfecto> {}, new List<ICondicion> {}, _jugador, _rival);
         }
     }
 }

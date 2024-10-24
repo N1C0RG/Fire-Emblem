@@ -36,32 +36,55 @@ public class Habilidad
     
 }
 
-public class HabilidadEspecifica : Habilidad
+public class MoonTwinWing : Habilidad
 {
     private bool cumple_todas_condicion = true;
-    public HabilidadEspecifica(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
+    private int descunto = 0; 
+    public MoonTwinWing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
     }
     public override void aplicarHabilidad()
     {
-        // Lógica específica para aplicar la habilidad
-        foreach (var i in condicion)
+        if (new HpMas25().condicionHabilidad(jugador, rival))
         {
-            if (i.condicionHabilidad(jugador, rival) == false)
+            new RivalAtkUp(-5).efecto(jugador, rival);
+            new RivalSpdUp(-5).efecto(jugador, rival);
+            descunto = -5; 
+        }
+        if (jugador.spd >= rival.spd)
+        {
+            if (new HpMas25().condicionHabilidad(jugador, rival))
             {
-                cumple_todas_condicion = false;
+                new ReduccionDanoSpd(descunto, descunto).efecto(jugador, rival);
             }
         }
+    }
+}
+public class GuardBearing : Habilidad
+{
+    private bool cumple_todas_condicion = true;
+    private int descunto = 0; 
+    public GuardBearing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
+        : base(efecto, condicion, jugador, rival)
+    {
+    }
+    public override void aplicarHabilidad()
+    {
 
-        if (cumple_todas_condicion)
+        new RivalSpdUp(-4).efecto(jugador, rival);
+        new RivalDefUp(-4).efecto(jugador, rival);
+
+        // if ((jugador.primerCombateInicia == false && new CondicionInicioCombate().condicionHabilidad(jugador, rival)) ||
+        //     (rival.primerCombateInicia == false && new CondicionNoInicia().condicionHabilidad(jugador, rival)))
+        if ((jugador.primerCombateInicia == false && new CondicionInicioCombate().condicionHabilidad(jugador, rival)) ||
+            (jugador.primeraVexDefiende == false && new CondicionNoInicia().condicionHabilidad(jugador, rival)))
         {
-            // Lógica específica para aplicar los efectos
-            foreach (var i in efecto)
-            {
-                // Implementa la lógica específica aquí
-                i.efecto(jugador, rival);
-            }
+            new ReduccionDanoPorcentual(0.6m).efecto(jugador, rival);
+        }
+        else
+        {
+            new ReduccionDanoPorcentual(0.3m).efecto(jugador, rival); 
         }
     }
 }

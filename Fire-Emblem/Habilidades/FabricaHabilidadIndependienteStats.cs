@@ -776,18 +776,17 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                 _jugador, 
                 _rival);
         }
-        else if (_nombre_habilidad == "Moon-Twin Wing")
+        else if (_nombre_habilidad == "Golden Lotus")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5)}, 
-                new List<ICondicion> { new HpMas25() }, 
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
+                new List<ICondicion> { new CondicionRivalNoTienArma(Armas.Magic) }, 
                 _jugador, 
                 _rival);
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentualSpd()}, 
-                new List<ICondicion> { new JugadorMasSpd() }, 
-                _jugador, 
-                _rival);
+        }
+        else if (_nombre_habilidad == "Guard Bearing")
+        {
+            _habilidad = new GuardBearing(new List<IEfecto> { }, new List<ICondicion> { }, _jugador, _rival);
         }
     }
 }

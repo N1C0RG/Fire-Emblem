@@ -91,6 +91,11 @@ public class ControladorTurno
         
         _personajeJugador.calcularNetosStats();
         _personajeRival.calcularNetosStats();
+        
+        //TODO: cambiar esto 
+        _personajeJugador.primerCombateInicia = true;
+        _personajeRival.primeraVexDefiende = true; 
+        
         _personajeJugador.setIniciaTurno(false);
     }
     
@@ -123,6 +128,15 @@ public class ControladorTurno
         foreach (var key in _personajeRival.ReduccionDanoPorcentualDictionary.Keys.ToList())
         {
             _personajeRival.ReduccionDanoPorcentualDictionary[key] = 0;
+        }
+        
+        foreach (var key in _personajeJugador.postEfecto.Keys.ToList())
+        {
+            _personajeJugador.postEfecto[key] = 0;
+        }
+        foreach (var key in _personajeRival.postEfecto.Keys.ToList())
+        {
+            _personajeRival.postEfecto[key] = 0;
         }
     }
 }
