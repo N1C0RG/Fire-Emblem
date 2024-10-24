@@ -16,7 +16,7 @@ public class NeutralizadorEfectos
         neutralizarBonusPenalty(_rival);
         neutralizarFollowBonusPenalty(_rival);
     }
-    private void neutralizarBonusPenalty(Personaje jugador) //TODO ver esto 
+    private void neutralizarBonusPenalty(Personaje jugador) 
     {
         foreach (var stat in jugador.bonusNeutralizados)
         {
