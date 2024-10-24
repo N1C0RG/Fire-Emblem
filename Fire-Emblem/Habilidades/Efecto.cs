@@ -338,7 +338,7 @@ public class ReduccionDanoSpd : IEfecto
         int spd = jugador.spd; 
         spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
         
-        int speedRival = rival.spd + spdRival;
+        int speedRival = rival.spd + rival.postEfecto["Spd"];
         
         decimal reduccionDano = ((spd - speedRival) * 4) / 100m > 0.4m ? 0.4m : ((spd - speedRival) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);

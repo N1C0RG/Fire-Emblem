@@ -49,8 +49,10 @@ public class MoonTwinWing : Habilidad
         {
             new RivalAtkUp(-5).efecto(jugador, rival);
             new RivalSpdUp(-5).efecto(jugador, rival);
-            descunto = -5; 
+            descunto = -0;
+            
         }
+        rival.SumarBonusYPenaltyEnPostEfecto();
         if (jugador.spd >= rival.spd)
         {
             if (new HpMas25().condicionHabilidad(jugador, rival))
@@ -118,8 +120,6 @@ public class DivineRecreation : Habilidad
 
         if (new CondicionInicioCombate().condicionHabilidad(jugador, rival))
         {
-            // new EfectoDanoExtraPrimerAtaque(atk).efecto(jugador, rival);
-            // new ReduccionDanoPorcentualPrimerAtaque(x).efecto(jugador, rival);
             new EfectoDanoExtraFollowUp(result).efecto(jugador, rival);
         }
         else
