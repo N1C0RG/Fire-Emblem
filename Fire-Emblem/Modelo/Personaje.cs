@@ -1,18 +1,7 @@
 using Fire_Emblem.Habilidades;
 
 namespace Fire_Emblem;
-public class JsonContent
-{
-    public string Name { get; set; }
-    public string Weapon { get; set; }
-    public string Gender { get; set; }
-    public string DeathQuote { get; set; }
-    public string HP { get; set; }
-    public string Atk { get; set; }
-    public string Spd { get; set; }
-    public string Def { get; set; }
-    public string Res { get; set; }
-}
+
 public class Personaje
 {
     public string name;
@@ -27,6 +16,8 @@ public class Personaje
     public int res;
     public string[] habilidades;
     public bool iniciaRound = false;
+    
+    
     public List<string> bonusNeutralizados = new List<string>(); 
     public List<string> penaltyNeutralizados = new List<string>(); 
     public Dictionary<string, int> bonusStats= new Dictionary<string, int>();

@@ -1,3 +1,5 @@
+using Fire_Emblem.ExcepcionesJuego;
+
 namespace Fire_Emblem;
 using System.Text.Json;
 public class LectorDeArchivo
@@ -13,17 +15,22 @@ public class LectorDeArchivo
 
     public string[] leerArchivo()
     {
-        string fileNumber = _archivoSeleccionado.PadLeft(3, '0');
-        var fullPath = Directory.GetFiles(_carpetaEquipo)
-            .FirstOrDefault(file => Path.GetFileName(file).Contains(fileNumber));
-        return fullPath != null ? File.ReadAllLines(fullPath) : Array.Empty<string>();
-    }
-    public List<JsonContent> LoadJsonCharacter()
-    {
-        string directorio_path = AppDomain.CurrentDomain.BaseDirectory; 
-        string jsonFilePath = Path.Combine(directorio_path, "characters.json");
-        string jsonString = File.ReadAllText(jsonFilePath);
-        List<JsonContent> todos_personajes = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
-        return todos_personajes; 
+        try
+        {
+            string numeroArchivo = _archivoSeleccionado.PadLeft(3, '0');
+            var pathCompleto = Directory.GetFiles(_carpetaEquipo)
+                .FirstOrDefault(file => Path.GetFileName(file).Contains(numeroArchivo));
+            
+            if (pathCompleto == null)
+            {
+                throw new ExcepcionArchivoInvalido();
+            }
+
+            return File.ReadAllLines(pathCompleto); 
+        } 
+        catch ( Exception e)
+        {
+            throw new ExceptionErrorLeerArchivo(); 
+        }
     }
 }

@@ -2,7 +2,7 @@ namespace Fire_Emblem;
 
 public class ConstructorDeEquipo
 {
-    public List<Personaje> crearEquipo(List<JsonContent> todosPersonajes, List<string> dataJugador)
+    public List<Personaje> crearEquipo(List<ContenidoJson> todosPersonajes, List<string> dataJugador)
     {
         var equipo = new List<Personaje>();
         foreach (string lineaPersonajeArchivo in dataJugador)
@@ -30,7 +30,7 @@ public class ConstructorDeEquipo
             return (nombre, habilidades);
         }
     }
-    private void agregarPersonajeEquipo(List<JsonContent> todosPersonajes, string nombre, string[] habilidades, List<Personaje> equipo)
+    private void agregarPersonajeEquipo(List<ContenidoJson> todosPersonajes, string nombre, string[] habilidades, List<Personaje> equipo)
     {
         var dataPersonajes = todosPersonajes.FirstOrDefault(c => c.Name == nombre);
         if (dataPersonajes != null)
