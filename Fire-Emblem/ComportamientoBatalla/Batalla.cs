@@ -28,9 +28,9 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
         get { return _ataqueRival; }
         private set { _ataqueRival = value < 0 ? 0 : value; }
     }
-    public Batalla(Personaje player, Personaje rival, View view, Player equipoJugador, Player equipoRival)
+    public Batalla(Personaje jugador, Personaje rival, View view, Player equipoJugador, Player equipoRival)
     {
-        this.jugador = player;
+        this.jugador = jugador;
         this.rival = rival;
         _view = view;
         this.equipoJugador = equipoJugador;
@@ -48,7 +48,6 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
         _ventaja.calcularVentaja(jugador, rival);
     }
     public void definirAtaque()  
-    
     {
         AtaqueJugador = _calculadorDeAtaque.calcularAtaque(jugador, rival, _ventaja.ventajaJugador);
         AtaqueRival = _calculadorDeAtaque.calcularAtaque(rival, jugador, _ventaja.ventajaRival);

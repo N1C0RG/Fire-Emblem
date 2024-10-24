@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Fire_Emblem_View;
 
 namespace Fire_Emblem;
 
@@ -73,4 +74,3 @@ public class CalculadorDeAtaque
         return ataqueFinal < 0 ? 0 : ataqueFinal;
     }
 }
-

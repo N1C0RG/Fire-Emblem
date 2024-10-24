@@ -23,7 +23,7 @@ public class HabilidadManager
         //aplicarHabilidades(_rival, _jugador);//TODO: tremendo problema aca 
         ordenarBonusEnDiccionarioListas();
         _impresoraHabilidades.printTodoBonusPenaltyNeutralizaciones();
-        _neutralizadorEfectos.aplicarNeutralizadores();
+        _neutralizadorEfectos.aplicarNeutralizadores(_view);
     }
 
     private void aplicarHabilidades(Personaje jugador, Personaje rival)
@@ -109,14 +109,14 @@ public class NeutralizadorEfectos
         _jugador = jugador;
         _rival = rival; 
     }
-    public void aplicarNeutralizadores()
+    public void aplicarNeutralizadores(View view)
     {
-        neutralizarBonusPenalty(_jugador);
+        neutralizarBonusPenalty(_jugador, view);
         neutralizarFollowBonusPenalty(_jugador);
-        neutralizarBonusPenalty(_rival);
+        neutralizarBonusPenalty(_rival, view);
         neutralizarFollowBonusPenalty(_rival);
     }
-    private void neutralizarBonusPenalty(Personaje jugador) //TODO ver esto 
+    private void neutralizarBonusPenalty(Personaje jugador, View view) //TODO ver esto 
     {
         foreach (var stat in jugador.bonusNeutralizados)
         {
@@ -137,6 +137,7 @@ public class NeutralizadorEfectos
         {
             jugador.ataqueFollow = 0;
         }
+
     }
 }
 
@@ -254,7 +255,6 @@ public class ImpresoraBonusPenaltyNeutralizaciones
 
     private void printReduccionDanoPorcentual(Personaje jugador)
     {
-        
         if (jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
@@ -285,6 +285,7 @@ public class ImpresoraBonusPenaltyNeutralizaciones
     }
     private void printReduccionDanoPorcentualFollowUp(Personaje jugador)
     {
+
         if (jugador.ReduccionDanoPorcentualDictionary["followUp"] > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["followUp"] * 100)}%");

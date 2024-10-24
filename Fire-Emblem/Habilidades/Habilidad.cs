@@ -53,7 +53,7 @@ public class MoonTwinWing : Habilidad
             
         }
         rival.SumarBonusYPenaltyEnPostEfecto();
-        if (jugador.spd >= rival.spd)
+        if (jugador.spd + jugador.postEfecto["Spd"]> rival.spd + rival.postEfecto["Spd"])
         {
             if (new HpMas25().condicionHabilidad(jugador, rival))
             {
