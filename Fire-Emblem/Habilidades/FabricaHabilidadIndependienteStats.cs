@@ -763,7 +763,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Swift Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new SpdUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new SpdUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() },
                 _jugador, 
                 _rival);
@@ -771,7 +771,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Bracing Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new DefUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);

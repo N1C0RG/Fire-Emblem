@@ -92,7 +92,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Fierce Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new AtkUp(8), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new AtkUp(8), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() },
                 _jugador, 
                 _rival);
@@ -100,7 +100,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Darting Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new SpdUp(8), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new SpdUp(8), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
@@ -108,7 +108,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Steady Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(8), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new DefUp(8), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
@@ -116,7 +116,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Warding Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new ResUp(8), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new ResUp(8), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
@@ -124,7 +124,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Kestrel Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() },   
                 _jugador, 
                 _rival);
@@ -132,7 +132,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Sturdy Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new AtkUp(6), new DefUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new AtkUp(6), new DefUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() },   
                 _jugador, 
                 _rival);
@@ -140,7 +140,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Mirror Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new AtkUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new AtkUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
@@ -148,7 +148,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         else if (_nombre_habilidad == "Steady Posture")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new SpdUp(6), new DefUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
+                new List<IEfecto> { new SpdUp(6), new DefUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
