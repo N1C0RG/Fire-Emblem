@@ -734,7 +734,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new EfectoDanoExtra(5)}, 
-                new List<ICondicion> { new CondicionNoTienArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new NoHayCondicion() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }

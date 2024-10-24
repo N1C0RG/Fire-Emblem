@@ -173,8 +173,8 @@ public class ReduccionDanoPorcentualSpd : IEfecto
         int spd = jugador.spd; 
         spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
         
-        
-        decimal reduccionDano = ((spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((spd - rival.spd) * 4) / 100m;
+        int speedRival = rival.spd + rival.postEfecto["Spd"];
+        decimal reduccionDano = ((spd - speedRival) * 4) / 100m > 0.4m ? 0.4m : ((spd - speedRival) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
 
     }
@@ -186,8 +186,9 @@ public class ReduccionDanoPorcentualRes : IEfecto
     {
         int res = jugador.res;
         res += jugador.postEfecto.ContainsKey("Res") ? jugador.postEfecto["Res"] : 0;
+        int r_res = rival.res + rival.postEfecto["Res"];
         
-        decimal reduccionDano = ((res - rival.res) * 4) / 100m > 0.4m ? 0.4m : ((res - rival.res) * 4) / 100m;
+        decimal reduccionDano = ((res - r_res) * 4) / 100m > 0.4m ? 0.4m : ((res - r_res) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
     }
 }

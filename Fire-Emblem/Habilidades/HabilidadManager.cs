@@ -58,6 +58,15 @@ public class HabilidadManager
         // {
         //_view.WriteLine($"los stats rival  {rival.primerCombateInicia} {rival.primeraVexDefiende}" );
         //_view.WriteLine($"los stats jugador  {jugador.primerCombateInicia} {jugador.primeraVexDefiende}" );
+        // _view.WriteLine($"jugador {rival.name}  {rival.postEfecto["Res"]}");
+        // if (_jugador.atk + _jugador.postEfecto["Atk"] > _rival.res + _rival.postEfecto["Res"])
+        // {
+        //     int cantidad = (int)((_jugador.atk + _jugador.postEfecto["Atk"] - _rival.res + _rival.postEfecto["Res"])/4);
+        //     _view.WriteLine(cantidad.ToString());
+        //     _view.WriteLine($"{_rival.res + _rival.postEfecto["Res"]}");
+        //     _view.WriteLine($"{_jugador.atk + _jugador.postEfecto["Atk"] }");
+        //     _view.WriteLine($"{(_jugador.atk + _jugador.postEfecto["Atk"]) - (_rival.res + _rival.postEfecto["Res"])}");
+        // }
         // }
         
         //_view.WriteLine($"los stats jugador  {jugador.DanoAdicionalDictionary["followUp"]}");
