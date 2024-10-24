@@ -86,8 +86,8 @@ public class ControladorTurno
         _personajeJugador.resetearContenedoresDeStats();
         _personajeRival.resetearContenedoresDeStats();
 
-        var manejadorHabilidades = new HabilidadManager(_personajeJugador, _personajeRival, _view);
-        manejadorHabilidades.aplicarTodo();
+        var controladorHabilidades = new ControladorHabilidades(_personajeJugador, _personajeRival, _view);
+        controladorHabilidades.aplicarTodo();
         
         _personajeJugador.calcularNetosStats();
         _personajeRival.calcularNetosStats();
