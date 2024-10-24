@@ -167,9 +167,9 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         {
             //TODO: crear una logica separada 
             int cantidad = 0; 
-            if (_jugador.atk > _rival.res)
+            if (_jugador.atk + _jugador.postEfecto["Atk"] > _rival.res + _rival.postEfecto["Res"])
             {
-                cantidad = (int)((_jugador.atk - _rival.res)/4);
+                cantidad = (int)((_jugador.atk + _jugador.postEfecto["Atk"] - _rival.res + _rival.postEfecto["Res"])/4);
             }
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.25m), new EfectoDanoExtraPrimerAtaque(cantidad) }, 
