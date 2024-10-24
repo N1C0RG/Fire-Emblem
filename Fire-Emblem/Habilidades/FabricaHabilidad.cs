@@ -16,9 +16,9 @@ public abstract class FabricaHabilidad
         _rival = rival;
     }
 
-    public AplicadorHabilidad crearAplicador()
+    public AplicadorEfectoHabilidad crearAplicador()
     {
-        return new AplicadorHabilidad(_habilidad, _habilidadSegundaCondicion, _habilidadTerceraCondicion);
+        return new AplicadorEfectoHabilidad(_habilidad, _habilidadSegundaCondicion, _habilidadTerceraCondicion);
     }
 
     public abstract void crearHabilidad();

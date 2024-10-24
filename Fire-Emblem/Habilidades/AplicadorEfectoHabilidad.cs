@@ -1,12 +1,12 @@
 namespace Fire_Emblem.Habilidades;
 
-public class AplicadorHabilidad
+public class AplicadorEfectoHabilidad
 {
     private Habilidad _habilidad;
     private Habilidad _habilidadSegundaCondicion;
     private Habilidad _habilidadTerceraCondicion;
 
-    public AplicadorHabilidad(Habilidad habilidad, Habilidad habilidadSegundaCondicion = null, Habilidad habilidadTerceraCondicion = null)
+    public AplicadorEfectoHabilidad(Habilidad habilidad, Habilidad habilidadSegundaCondicion = null, Habilidad habilidadTerceraCondicion = null)
     {
         _habilidad = habilidad;
         _habilidadSegundaCondicion = habilidadSegundaCondicion;

@@ -9,7 +9,7 @@ namespace Fire_Emblem.Controlador
         private Personaje _rival;
         private VistaStatsEfectosHabilidades _vista;
         private NeutralizadorEfectos _neutralizadorEfectos;
-        private AplicadorHabilidades _aplicadorHabilidades;
+        private ManejadorAplicadorHabilidad _aplicadorHabilidades;
 
         public ControladorHabilidades(Personaje jugador, Personaje rival, View view)
         {
@@ -17,7 +17,7 @@ namespace Fire_Emblem.Controlador
             _rival = rival;
             _vista = new VistaStatsEfectosHabilidades(view);
             _neutralizadorEfectos = new NeutralizadorEfectos(jugador, rival);
-            _aplicadorHabilidades = new AplicadorHabilidades(jugador, rival);
+            _aplicadorHabilidades = new ManejadorAplicadorHabilidad(jugador, rival);
         }
 
         public void aplicarTodo()
