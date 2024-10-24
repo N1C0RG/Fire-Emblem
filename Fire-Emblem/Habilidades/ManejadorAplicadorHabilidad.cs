@@ -17,8 +17,8 @@ public class ManejadorAplicadorHabilidad
         aplicarHabilidadesIndependientes(_jugador, _rival);
         aplicarHabilidadesIndependientes(_rival, _jugador);
 
-        _jugador.SumarBonusYPenaltyEnPostEfecto();
-        _rival.SumarBonusYPenaltyEnPostEfecto();
+        _jugador.dataHabilidadStats.calcularPostEfecto();
+        _rival.dataHabilidadStats.calcularPostEfecto();
 
         aplicarHabilidadesDependientes(_jugador, _rival);
         aplicarHabilidadesDependientes(_rival, _jugador);

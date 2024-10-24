@@ -52,8 +52,8 @@ public class MoonTwinWing : Habilidad
             descunto = -0;
             
         }
-        rival.SumarBonusYPenaltyEnPostEfecto();
-        if (jugador.spd + jugador.postEfecto["Spd"]> rival.spd + rival.postEfecto["Spd"])
+        rival.dataHabilidadStats.calcularPostEfecto();
+        if (jugador.spd + jugador.dataHabilidadStats.postEfecto["Spd"]> rival.spd + rival.dataHabilidadStats.postEfecto["Spd"])
         {
             if (new HpMas25().condicionHabilidad(jugador, rival))
             {
@@ -102,10 +102,10 @@ public class DivineRecreation : Habilidad
         new RivalResUp(-4).efecto(jugador, rival);
 
 
-        rival.postEfecto["Atk"] += -4; 
-        foreach (var i in rival.postEfecto)
+        rival.dataHabilidadStats.postEfecto["Atk"] += -4; 
+        foreach (var i in rival.dataHabilidadStats.postEfecto)
         {
-            rival.netosStats.Add(i.Key, i.Value);
+            rival.dataHabilidadStats.postEfecto.Add(i.Key, i.Value);
         }
 
         var c = new CalculadorDeAtaque();

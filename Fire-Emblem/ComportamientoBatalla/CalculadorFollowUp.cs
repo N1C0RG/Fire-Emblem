@@ -12,12 +12,13 @@ public class CalculadorFollowUp : CalculadorDeAtaque
         
         var ataque = _ataque + atacante.getAtaqueFollow();
         
-        //view.WriteLine($"  {atacante.name}  el ataque con ventaja    {(ataque * _ventaja) - _defensa}");
-        int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa + _atacante.DanoAdicionalDictionary["todosAtaques"] + _atacante.DanoAdicionalDictionary["followUp"];
+        int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa + 
+                          _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] 
+                          + _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"];
         
-        var reduccionTotal = _reduccionTotal * (1 - defensor.ReduccionDanoPorcentualDictionary["followUp"]);
-        //view.WriteLine($"{reduccionTotal}");
-        //.WriteLine($"  {atacante.name}  el ataque con ventaja    {(int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta}");
+        var reduccionTotal = _reduccionTotal * 
+                             (1 - defensor.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"]);
+
         return (int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta;
     }
     public DataFollowUp obtenerDatosFollowUp(Personaje jugador, Personaje rival, decimal ventajaJugador, decimal ventajaRival, View view) 

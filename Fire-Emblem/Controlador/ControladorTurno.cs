@@ -89,8 +89,8 @@ public class ControladorTurno
         var controladorHabilidades = new ControladorHabilidades(_personajeJugador, _personajeRival, _view);
         controladorHabilidades.aplicarTodo();
         
-        _personajeJugador.calcularNetosStats();
-        _personajeRival.calcularNetosStats();
+        _personajeJugador.dataHabilidadStats.calcularNetosStats();
+        _personajeRival.dataHabilidadStats.calcularNetosStats();
         
         //TODO: cambiar esto 
         _personajeJugador.primerCombateInicia = true;
@@ -106,37 +106,15 @@ public class ControladorTurno
         _personajeJugador.setOponentePrevio(_personajeRival.getNombre()); 
         _personajeRival.setOponentePrevio(_personajeJugador.getNombre());
         
-        _personajeJugador.reduccionDanoPorcentual = 0m; //TODO: redefinir esto con un metodo que lo encapsule 
-        _personajeRival.reduccionDanoPorcentual = 0m; 
         _personajeJugador.reduccionDanoAbsoluta = 0;
         _personajeRival.reduccionDanoAbsoluta = 0;
-        _personajeJugador.danoAdicional = 0; 
-        _personajeRival.danoAdicional = 0; 
+
+        _personajeJugador.dataReduccionExtraStats.resetearAdicional();
+        _personajeRival.dataReduccionExtraStats.resetearAdicional();
+        _personajeJugador.dataReduccionExtraStats.resetearPorcentual();
+        _personajeRival.dataReduccionExtraStats.resetearPorcentual();
         
-        foreach (var key in _personajeJugador.DanoAdicionalDictionary.Keys.ToList())
-        {
-            _personajeJugador.DanoAdicionalDictionary[key] = 0;
-        }
-        foreach (var key in _personajeRival.DanoAdicionalDictionary.Keys.ToList())
-        {
-            _personajeRival.DanoAdicionalDictionary[key] = 0;
-        }
-        foreach (var key in _personajeJugador.ReduccionDanoPorcentualDictionary.Keys.ToList())
-        {
-            _personajeJugador.ReduccionDanoPorcentualDictionary[key] = 0;
-        }
-        foreach (var key in _personajeRival.ReduccionDanoPorcentualDictionary.Keys.ToList())
-        {
-            _personajeRival.ReduccionDanoPorcentualDictionary[key] = 0;
-        }
-        
-        foreach (var key in _personajeJugador.postEfecto.Keys.ToList())
-        {
-            _personajeJugador.postEfecto[key] = 0;
-        }
-        foreach (var key in _personajeRival.postEfecto.Keys.ToList())
-        {
-            _personajeRival.postEfecto[key] = 0;
-        }
+        _personajeJugador.dataHabilidadStats.resetearPostEfecto();
+        _personajeRival.dataHabilidadStats.resetearPostEfecto();
     }
 }

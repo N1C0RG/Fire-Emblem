@@ -30,8 +30,8 @@ namespace Fire_Emblem.Controlador
 
         private void ordenarBonusEnDiccionarioListas()
         {
-            _jugador.ordenarContenedores();
-            _rival.ordenarContenedores();
+            _jugador.dataHabilidadStats.ordenarContenedores();
+            _rival.dataHabilidadStats.ordenarContenedores();
         }
     }
 }

@@ -45,7 +45,7 @@ public class CalculadorDeAtaque
     {
         decimal reduccionTotal = 1;
 
-        foreach (var reduccion in _defensor.ReduccionDanoPorcentualDictionary)
+        foreach (var reduccion in _defensor.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary)
         {
             if (reduccion.Key == "primerAtaque" && _atacante.contadorAtaques == 1)
             {
@@ -62,11 +62,12 @@ public class CalculadorDeAtaque
 
     private int calcularAtaqueFinal()
     {
-        int ataqueFinal = (int)Math.Floor(_ataque * _ventaja) - _defensa + _atacante.DanoAdicionalDictionary["todosAtaques"];
+        int ataqueFinal = (int)Math.Floor(_ataque * _ventaja) - _defensa + 
+                          _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"];
 
         if (_atacante.contadorAtaques == 1)
         {
-            ataqueFinal += _atacante.DanoAdicionalDictionary["primerAtaque"];
+            ataqueFinal += _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"];
         }
 
         ataqueFinal = (int)(ataqueFinal * _reduccionTotal) + _defensor.reduccionDanoAbsoluta;

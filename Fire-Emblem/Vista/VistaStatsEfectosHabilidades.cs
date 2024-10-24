@@ -38,7 +38,7 @@ public class VistaStatsEfectosHabilidades
     }
     private void printJugadorBonus(Personaje jugador)
     {
-        foreach (var stat in jugador.bonusStats)
+        foreach (var stat in jugador.dataHabilidadStats.bonusStats)
         {
             printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
@@ -47,7 +47,7 @@ public class VistaStatsEfectosHabilidades
     }
     private void printJugadorPenalty(Personaje jugador)
     {
-        foreach (var stat in jugador.penaltyStats)
+        foreach (var stat in jugador.dataHabilidadStats.penaltyStats) 
         {
             if (stat.Value < 0)
             {
@@ -67,12 +67,12 @@ public class VistaStatsEfectosHabilidades
     
     private void printBonusPenaltyNeutralizados(Personaje jugador)
     {  
-        foreach (var bonus in jugador.bonusNeutralizados)
+        foreach (var bonus in jugador.dataHabilidadStats.bonusNeutralizados)
         {
             _view.WriteLine($"Los bonus de {bonus} de {jugador.name} fueron neutralizados");
         }
 
-        foreach (var penalty in jugador.penaltyNeutralizados)
+        foreach (var penalty in jugador.dataHabilidadStats.penaltyNeutralizados)
         {
             _view.WriteLine($"Los penalty de {penalty} de {jugador.name} fueron neutralizados");
         }
@@ -88,9 +88,9 @@ public class VistaStatsEfectosHabilidades
 
     private void printReduccionDanoPorcentual(Personaje jugador)
     {
-        if (jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] > 0)
+        if (jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] > 0)
         {
-            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
+            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
         }
     }
     private void printReduccionDanoAbsoluto(Personaje jugador)
@@ -103,39 +103,39 @@ public class VistaStatsEfectosHabilidades
 
     private void printDanoExtra(Personaje jugador)
     {
-        if (jugador.DanoAdicionalDictionary["todosAtaques"] != 0)
+        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["todosAtaques"]} daño extra en cada ataque");
+            _view.WriteLine($"{jugador.name} realizará +{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"]} daño extra en cada ataque");
         }
     }
     private void printReduccionDanoPorcentualPrimerAtaque(Personaje jugador)
     {
         
-        if (jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] > 0)
+        if (jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["primerAtaque"] > 0)
         {
-            _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] * 100)}%");
+            _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un {Math.Truncate(jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["primerAtaque"] * 100)}%");
         }
     }
     private void printReduccionDanoPorcentualFollowUp(Personaje jugador)
     {
 
-        if (jugador.ReduccionDanoPorcentualDictionary["followUp"] > 0)
+        if (jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"] > 0)
         {
-            _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un {Math.Truncate(jugador.ReduccionDanoPorcentualDictionary["followUp"] * 100)}%");
+            _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un {Math.Truncate(jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"] * 100)}%");
         }
     }
     private void printDanoExtraPrimerAtaque(Personaje jugador)
     {
-        if (jugador.DanoAdicionalDictionary["primerAtaque"] != 0)
+        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"] != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["primerAtaque"]} daño extra en su primer ataque");
+            _view.WriteLine($"{jugador.name} realizará +{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"]} daño extra en su primer ataque");
         }
     }
     private void printDanoExtraFollowUp(Personaje jugador)
     {
-        if (jugador.DanoAdicionalDictionary["followUp"] != 0)
+        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"] != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.DanoAdicionalDictionary["followUp"]} daño extra en su Follow-Up");
+            _view.WriteLine($"{jugador.name} realizará +{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"]} daño extra en su Follow-Up");
         }
     }
 }

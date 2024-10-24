@@ -15,7 +15,7 @@ public abstract class EfectoStatJugador : IEfecto
 
     public void efecto(Personaje jugador, Personaje rival)
     {
-        var stats = Cantidad > 0 ? jugador.bonusStats : jugador.penaltyStats;
+        var stats = Cantidad > 0 ? jugador.dataHabilidadStats.bonusStats : jugador.dataHabilidadStats.penaltyStats;
 
         if (stats.ContainsKey(StatKey))
         {
@@ -38,7 +38,7 @@ public abstract class EfectoStatRival : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        var stats = Cantidad > 0 ? rival.bonusStats : rival.penaltyStats;
+        var stats = Cantidad > 0 ? rival.dataHabilidadStats.bonusStats : rival.dataHabilidadStats.penaltyStats;
 
         if (stats.ContainsKey(StatKey))
         {
@@ -59,7 +59,7 @@ public abstract class AplicarCancelacionBonus : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        rival.bonusNeutralizados.Add(StatKey);
+        rival.dataHabilidadStats.bonusNeutralizados.Add(StatKey);
     }
 }
 public class AtkUp : EfectoStatJugador
@@ -125,13 +125,13 @@ public class Up50Atack: IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival)
     {
-        if (jugador.bonusStats.ContainsKey("Atk"))
+        if (jugador.dataHabilidadStats.bonusStats.ContainsKey("Atk"))
         {
-            jugador.bonusStats["Atk"] += (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
+            jugador.dataHabilidadStats.bonusStats["Atk"] += (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
         }
         else
         {
-            jugador.bonusStats.Add("Atk", (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m));
+            jugador.dataHabilidadStats.bonusStats.Add("Atk", (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m));
         } 
     }
 }
@@ -171,11 +171,11 @@ public class ReduccionDanoPorcentualSpd : IEfecto
     {
         //TODO: cambiar la forma en que proceso habilidades, hay habilidades en esta entrega que tengo que aplicar sobre los stats de unaunidad normal, hay que hacer cambios (parche temporal)
         int spd = jugador.spd; 
-        spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
+        spd += jugador.dataHabilidadStats.postEfecto.ContainsKey("Spd") ? jugador.dataHabilidadStats.postEfecto["Spd"] : 0;
         
-        int speedRival = rival.spd + rival.postEfecto["Spd"];
+        int speedRival = rival.spd + rival.dataHabilidadStats.postEfecto["Spd"];
         decimal reduccionDano = ((spd - speedRival) * 4) / 100m > 0.4m ? 0.4m : ((spd - speedRival) * 4) / 100m;
-        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
 
     }
 }
@@ -185,11 +185,11 @@ public class ReduccionDanoPorcentualRes : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         int res = jugador.res;
-        res += jugador.postEfecto.ContainsKey("Res") ? jugador.postEfecto["Res"] : 0;
-        int r_res = rival.res + rival.postEfecto["Res"];
+        res += jugador.dataHabilidadStats.postEfecto.ContainsKey("Res") ? jugador.dataHabilidadStats.postEfecto["Res"] : 0;
+        int r_res = rival.res + rival.dataHabilidadStats.postEfecto["Res"];
         
         decimal reduccionDano = ((res - r_res) * 4) / 100m > 0.4m ? 0.4m : ((res - r_res) * 4) / 100m;
-        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
     }
 }
 
@@ -211,8 +211,8 @@ public class EfectoLunarBrace : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        int def = rival.postEfecto.ContainsKey("Def") ? rival.def + rival.postEfecto["Def"] : rival.def; 
-        jugador.DanoAdicionalDictionary["todosAtaques"] += (int)((def * 0.3m)); 
+        int def = rival.dataHabilidadStats.postEfecto.ContainsKey("Def") ? rival.def + rival.dataHabilidadStats.postEfecto["Def"] : rival.def; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += (int)((def * 0.3m)); 
     }
 }
 
@@ -225,7 +225,7 @@ public class EfectoDanoExtra : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.DanoAdicionalDictionary["todosAtaques"] += cantidad; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += cantidad; 
     }
 }
 
@@ -233,7 +233,7 @@ public class EfectoBackAtYou : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.DanoAdicionalDictionary["todosAtaques"] += (jugador.hpOriginal - jugador.HP)/2; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += (jugador.hpOriginal - jugador.HP)/2; 
     }
 }
 
@@ -246,7 +246,7 @@ public class ReduccionDanoPorcentualPrimerAtaque : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.ReduccionDanoPorcentualDictionary["primerAtaque"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["primerAtaque"]) * (1 - cantidad);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["primerAtaque"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["primerAtaque"]) * (1 - cantidad);
     }
 }
 
@@ -259,7 +259,7 @@ public class ReduccionDanoPorcentualFollowUo : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.ReduccionDanoPorcentualDictionary["followUp"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["followUp"]) * (1 - cantidad);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"]) * (1 - cantidad);
     }
 }
 
@@ -273,7 +273,7 @@ public abstract class AplicarCancelacionBonusJugador : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.bonusNeutralizados.Add(StatKey);
+        jugador.dataHabilidadStats.bonusNeutralizados.Add(StatKey);
     }
 }
 public class AplicarCancelacionDefJugador : AplicarCancelacionBonusJugador
@@ -294,7 +294,7 @@ public class ReduccionDanoPorcentual : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - cantidad);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - cantidad);
     }
 }
 
@@ -307,7 +307,7 @@ public class EfectoDanoExtraPrimerAtaque : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.DanoAdicionalDictionary["primerAtaque"] += cantidad; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"] += cantidad; 
     }
 }
 public class EfectoDanoExtraFollowUp : IEfecto
@@ -319,7 +319,7 @@ public class EfectoDanoExtraFollowUp : IEfecto
     }
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.DanoAdicionalDictionary["followUp"] += cantidad; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"] += cantidad; 
     }
 }
 
@@ -337,12 +337,12 @@ public class ReduccionDanoSpd : IEfecto
     {
         //TODO: cambiar la forma en que proceso habilidades, hay habilidades en esta entrega que tengo que aplicar sobre los stats de unaunidad normal, hay que hacer cambios (parche temporal)
         int spd = jugador.spd; 
-        spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
+        spd += jugador.dataHabilidadStats.postEfecto.ContainsKey("Spd") ? jugador.dataHabilidadStats.postEfecto["Spd"] : 0;
         
-        int speedRival = rival.spd + rival.postEfecto["Spd"];
+        int speedRival = rival.spd + rival.dataHabilidadStats.postEfecto["Spd"];
         
         decimal reduccionDano = ((spd - speedRival) * 4) / 100m > 0.4m ? 0.4m : ((spd - speedRival) * 4) / 100m;
-        jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
+        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
 
     }
 }
