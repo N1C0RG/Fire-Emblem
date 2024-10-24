@@ -248,3 +248,19 @@ public class CondicionRivalHP50 : CondicionGenerica
         return rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.getHpOriginal()) * 0.5m); 
     }
 }
+
+public class HpMas25 : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return jugador.HP >= (int)Math.Floor(Convert.ToDecimal(jugador.getHpOriginal()) * 0.25m); 
+    }
+}
+
+public class JugadorMasSpd : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return jugador.spd > rival.spd; 
+    }
+}

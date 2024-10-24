@@ -31,65 +31,6 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
                 _jugador, 
                 _rival);
         }
-        else if (_nombre_habilidad == "Arms Shield")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-7)}, 
-                new List<ICondicion> { new CondicionTieneVentaja() }, 
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Bow Guard")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Bow) }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Axe Guard")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Axe) }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Magic Guard")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Lance Guard")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Lance) }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Sympathetic")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionNoInicia(), new HpMenos50() }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
-        
-        // habilidades dano extra 
-        
-        else if (_nombre_habilidad == "Bravery")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new EfectoDanoExtra(5)}, 
-                new List<ICondicion> { new CondicionNoTienArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
-                _jugador, 
-                _rival);
-        }
         else if (_nombre_habilidad == "Lunar Brace")
         {
             _habilidad = new Habilidad (
@@ -212,22 +153,6 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
                 _jugador, 
                 _rival);
         }
-        else if (_nombre_habilidad == "Swift Stance")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new SpdUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
-                new List<ICondicion> { new CondicionNoInicia() },
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Bracing Stance")
-        {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUo(0.1m)}, 
-                new List<ICondicion> { new CondicionNoInicia() }, 
-                _jugador, 
-                _rival);
-        }
         else if (_nombre_habilidad == "Poetic Justice")
         {
             //TODO: crear una logica separa para la habilidad 
@@ -235,29 +160,6 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
             _habilidad = new Habilidad (
                 new List<IEfecto> { new RivalSpdUp(-4), new EfectoDanoExtra(cantidad)}, 
                 new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
-                _rival);
-        }
-        else if (_nombre_habilidad == "Laguz Friend")
-        {
-            //TODO: crear una logica separada 
-            int def = -(int)(_jugador.def * 0.5);
-            int res = -(int)(_jugador.res * 0.5);
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(def), new ResUp(res), new AplicarCancelacionDefJugador(), new AplicarCancelacionResJugador(), new ReduccionDanoPorcentual(0.5m)}, 
-                new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
-                _rival);
-        }
-        
-        else if (_nombre_habilidad == "Chivalry")
-        {
-            //TODO: crear una logica separada 
-            int def = -(int)(_jugador.def * 0.5);
-            int res = -(int)(_jugador.res * 0.5);
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoAbsoluta(-2), new EfectoDanoExtra(2) }, 
-                new List<ICondicion> { new CondicionInicioCombate(), new CondicionFullVidaJugador() }, 
                 _jugador, 
                 _rival);
         }
@@ -329,6 +231,14 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
                 new List<ICondicion> { new CondicionRivalNoTienArma(Armas.Magic) }, 
+                _jugador, 
+                _rival);
+        }
+        else if (_nombre_habilidad == "Divine Recreation")
+        {
+            _habilidad = new Habilidad (
+                new List<IEfecto> { new ReduccionDanoPorcentualSpd() }, 
+                new List<ICondicion> { new CondicionRivalHP50() }, 
                 _jugador, 
                 _rival);
         }

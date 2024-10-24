@@ -32,6 +32,7 @@ public class Personaje
     public Dictionary<string, int> bonusStats= new Dictionary<string, int>();
     public Dictionary<string, int> penaltyStats= new Dictionary<string, int>();
     public Dictionary<string, int> netosStats= new Dictionary<string, int>();
+    public Dictionary<string, int> postEfecto = new Dictionary<string, int>(); 
     public int contadorAtaques = 1;
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
@@ -202,9 +203,12 @@ public class Personaje
         bonusNeutralizados.Clear();
         penaltyNeutralizados.Clear();
         habilidadPrimerAtaque.Clear();
+        
+        
+        postEfecto.Clear();
     }
     
-    public void ResetearStatsPorFirstAtack()
+    public void resetearStatsPorFirstAtack()
     {
         foreach (var stat in habilidadPrimerAtaque)
         {

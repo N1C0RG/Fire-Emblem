@@ -171,10 +171,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
     {
         //TODO: cambiar la forma en que proceso habilidades, hay habilidades en esta entrega que tengo que aplicar sobre los stats de unaunidad normal, hay que hacer cambios (parche temporal)
         int spd = jugador.spd; 
-        if (jugador.bonusStats.ContainsKey("Spd"))
-        {
-            spd += jugador.bonusStats["Spd"]; 
-        }
+        spd += jugador.postEfecto.ContainsKey("Spd") ? jugador.postEfecto["Spd"] : 0;
         
         decimal reduccionDano = ((spd - rival.spd) * 4) / 100m > 0.4m ? 0.4m : ((spd - rival.spd) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
@@ -186,7 +183,10 @@ public class ReduccionDanoPorcentualRes : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        decimal reduccionDano = ((jugador.res - rival.res) * 4) / 100m > 0.4m ? 0.4m : ((jugador.res - rival.res) * 4) / 100m;
+        int res = jugador.res;
+        res += jugador.postEfecto.ContainsKey("Res") ? jugador.postEfecto["Res"] : 0;
+        
+        decimal reduccionDano = ((res - rival.res) * 4) / 100m > 0.4m ? 0.4m : ((res - rival.res) * 4) / 100m;
         jugador.ReduccionDanoPorcentualDictionary["todosAtaques"] = 1 - (1 - jugador.ReduccionDanoPorcentualDictionary["todosAtaques"]) * (1 - reduccionDano);
     }
 }
@@ -209,7 +209,8 @@ public class EfectoLunarBrace : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.DanoAdicionalDictionary["todosAtaques"] += (int)(rival.def * 0.3m); 
+        int def = rival.postEfecto.ContainsKey("Def") ? rival.def + rival.postEfecto["Def"] : rival.def; 
+        jugador.DanoAdicionalDictionary["todosAtaques"] += (int)((def * 0.3m)); 
     }
 }
 
@@ -305,5 +306,13 @@ public class EfectoDanoExtraPrimerAtaque : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         jugador.DanoAdicionalDictionary["primerAtaque"] += cantidad; 
+    }
+}
+
+public class DivineRecreation : IEfecto
+{
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        jugador.HP = jugador.hpOriginal; 
     }
 }

@@ -17,8 +17,8 @@ public class CalculadorDeAtaque
         _defensor = defensor;
         _ventaja = ventaja;
 
-        _atacante.ResetearStatsPorFirstAtack();
-        _defensor.ResetearStatsPorFirstAtack();
+        _atacante.resetearStatsPorFirstAtack();
+        _defensor.resetearStatsPorFirstAtack();
 
         calcularAtaqueBase();
         calcularDefensa();

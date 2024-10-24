@@ -20,7 +20,7 @@ public class HabilidadManager
     public void aplicarTodo()
     {
         aplicarHabilidades(_jugador, _rival);
-        aplicarHabilidades(_rival, _jugador);//TODO: tremendo problema aca 
+        //aplicarHabilidades(_rival, _jugador);//TODO: tremendo problema aca 
         ordenarBonusEnDiccionarioListas();
         _impresoraHabilidades.printTodoBonusPenaltyNeutralizaciones();
         _neutralizadorEfectos.aplicarNeutralizadores();
@@ -37,6 +37,23 @@ public class HabilidadManager
                 var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
                 aplicadorHabilidad.aplicarHabilidad();
             } catch {}
+        }
+        foreach (var habilidad in rival.habilidades)
+        {
+            var fabricaHabilidad = new FabricaHabilidadIndependienteStats(habilidad, rival, jugador);
+            try
+            {
+                fabricaHabilidad.crearHabilidad();
+                var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
+                aplicadorHabilidad.aplicarHabilidad();
+            } catch {}
+        }
+
+        SumarBonusYPenaltyEnPostEfecto(jugador); 
+        SumarBonusYPenaltyEnPostEfecto(rival);
+        
+        foreach (var habilidad in jugador.habilidades)
+        {
             var fabricaHabilidad2 = new FabricaHabilidadesDependientesStats(habilidad, jugador, rival);
             try 
             {
@@ -44,6 +61,38 @@ public class HabilidadManager
                 var aplicadorHabilidad2 = fabricaHabilidad2.crearAplicador();
                 aplicadorHabilidad2.aplicarHabilidad();
             } catch {}
+        }
+        foreach (var habilidad in rival.habilidades)
+        {
+            var fabricaHabilidad2 = new FabricaHabilidadesDependientesStats(habilidad, rival, jugador);
+            try 
+            {
+                fabricaHabilidad2.crearHabilidad();
+                var aplicadorHabilidad2 = fabricaHabilidad2.crearAplicador();
+                aplicadorHabilidad2.aplicarHabilidad();
+            } catch {}
+        }
+    }
+    public void SumarBonusYPenaltyEnPostEfecto(Personaje jugador)
+    {
+        jugador.postEfecto.Clear(); // Asegúrate de que el diccionario esté vacío antes de sumar
+
+        foreach (var bonus in jugador.bonusStats)
+        {
+            if (!jugador.postEfecto.ContainsKey(bonus.Key))
+            {
+                jugador.postEfecto[bonus.Key] = 0;
+            }
+            jugador.postEfecto[bonus.Key] += bonus.Value;
+        }
+
+        foreach (var penalty in jugador.penaltyStats)
+        {
+            if (!jugador.postEfecto.ContainsKey(penalty.Key))
+            {
+                jugador.postEfecto[penalty.Key] = 0;
+            }
+            jugador.postEfecto[penalty.Key] += penalty.Value;
         }
     }
 
@@ -112,8 +161,10 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printFollowUpAtk(_rival);
         
         printJugadorBonus(_jugador);
+        
         printDanoExtra(_jugador);
         printDanoExtraPrimerAtaque(_jugador);
+
         printJugadorPenalty(_jugador);
         
         printBonusPenaltyNeutralizados(_jugador);
@@ -121,6 +172,8 @@ public class ImpresoraBonusPenaltyNeutralizaciones
         printReduccionDanoPorcentual(_jugador); 
         printReduccionDanoPorcentualPrimerAtaque(_jugador); 
         printReduccionDanoPorcentualFollowUp(_jugador);
+        
+        
         printReduccionDanoAbsoluto(_jugador);
 
         
