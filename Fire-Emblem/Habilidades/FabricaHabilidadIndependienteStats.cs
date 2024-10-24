@@ -784,11 +784,10 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                 _jugador, 
                 _rival);
             _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5)}, 
+                new List<IEfecto> { new ReduccionDanoPorcentualSpd()}, 
                 new List<ICondicion> { new JugadorMasSpd() }, 
                 _jugador, 
                 _rival);
         }
-        
     }
 }

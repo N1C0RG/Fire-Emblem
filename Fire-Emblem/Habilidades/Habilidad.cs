@@ -15,7 +15,7 @@ public class Habilidad
         this.rival = rival;
     }
 
-    public void aplicarHabilidad()
+    public virtual void aplicarHabilidad()
     {
         foreach (var i in  condicion)
         {
@@ -36,10 +36,32 @@ public class Habilidad
     
 }
 
-
-public class HabilidadesPostEfectosNormales : Habilidad
+public class HabilidadEspecifica : Habilidad
 {
-    public HabilidadesPostEfectosNormales(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival) : base(efecto, condicion, jugador, rival)
+    private bool cumple_todas_condicion = true;
+    public HabilidadEspecifica(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
+        : base(efecto, condicion, jugador, rival)
     {
+    }
+    public override void aplicarHabilidad()
+    {
+        // Lógica específica para aplicar la habilidad
+        foreach (var i in condicion)
+        {
+            if (i.condicionHabilidad(jugador, rival) == false)
+            {
+                cumple_todas_condicion = false;
+            }
+        }
+
+        if (cumple_todas_condicion)
+        {
+            // Lógica específica para aplicar los efectos
+            foreach (var i in efecto)
+            {
+                // Implementa la lógica específica aquí
+                i.efecto(jugador, rival);
+            }
+        }
     }
 }
