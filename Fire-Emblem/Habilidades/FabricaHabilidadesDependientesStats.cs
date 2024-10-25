@@ -35,7 +35,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new EfectoLunarBrace()}, 
-                new List<ICondicion> { new CondicionNoTienArma(Armas.Magic), new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new NoTieneMagic(), new CondicionInicioCombate() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }

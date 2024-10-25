@@ -391,7 +391,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> {new HpUp() }, 
-                new List<ICondicion> { new NoHayCondicion()}, 
+                new List<ICondicion> { new CondicionHpUp()}, 
                 _jugador, 
                 _rival);
             
@@ -694,7 +694,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Bow) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalBow() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }
@@ -702,7 +702,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Axe) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalAxe() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }
@@ -710,7 +710,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Magic) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalMagic() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }
@@ -718,7 +718,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalArma(Armas.Lance) }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalLance() }, //TODO: arreglar la logica de las otras condiciones de arma  
                 _jugador, 
                 _rival);
         }
@@ -780,7 +780,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.5m)}, 
-                new List<ICondicion> { new CondicionRivalNoTienArma(Armas.Magic) }, 
+                new List<ICondicion> { new NoTieneMagicRival() }, 
                 _jugador, 
                 _rival);
         }

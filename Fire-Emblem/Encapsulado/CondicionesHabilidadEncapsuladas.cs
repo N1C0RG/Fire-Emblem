@@ -79,4 +79,10 @@ public class CondicionesHabilidadEncapsuladas
         bool condicion = ventaja.ventajaJugador == 1.2m; 
         return condicion; 
     }
+    
+    public bool tieneHpUp(Personaje jugador)
+    {
+        bool condicion = jugador.habilidadHpUp; 
+        return condicion; 
+    }
 }

@@ -1,26 +1,28 @@
+using Fire_Emblem.Encapsulado;
+
 namespace Fire_Emblem.Habilidades;
 
 public class AplicarCancelacionPenalty : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.addPenaltyNeutralizados("Atk");
-        jugador.addPenaltyNeutralizados("Spd");
-        jugador.addPenaltyNeutralizados("Def");
-        jugador.addPenaltyNeutralizados("Res");
+        jugador.addPenaltyNeutralizados(Stat.Atk.ToString());
+        jugador.addPenaltyNeutralizados(Stat.Spd.ToString());
+        jugador.addPenaltyNeutralizados(Stat.Def.ToString());
+        jugador.addPenaltyNeutralizados(Stat.Res.ToString());
     }
 }
 public class Up50Atack: IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival)
     {
-        if (jugador.dataHabilidadStats.bonusStats.ContainsKey("Atk"))
+        if (jugador.dataHabilidadStats.bonusStats.ContainsKey(Stat.Atk.ToString()))
         {
-            jugador.dataHabilidadStats.bonusStats["Atk"] += (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
+            jugador.dataHabilidadStats.bonusStats[Stat.Atk.ToString()] += (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
         }
         else
         {
-            jugador.dataHabilidadStats.bonusStats.Add("Atk", (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m));
+            jugador.dataHabilidadStats.bonusStats.Add(Stat.Atk.ToString(), (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m));
         } 
     }
 }
@@ -37,48 +39,28 @@ public class EfectoLuna : IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival)
     {
-        rival.habilidadPrimerAtaque.Add("Def"); //TODO: ver esto 
-        rival.habilidadPrimerAtaque.Add("Res");
+        rival.habilidadPrimerAtaque.Add(Stat.Def.ToString()); //TODO: ver esto 
+        rival.habilidadPrimerAtaque.Add(Stat.Res.ToString());
     }
 }
 
 public class HpUp : IEfecto
 {
-    public  void efecto(Personaje jugador, Personaje rival) //TODO: arreglar esto, mala practica 
+    public  void efecto(Personaje jugador, Personaje rival) 
     {
-        if (jugador.habilidadHpUp)
-        {
-            jugador.HP += 15;
-            jugador.habilidadHpUp = false;
-        } 
+        jugador.HP += 15;
+        jugador.habilidadHpUp = false;
     }
 }
-
-
-public class ReduccionDanoAbsoluta : IEfecto
-{
-    private int cantidad;
-    public ReduccionDanoAbsoluta(int cantidad)
-    {
-        this.cantidad = cantidad;
-    }
-    public void efecto(Personaje jugador, Personaje rival)
-    {
-        jugador.reduccionDanoAbsoluta += cantidad;
-    }
-}
-
 
 public class EfectoLunarBrace : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        int def = rival.dataHabilidadStats.postEfecto.ContainsKey("Def") ? rival.def + rival.dataHabilidadStats.postEfecto["Def"] : rival.def; 
+        int def = rival.dataHabilidadStats.postEfecto.ContainsKey(Stat.Def.ToString()) ? rival.def + rival.dataHabilidadStats.postEfecto[Stat.Def.ToString()] : rival.def; 
         jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += (int)((def * 0.3m)); 
     }
 }
-
-
 
 public class EfectoBackAtYou : IEfecto
 {
