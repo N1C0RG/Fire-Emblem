@@ -358,21 +358,25 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Dragonskin") //TODO: ver lo de todas las segunads condiciones 
         {
-            _habilidad = new Habilidad(
-                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), 
-                    new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
-                    new AplicarCancelacionDef(), new AplicarCancelacionRes() },
-                new List<ICondicion> { new CondicionNoInicia() },
-                _jugador,
-                _rival);
+            var habilidades = new List<Habilidad>
+            {
+                new Habilidad(
+                    new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), 
+                        new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
+                        new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                    new List<ICondicion> { new CondicionNoInicia() },
+                    _jugador,
+                    _rival),
+                new Habilidad(
+                    new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6),
+                        new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
+                        new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                    new List<ICondicion> { new CondicionRivalHP75(), new CondicionInicioCombate() },
+                    _jugador,
+                    _rival)
+            };
+            _habilidad = new HabilidadCompuesta(habilidades);
             
-            _habilidadSegundaCondicion = new Habilidad(
-                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6),
-                    new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
-                    new AplicarCancelacionDef(), new AplicarCancelacionRes() },
-                new List<ICondicion> { new CondicionRivalHP75(), new CondicionInicioCombate() },
-                _jugador,
-                _rival);
             
         }
         else if (_nombre_habilidad == "Ignis")
@@ -743,16 +747,14 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
             int def = -(int)(_jugador.def * 0.5);
             int res = -(int)(_jugador.res * 0.5);
             _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(def), new ResUp(res), new AplicarCancelacionDefJugador(), new AplicarCancelacionResJugador(), new ReduccionDanoPorcentual(0.5m)}, 
+                new List<IEfecto> { new DefUp(def), new ResUp(res), new AplicarCancelacionDefJugador(),
+                    new AplicarCancelacionResJugador(), new ReduccionDanoPorcentual(0.5m)}, 
                 new List<ICondicion> { new NoHayCondicion() }, 
                 _jugador, 
                 _rival);
         }
         else if (_nombre_habilidad == "Chivalry")
         {
-            //TODO: crear una logica separada 
-            int def = -(int)(_jugador.def * 0.5);
-            int res = -(int)(_jugador.res * 0.5);
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-2), new EfectoDanoExtra(2) }, 
                 new List<ICondicion> { new CondicionInicioCombate(), new CondicionFullVidaJugador() }, 
@@ -762,7 +764,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Swift Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new SpdUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
+                new List<IEfecto> { new SpdUp(6), new ResUp(6), 
+                    new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() },
                 _jugador, 
                 _rival);
@@ -770,7 +773,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Bracing Stance")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> { new DefUp(6), new ResUp(6), new ReduccionDanoPorcentualFollowUp(0.1m)}, 
+                new List<IEfecto> { new DefUp(6), new ResUp(6),
+                    new ReduccionDanoPorcentualFollowUp(0.1m)}, 
                 new List<ICondicion> { new CondicionNoInicia() }, 
                 _jugador, 
                 _rival);
@@ -785,7 +789,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Guard Bearing")
         {
-            _habilidad = new GuardBearing(new List<IEfecto> { }, new List<ICondicion> { }, _jugador, _rival);
+            _habilidad = new GuardBearing(new List<IEfecto> { }, new List<ICondicion> { }, _jugador, 
+                _rival);
         }
     }
 }

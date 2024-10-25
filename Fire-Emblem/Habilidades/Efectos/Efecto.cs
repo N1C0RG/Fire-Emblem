@@ -12,29 +12,45 @@ public class AplicarCancelacionPenalty : IEfecto
         jugador.addPenaltyNeutralizados(Stat.Res.ToString());
     }
 }
-public class Up50Atack: IEfecto
+public class Up50Atack : IEfecto
 {
-    public  void efecto(Personaje jugador, Personaje rival)
+    public void efecto(Personaje jugador, Personaje rival)
     {
-        if (jugador.dataHabilidadStats.bonusStats.ContainsKey(Stat.Atk.ToString()))
+        int bonusAtk = calcularBonusAtk(jugador);
+        if (contieneBonus(jugador))
         {
-            jugador.dataHabilidadStats.bonusStats[Stat.Atk.ToString()] += (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
+            jugador.dataHabilidadStats.bonusStats[Stat.Atk.ToString()] += bonusAtk;
         }
         else
         {
-            jugador.dataHabilidadStats.bonusStats.Add(Stat.Atk.ToString(), (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m));
-        } 
+            jugador.dataHabilidadStats.bonusStats.Add(Stat.Atk.ToString(), bonusAtk);
+        }
+    }
+
+    private int calcularBonusAtk(Personaje jugador)
+    {
+        return (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
+    }
+
+    private bool contieneBonus(Personaje jugador)
+    {
+        bool condicion = jugador.dataHabilidadStats.bonusStats.ContainsKey(Stat.Atk.ToString());
+        return condicion; 
     }
 }
 
 public class Sandstorm : IEfecto
 {
-    public  void efecto(Personaje jugador, Personaje rival) //TODO: no considero el caso de multiples sumas al follow 
+    public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.ataqueFollow = (int)Math.Floor(Convert.ToDecimal(jugador.def) * 1.5m) - jugador.atk; //TODO: ver esto 
+        jugador.ataqueFollow = calcularAtaqueFollow(jugador);
+    }
+
+    private int calcularAtaqueFollow(Personaje jugador)
+    {
+        return (int)Math.Floor(Convert.ToDecimal(jugador.def) * 1.5m) - jugador.atk;
     }
 }
-
 public class HpUp : IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival) 
@@ -44,23 +60,18 @@ public class HpUp : IEfecto
     }
 }
 
-public class EfectoLunarBrace : IEfecto
-{
-    public void efecto(Personaje jugador, Personaje rival)
-    {
-        int def = rival.dataHabilidadStats.postEfecto.ContainsKey(Stat.Def.ToString()) ? rival.def + rival.dataHabilidadStats.postEfecto[Stat.Def.ToString()] : rival.def; 
-        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += (int)((def * 0.3m)); 
-    }
-}
-
 public class EfectoBackAtYou : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
-        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += (jugador.hpOriginal - jugador.HP)/2; 
+        jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] += calcularDanoAdicional(jugador);
+    }
+
+    private int calcularDanoAdicional(Personaje jugador)
+    {
+        int cantidad = (jugador.hpOriginal - jugador.HP) / 2;
+        return cantidad; 
     }
 }
-
-
 
 

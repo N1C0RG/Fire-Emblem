@@ -33,11 +33,9 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Lunar Brace")
         {
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new EfectoLunarBrace()}, 
-                new List<ICondicion> { new NoTieneMagic(), new CondicionInicioCombate() },   
-                _jugador, 
+            _habilidad = new LunarBrace (new List<IEfecto> {}, new List<ICondicion> {}, _jugador,
                 _rival);
+
         }
         else if (_nombre_habilidad == "Back at You")
         {
@@ -221,11 +219,13 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Divine Recreation")
         {
-            _habilidad = _habilidad = new DivineRecreation(new List<IEfecto> {}, new List<ICondicion> {}, _jugador, _rival);
+            _habilidad = _habilidad = new DivineRecreation(new List<IEfecto> {}, new List<ICondicion> {}, 
+                _jugador, _rival);
         }
         else if (_nombre_habilidad == "Moon-Twin Wing")
         {
-            _habilidad = new MoonTwinWing(new List<IEfecto> {}, new List<ICondicion> {}, _jugador, _rival);
+            _habilidad = new MoonTwinWing(new List<IEfecto> {}, new List<ICondicion> {}, _jugador,
+                _rival);
         }
     }
 }
