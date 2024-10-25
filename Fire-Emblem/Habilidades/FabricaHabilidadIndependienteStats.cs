@@ -330,7 +330,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Beorc's Blessing")
         {
             _habilidad = new Habilidad(
-                new List<IEfecto> { new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                new List<IEfecto> { new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
+                    new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondicion> { new NoHayCondicion() },
                 _jugador,
                 _rival);
@@ -339,7 +340,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Close Def")
         {
             _habilidad = new Habilidad(
-                new List<IEfecto> { new DefUp(8), new ResUp(8), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                new List<IEfecto> { new DefUp(8), new ResUp(8), new AplicarCancelacionAtk(),
+                    new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondicion> { new CondicionClose(), new CondicionNoInicia() },
                 _jugador,
                 _rival);
@@ -354,16 +356,20 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                 _rival); 
             
         }
-        else if (_nombre_habilidad == "Dragonskin")
+        else if (_nombre_habilidad == "Dragonskin") //TODO: ver lo de todas las segunads condiciones 
         {
             _habilidad = new Habilidad(
-                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), 
+                    new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
+                    new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondicion> { new CondicionNoInicia() },
                 _jugador,
                 _rival);
             
             _habilidadSegundaCondicion = new Habilidad(
-                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6), new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes() },
+                new List<IEfecto> { new AtkUp(6), new SpdUp(6), new DefUp(6),
+                    new ResUp(6),  new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), 
+                    new AplicarCancelacionDef(), new AplicarCancelacionRes() },
                 new List<ICondicion> { new CondicionRivalHP75(), new CondicionInicioCombate() },
                 _jugador,
                 _rival);
@@ -398,12 +404,10 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Fort. Def/Res")
         {
-            _habilidad = new Habilidad (
-                new List<IEfecto> {new DefUp(6), new ResUp(6)}, 
-                new List<ICondicion> { new NoHayCondicion()}, 
-                _jugador, 
-                _rival);
-            
+            _habilidad = new Habilidad(
+                new List<IEfecto> { new DefUp(6), new ResUp(6) },
+                new List<ICondicion> { new NoHayCondicion() },
+                _jugador, _rival); 
             _habilidadSegundaCondicion = new Habilidad (
                 new List<IEfecto> {new AtkUp(-2)}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
@@ -414,7 +418,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Life and Death")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new AtkUp(6), new SpdUp(6), new DefUp(-5), new ResUp(-5)}, 
+                new List<IEfecto> {new AtkUp(6), new SpdUp(6), new DefUp(-5), 
+                    new ResUp(-5)}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -423,7 +428,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Atk/Def")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalAtkUp(-3), new RivalDefUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionDef()}, 
+                new List<IEfecto> {new RivalAtkUp(-3), new RivalDefUp(-3), 
+                    new AplicarCancelacionAtk(), new AplicarCancelacionDef()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -432,7 +438,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Atk/Spd")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalAtkUp(-3), new RivalSpdUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionSpd()}, 
+                new List<IEfecto> {new RivalAtkUp(-3), new RivalSpdUp(-3),
+                    new AplicarCancelacionAtk(), new AplicarCancelacionSpd()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -441,7 +448,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Atk/Res")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalAtkUp(-3), new RivalResUp(-3), new AplicarCancelacionAtk(), new AplicarCancelacionRes()}, 
+                new List<IEfecto> {new RivalAtkUp(-3), new RivalResUp(-3), 
+                    new AplicarCancelacionAtk(), new AplicarCancelacionRes()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -450,7 +458,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Spd/Def")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalSpdUp(-3), new RivalDefUp(-3), new AplicarCancelacionSpd(), new AplicarCancelacionDef()}, 
+                new List<IEfecto> {new RivalSpdUp(-3), new RivalDefUp(-3),
+                    new AplicarCancelacionSpd(), new AplicarCancelacionDef()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -459,7 +468,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Spd/Res")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalSpdUp(-3), new RivalResUp(-3), new AplicarCancelacionSpd(), new AplicarCancelacionRes()}, 
+                new List<IEfecto> {new RivalSpdUp(-3), new RivalResUp(-3),
+                    new AplicarCancelacionSpd(), new AplicarCancelacionRes()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -468,7 +478,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Lull Def/Res")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalDefUp(-3), new RivalResUp(-3), new AplicarCancelacionDef(), new AplicarCancelacionRes()}, 
+                new List<IEfecto> {new RivalDefUp(-3), new RivalResUp(-3),
+                    new AplicarCancelacionDef(), new AplicarCancelacionRes()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -477,13 +488,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         else if (_nombre_habilidad == "Solid Ground")
         {
             _habilidad = new Habilidad (
-                new List<IEfecto> {new AtkUp(6), new DefUp(6) }, 
-                new List<ICondicion> { new NoHayCondicion()}, 
-                _jugador, 
-                _rival);
-            
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> {new ResUp(-5) }, 
+                new List<IEfecto> {new AtkUp(6), new DefUp(6), new ResUp(-5) }, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
@@ -493,7 +498,8 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {   //TODO; mover esto a efecto ? 
             int cantidad = ((_rival.def + _rival.res) / 2);
             _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalResUp(cantidad - _rival.res), new RivalDefUp(cantidad - _rival.def)}, 
+                new List<IEfecto> {new RivalResUp(cantidad - _rival.res), 
+                    new RivalDefUp(cantidad - _rival.def)}, 
                 new List<ICondicion> { new CondicionSword()}, 
                 _jugador, 
                 _rival);
@@ -663,26 +669,19 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5), 
-                    new RivalDefUp(-5), new RivalResUp(-5), new AplicarCancelacionAtk(), new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes(),
+                    new RivalDefUp(-5), new RivalResUp(-5), new AplicarCancelacionAtk(),
+                    new AplicarCancelacionSpd(), new AplicarCancelacionDef(), new AplicarCancelacionRes(),
                     new AplicarCancelacionPenalty()}, 
                 new List<ICondicion> { new NoHayCondicion()}, 
                 _jugador, 
                 _rival);
             
         }
-        else if (_nombre_habilidad == "Luna") //TODO: numeros que entrego 
+        else if (_nombre_habilidad == "Luna") 
         {
-            int res = (int)Math.Floor(Convert.ToDecimal(_rival.res) * 0.5m); 
-            int def = (int)Math.Floor(Convert.ToDecimal(_rival.def) * 0.5m);
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new RivalDefUp(-def), new RivalResUp(-res), new EfectoLuna() }, 
-                new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
-                _rival);
-            
+            _habilidad = new Luna (new List<IEfecto> { }, new List<ICondicion> { }, _jugador, _rival);
         }
-        //habilidades E3
-         else if (_nombre_habilidad == "Arms Shield")
+        else if (_nombre_habilidad == "Arms Shield")
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-7)}, 
@@ -694,7 +693,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalBow() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalBow() },  
                 _jugador, 
                 _rival);
         }
@@ -702,7 +701,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalAxe() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalAxe() },  
                 _jugador, 
                 _rival);
         }
@@ -710,7 +709,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalMagic() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalMagic() },  
                 _jugador, 
                 _rival);
         }
@@ -718,7 +717,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionRivalLance() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionRivalLance() },  
                 _jugador, 
                 _rival);
         }
@@ -726,7 +725,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-5)}, 
-                new List<ICondicion> { new CondicionNoInicia(), new HpMenos50() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new CondicionNoInicia(), new HpMenos50() },  
                 _jugador, 
                 _rival);
         }
@@ -734,7 +733,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new EfectoDanoExtra(5)}, 
-                new List<ICondicion> { new NoHayCondicion() }, //TODO: arreglar la logica de las otras condiciones de arma  
+                new List<ICondicion> { new NoHayCondicion() },  
                 _jugador, 
                 _rival);
         }

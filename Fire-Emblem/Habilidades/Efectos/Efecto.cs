@@ -35,15 +35,6 @@ public class Sandstorm : IEfecto
     }
 }
 
-public class EfectoLuna : IEfecto
-{
-    public  void efecto(Personaje jugador, Personaje rival)
-    {
-        rival.habilidadPrimerAtaque.Add(Stat.Def.ToString()); //TODO: ver esto 
-        rival.habilidadPrimerAtaque.Add(Stat.Res.ToString());
-    }
-}
-
 public class HpUp : IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival) 
