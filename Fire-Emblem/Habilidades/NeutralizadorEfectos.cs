@@ -1,9 +1,14 @@
+using Fire_Emblem.Encapsulado;
+using Fire_Emblem.Encapsulado.Stats;
+
 namespace Fire_Emblem.Habilidades;
 
 public class NeutralizadorEfectos
 {
     private Personaje _jugador;
     private Personaje _rival; 
+    string bonusNeutralizados = NombreDiccionario.bonusNeutralizados.ToString(); 
+    string penaltyNeutralizados = NombreDiccionario.penaltyNeutralizados.ToString();
     public NeutralizadorEfectos(Personaje jugador, Personaje rival)
     {
         _jugador = jugador;
@@ -16,27 +21,29 @@ public class NeutralizadorEfectos
         neutralizarBonusPenalty(_rival);
         neutralizarFollowBonusPenalty(_rival);
     }
-    private void neutralizarBonusPenalty(Personaje jugador) 
+    private void neutralizarBonusPenalty(Personaje jugador)
     {
-        foreach (var stat in jugador.dataHabilidadStats.bonusNeutralizados)
+        foreach (var stat in
+                 jugador.getSpecificArrayDataHabilidadStat(bonusNeutralizados))
         {
-            jugador.dataHabilidadStats.bonusStats[stat] = 0;
+            jugador.setDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), stat, 0);
         }
-        foreach (var stat in jugador.dataHabilidadStats.penaltyNeutralizados)
+        foreach (var stat in jugador.getSpecificArrayDataHabilidadStat(penaltyNeutralizados))
         {
-            jugador.dataHabilidadStats.penaltyStats[stat] = 0;
+            jugador.setDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), stat, 0);
         }
     }
     private void neutralizarFollowBonusPenalty(Personaje jugador)
     {
-        if (jugador.getAtaqueFollow() > 0 && jugador.dataHabilidadStats.bonusNeutralizados.Contains("Atk"))
+        if (jugador.getAtaqueFollow() > 0
+            && jugador.contieneStatNeutralizado(bonusNeutralizados,Stat.Atk.ToString()))
         {
             jugador.ataqueFollow = 0;
         }
-        if (jugador.getAtaqueFollow() < 0 && jugador.dataHabilidadStats.penaltyNeutralizados.Contains("Atk"))
+        if (jugador.getAtaqueFollow() < 0 
+            && jugador.contieneStatNeutralizado(penaltyNeutralizados,Stat.Atk.ToString()))
         {
             jugador.ataqueFollow = 0;
         }
-
     }
 }

@@ -187,9 +187,9 @@ public class Personaje
     
     //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 
     
-    public int getDataHabilidadStat(string dictionaryName, string key)
+    public int getDataHabilidadStat(string nombreDiccionario, string key)
     {
-        return dictionaryName switch
+        return nombreDiccionario switch
         {
             "bonusStats" => dataHabilidadStats.bonusStats.ContainsKey(key) ? dataHabilidadStats.bonusStats[key] : 0,
             "penaltyStats" => dataHabilidadStats.penaltyStats.ContainsKey(key) 
@@ -197,9 +197,9 @@ public class Personaje
             "netosStats" => dataHabilidadStats.netosStats.ContainsKey(key) ? dataHabilidadStats.netosStats[key] : 0,
         };
     }
-    public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string dictionaryName)
+    public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string nombreDiccionario)
     {
-        return dictionaryName switch
+        return nombreDiccionario switch
         {
             "bonusStats" => dataHabilidadStats.bonusStats,
             "penaltyStats" => dataHabilidadStats.penaltyStats,
@@ -208,9 +208,9 @@ public class Personaje
     }
 
 
-    public void setDataHabilidadStat(string dictionaryName, string key, int value)
+    public void setDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
-        switch (dictionaryName)
+        switch (nombreDiccionario)
         {
             case "bonusStats":
                 dataHabilidadStats.bonusStats[key] = value;
@@ -223,9 +223,9 @@ public class Personaje
                 break;
         }
     }
-    public void sumarDataHabilidadStat(string dictionaryName, string key, int value)
+    public void sumarDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
-        switch (dictionaryName)
+        switch (nombreDiccionario)
         {
             case "bonusStats":
                 dataHabilidadStats.bonusStats[key] += value;
@@ -238,9 +238,18 @@ public class Personaje
                 break;
         }
     }
-    public List<string> getSpecificArrayDataHabilidadStat(string dictionaryName)
+    public bool contieneStatNeutralizado(string nombreDiccionario, string key)
     {
-        return dictionaryName switch
+        return nombreDiccionario switch
+        {
+            "bonusNeutralizados" => dataHabilidadStats.bonusNeutralizados.Contains(key),
+            "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados.Contains(key),
+            _ => false
+        };
+    }
+    public List<string> getSpecificArrayDataHabilidadStat(string nombreDiccionario)
+    {
+        return nombreDiccionario switch
         {
             "bonusNeutralizados" => dataHabilidadStats.bonusNeutralizados,
             "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
