@@ -21,7 +21,8 @@ public class PoeticJustice : Habilidad
     }
     private int calcularAtaqueRival()
     {
-        int cantiadad = rival.atk + rival.dataHabilidadStats.postEfecto[Stat.Atk.ToString()];
+        int cantiadad = rival.atk + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            Stat.Atk.ToString());
         return cantiadad; 
     }
 

@@ -1,3 +1,5 @@
+using Fire_Emblem.Encapsulado;
+
 namespace Fire_Emblem.Habilidades;
 
 public class MoonTwinWing : Habilidad
@@ -30,8 +32,10 @@ public class MoonTwinWing : Habilidad
 
     private bool condicionReduccionDanoPorcentual()
     {
-        bool condicion = (jugador.spd + jugador.dataHabilidadStats.postEfecto["Spd"]
-                          > rival.spd + rival.dataHabilidadStats.postEfecto["Spd"])
+        bool condicion = (jugador.spd +
+                          jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Spd.ToString())
+                          > rival.spd + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), 
+                              Stat.Spd.ToString()))
                          && new HpMas25().condicionHabilidad(jugador, rival); 
         return condicion; 
     }

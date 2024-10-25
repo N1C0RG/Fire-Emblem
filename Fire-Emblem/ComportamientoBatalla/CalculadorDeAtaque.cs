@@ -1,7 +1,9 @@
 using System.Security.Cryptography;
 using Fire_Emblem_View;
+using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem;
+
 
 public class CalculadorDeAtaque
 {
@@ -31,14 +33,18 @@ public class CalculadorDeAtaque
 
     private void calcularAtaqueBase()
     {
-        _ataque = Convert.ToDecimal(_atacante.getAtaque() + _atacante.getNetoStats("Atk"));
+        _ataque = Convert.ToDecimal(_atacante.getAtaque() + 
+                                    _atacante.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(),
+                                        Stat.Atk.ToString()));
     }
-
     private void calcularDefensa()
     {
         bool esAtaqueMagico = _atacante.getArma() == Armas.Magic.ToString();
-        _defensa = esAtaqueMagico ? _defensor.getResistencia() + _defensor.getNetoStats("Res")
-                              : _defensor.getDefensa() + _defensor.getNetoStats("Def");
+        _defensa = esAtaqueMagico ? 
+            _defensor.getResistencia() + _defensor.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(), 
+                Stat.Res.ToString())
+            : _defensor.getDefensa() + _defensor.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(),
+                Stat.Def.ToString());
     }
 
     private void calcularReduccionTotal()

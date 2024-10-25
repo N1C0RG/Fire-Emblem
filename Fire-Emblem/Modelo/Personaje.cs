@@ -16,27 +16,19 @@ public class Personaje
     public int res;
     public string[] habilidades;
     
-    
-    
     public bool iniciaRound = false;
-    
     public int contadorAtaques = 1;
     public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
     public string oponentePrevio = "";
-
     public bool primerCombateInicia = false;
     public bool primeraVexDefiende = false; 
-    
-
     public int reduccionDanoAbsoluta = 0; 
-    public bool habilidadHpUp = true;  //TODO: arreglaar esto 
+    public bool habilidadHpUp = true; 
     
     public DataHabilidadStats dataHabilidadStats = new DataHabilidadStats();
     public DataReduccionExtraStats dataReduccionExtraStats = new DataReduccionExtraStats(); 
-
     
-
     public Personaje(string name, string weapon, string gender, string deathQuote, int hp, int atk, int spd, 
         int def, int res, string[] habilidades)
     {
@@ -68,13 +60,10 @@ public class Personaje
             }
         }
     }
-    //TODO: ver este metodo, la clase tiene muchos metodos publicos 
-
     public string[] getHabilidades()
     {
         return habilidades; 
     }
-
     public void recivirDano(int cantidad)
     {
         HP -= cantidad; 
@@ -90,16 +79,10 @@ public class Personaje
     {
         return def; 
     }
-    public int getNetoStats(string stat)
-    {
-        return dataHabilidadStats.netosStats.ContainsKey(stat) ? dataHabilidadStats.netosStats[stat] : 0;
-    }
-
     public string getArma()
     {
         return weapon; 
     }
-
     public string getNombre()
     {
         return name; 
@@ -136,6 +119,10 @@ public class Personaje
     {
         oponentePrevio = oponente; 
     }
+    public string getOponentePrevio()
+    {
+        return oponentePrevio; 
+    }
 
     public int getHpOriginal()
     {
@@ -146,12 +133,6 @@ public class Personaje
     {
         return iniciaRound; 
     }
-
-    public string getOponentePrevio()
-    {
-        return oponentePrevio; 
-    }
-
     public string getGenero()
     {
         return gender; 
@@ -184,8 +165,6 @@ public class Personaje
             }
         }
     }
-    
-    //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 
     
     public int getDataHabilidadStat(string nombreDiccionario, string key)
     {
@@ -256,9 +235,7 @@ public class Personaje
             "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
         };
     }
-    //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
     
-
     public decimal getDataReduccionExtraStat(string dictionaryName, string key)
     {
         return dictionaryName switch

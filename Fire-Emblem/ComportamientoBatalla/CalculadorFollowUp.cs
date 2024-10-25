@@ -5,7 +5,7 @@ namespace Fire_Emblem;
 
 public class CalculadorFollowUp : CalculadorDeAtaque
 {
-    private int calcularFollowUp(Personaje atacante, Personaje defensor, decimal ventaja, View view) 
+    private int calcularFollowUp(Personaje atacante, Personaje defensor, decimal ventaja) 
     {
         
         var calculadorAtaque = calcularAtaque(atacante, defensor, ventaja);
@@ -21,14 +21,19 @@ public class CalculadorFollowUp : CalculadorDeAtaque
 
         return (int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta;
     }
-    public DataFollowUp obtenerDatosFollowUp(Personaje jugador, Personaje rival, decimal ventajaJugador, decimal ventajaRival, View view) 
+    public DataFollowUp obtenerDatosFollowUp(Personaje jugador, Personaje rival, decimal ventajaJugador,
+        decimal ventajaRival) 
     {
         var dataFollowUp = new DataFollowUp
         {
-            velocidadFollowJugador = jugador.spd + (jugador.getNetoStats("Spd")),
-            velocidadFollowRival = rival.spd + (rival.getNetoStats("Spd")),
-            AtkFollowJugador = calcularFollowUp(jugador, rival, ventajaJugador, view),
-            AtkFollowRival = calcularFollowUp(rival, jugador, ventajaRival, view),
+            velocidadFollowJugador = jugador.spd + (jugador.getDataHabilidadStat(
+                NombreDiccionario.netosStats.ToString(), Stat.Spd.ToString())),
+            
+            velocidadFollowRival = rival.spd + (rival.getDataHabilidadStat(
+                NombreDiccionario.netosStats.ToString(), Stat.Spd.ToString())),
+            
+            AtkFollowJugador = calcularFollowUp(jugador, rival, ventajaJugador),
+            AtkFollowRival = calcularFollowUp(rival, jugador, ventajaRival),
             velocidadAdicionalFollowUp = 5
         };
 

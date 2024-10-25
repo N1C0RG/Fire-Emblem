@@ -1,3 +1,5 @@
+using Fire_Emblem.Encapsulado;
+
 namespace Fire_Emblem.Habilidades;
 
 public class DragonsWrath : Habilidad
@@ -25,7 +27,9 @@ public class DragonsWrath : Habilidad
     }
     private void calcularAtaqueResitencia()
     {
-        ataqueJugador = jugador.atk + jugador.dataHabilidadStats.postEfecto["Atk"]; 
-        resistenciaRival = rival.res + rival.dataHabilidadStats.postEfecto["Res"];
+        ataqueJugador = jugador.atk + jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            Stat.Atk.ToString()); 
+        resistenciaRival = rival.res + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            Stat.Res.ToString());
     }
 }

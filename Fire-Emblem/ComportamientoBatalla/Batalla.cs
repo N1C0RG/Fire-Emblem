@@ -61,8 +61,9 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
     public void realizarFollowUp()
     {
         var calculadorFollowUp = new CalculadorFollowUp();
-        var dataFollowUp = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador, _ventaja.ventajaRival, _view); 
-        _manejadorFollowUp.realizarFollowUp(jugador, rival, AtaqueJugador, AtaqueRival, dataFollowUp, _view);
+        var dataFollowUp = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador,
+            _ventaja.ventajaRival); 
+        _manejadorFollowUp.realizarFollowUp(jugador, rival, dataFollowUp);
     }
 
     public void removerJugador()
@@ -73,9 +74,9 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
 
     public DataBatalla obtenerDataBatalla()
     {
-        //var dataFollow = _manejadorFollowUp.obtenerDatosFollowUp(jugador, rival);
         var calculadorFollowUp = new CalculadorFollowUp();
-        var dataFollowUp = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador, _ventaja.ventajaRival, _view); 
+        var dataFollowUp = calculadorFollowUp.obtenerDatosFollowUp(jugador, rival, _ventaja.ventajaJugador, 
+            _ventaja.ventajaRival); 
         return new DataBatalla(jugador, rival, _ventaja.ventajaJugador, AtaqueJugador, AtaqueRival, dataFollowUp);
     }
 }
