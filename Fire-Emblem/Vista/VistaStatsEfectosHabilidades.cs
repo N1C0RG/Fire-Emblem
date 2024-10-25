@@ -2,7 +2,7 @@ using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem.Vista;
 using Fire_Emblem_View;
-
+using NombreDiccionario = Fire_Emblem.NombreDiccionario;
 public class VistaStatsEfectosHabilidades
 {
     private readonly View _view;
@@ -38,7 +38,8 @@ public class VistaStatsEfectosHabilidades
     }
     private void printJugadorBonus(Personaje jugador)
     {
-        foreach (var stat in jugador.dataHabilidadStats.bonusStats)
+        foreach (var stat in 
+                 jugador.getSpecificDyctionaryDataHabilidadStat(NombreDiccionario.bonusStats.ToString()))
         {
             printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
@@ -47,7 +48,8 @@ public class VistaStatsEfectosHabilidades
     }
     private void printJugadorPenalty(Personaje jugador)
     {
-        foreach (var stat in jugador.dataHabilidadStats.penaltyStats) 
+        foreach (var stat in 
+                 jugador.getSpecificDyctionaryDataHabilidadStat(NombreDiccionario.penaltyStats.ToString())) 
         {
             if (stat.Value < 0)
             {
@@ -67,12 +69,16 @@ public class VistaStatsEfectosHabilidades
     
     private void printBonusPenaltyNeutralizados(Personaje jugador)
     {  
-        foreach (var bonus in jugador.dataHabilidadStats.bonusNeutralizados)
+        foreach (var bonus in
+                 jugador.getSpecificArrayDataHabilidadStat(
+                     NombreDiccionario.bonusNeutralizados.ToString()))
         {
             _view.WriteLine($"Los bonus de {bonus} de {jugador.name} fueron neutralizados");
         }
 
-        foreach (var penalty in jugador.dataHabilidadStats.penaltyNeutralizados)
+        foreach (var penalty in 
+                 jugador.getSpecificArrayDataHabilidadStat(
+                     NombreDiccionario.penaltyNeutralizados.ToString()))
         {
             _view.WriteLine($"Los penalty de {penalty} de {jugador.name} fueron neutralizados");
         }
@@ -90,7 +96,8 @@ public class VistaStatsEfectosHabilidades
     {
         if (jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] > 0)
         {
-            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un {Math.Truncate(jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
+            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un " +
+                            $"{Math.Truncate(jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] * 100)}%");
         }
     }
     private void printReduccionDanoAbsoluto(Personaje jugador)

@@ -184,9 +184,68 @@ public class Personaje
             }
         }
     }
-
     
- 
+    //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm 
+    
+    public int getDataHabilidadStat(string dictionaryName, string key)
+    {
+        return dictionaryName switch
+        {
+            "bonusStats" => dataHabilidadStats.bonusStats.ContainsKey(key) ? dataHabilidadStats.bonusStats[key] : 0,
+            "penaltyStats" => dataHabilidadStats.penaltyStats.ContainsKey(key) 
+                ? dataHabilidadStats.penaltyStats[key] : 0,
+            "netosStats" => dataHabilidadStats.netosStats.ContainsKey(key) ? dataHabilidadStats.netosStats[key] : 0,
+        };
+    }
+    public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string dictionaryName)
+    {
+        return dictionaryName switch
+        {
+            "bonusStats" => dataHabilidadStats.bonusStats,
+            "penaltyStats" => dataHabilidadStats.penaltyStats,
+            "netosStats" => dataHabilidadStats.netosStats
+        };
+    }
+
+
+    public void setDataHabilidadStat(string dictionaryName, string key, int value)
+    {
+        switch (dictionaryName)
+        {
+            case "bonusStats":
+                dataHabilidadStats.bonusStats[key] = value;
+                break;
+            case "penaltyStats":
+                dataHabilidadStats.penaltyStats[key] = value;
+                break;
+            case "netosStats":
+                dataHabilidadStats.netosStats[key] = value;
+                break;
+        }
+    }
+    public void sumarDataHabilidadStat(string dictionaryName, string key, int value)
+    {
+        switch (dictionaryName)
+        {
+            case "bonusStats":
+                dataHabilidadStats.bonusStats[key] += value;
+                break;
+            case "penaltyStats":
+                dataHabilidadStats.penaltyStats[key] += value;
+                break;
+            case "netosStats":
+                dataHabilidadStats.netosStats[key] += value;
+                break;
+        }
+    }
+    public List<string> getSpecificArrayDataHabilidadStat(string dictionaryName)
+    {
+        return dictionaryName switch
+        {
+            "bonusNeutralizados" => dataHabilidadStats.bonusNeutralizados,
+            "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
+        };
+    }
 }
 
 
