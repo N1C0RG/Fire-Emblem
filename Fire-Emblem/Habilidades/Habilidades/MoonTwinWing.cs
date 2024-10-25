@@ -2,27 +2,37 @@ namespace Fire_Emblem.Habilidades;
 
 public class MoonTwinWing : Habilidad
 {
-    private int descunto = 0; 
     public MoonTwinWing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
     }
     public override void aplicarHabilidad()
     {
-        if (new HpMas25().condicionHabilidad(jugador, rival))
+        if (condicinoEfectosStat())
         {
             new RivalAtkUp(-5).efecto(jugador, rival);
             new RivalSpdUp(-5).efecto(jugador, rival);
-            descunto = -0;
             
         }
         rival.dataHabilidadStats.calcularPostEfecto();
-        if (jugador.spd + jugador.dataHabilidadStats.postEfecto["Spd"]> rival.spd + rival.dataHabilidadStats.postEfecto["Spd"])
+        
+        if (condicionReduccionDanoPorcentual())
         {
-            if (new HpMas25().condicionHabilidad(jugador, rival))
-            {
-                new ReduccionDanoSpd(descunto, descunto).efecto(jugador, rival);
-            }
+            new ReduccionDanoPorcentualSpd().efecto(jugador, rival);
         }
+    }
+
+    private bool condicinoEfectosStat()
+    {
+        bool condicio = new HpMas25().condicionHabilidad(jugador, rival);
+        return condicio; 
+    }
+
+    private bool condicionReduccionDanoPorcentual()
+    {
+        bool condicion = (jugador.spd + jugador.dataHabilidadStats.postEfecto["Spd"]
+                          > rival.spd + rival.dataHabilidadStats.postEfecto["Spd"])
+                         && new HpMas25().condicionHabilidad(jugador, rival); 
+        return condicion; 
     }
 }

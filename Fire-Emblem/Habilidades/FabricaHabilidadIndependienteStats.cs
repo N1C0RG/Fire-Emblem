@@ -356,7 +356,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                 _rival); 
             
         }
-        else if (_nombre_habilidad == "Dragonskin") //TODO: ver lo de todas las segunads condiciones 
+        else if (_nombre_habilidad == "Dragonskin")  
         {
             var habilidades = new List<Habilidad>
             {

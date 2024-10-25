@@ -9,11 +9,13 @@ public class DivineRecreation : Habilidad
 
     public override void aplicarHabilidad()
     {
-        if (new CondicionRivalHP50().condicionHabilidad(jugador, rival))
+        if (condicionHabilidadStats());
+        {
             new RivalAtkUp(-4).efecto(jugador, rival);
-        new RivalSpdUp(-4).efecto(jugador, rival);
-        new RivalDefUp(-4).efecto(jugador, rival);
-        new RivalResUp(-4).efecto(jugador, rival);
+            new RivalSpdUp(-4).efecto(jugador, rival);
+            new RivalDefUp(-4).efecto(jugador, rival);
+            new RivalResUp(-4).efecto(jugador, rival);
+        }
 
 
         rival.dataHabilidadStats.postEfecto["Atk"] += -4; 
@@ -21,24 +23,41 @@ public class DivineRecreation : Habilidad
         {
             rival.dataHabilidadStats.postEfecto.Add(i.Key, i.Value);
         }
-
-        var c = new CalculadorDeAtaque();
-        var v = new Ventaja(); 
-        v.calcularVentaja(jugador, rival); 
-        var atk = c.calcularAtaque(rival, jugador, v.ventajaRival);
-
-        int cantidad = atk - jugador.reduccionDanoAbsoluta;
-        int result = (int)(cantidad * 0.3m);
         
         new ReduccionDanoPorcentualPrimerAtaque(0.3m).efecto(jugador, rival);
 
-        if (new CondicionInicioCombate().condicionHabilidad(jugador, rival))
+        int danoExtra = calcularDano(); 
+        
+        if (condicionDanoExtra())
         {
-            new EfectoDanoExtraFollowUp(result).efecto(jugador, rival);
+            new EfectoDanoExtraFollowUp(danoExtra).efecto(jugador, rival);
         }
         else
         {
-            new EfectoDanoExtraPrimerAtaque(result).efecto(jugador, rival);
+            new EfectoDanoExtraPrimerAtaque(danoExtra).efecto(jugador, rival);
         }
+    }
+
+    private bool condicionHabilidadStats()
+    {
+        bool condicion = new CondicionRivalHP50().condicionHabilidad(jugador, rival);
+        return condicion; 
+    }
+
+    private int calcularDano()
+    {
+        var calculadorAtaque = new CalculadorDeAtaque();
+        var ventaja = new Ventaja(); 
+        ventaja.calcularVentaja(jugador, rival); 
+        var ataque = calculadorAtaque.calcularAtaque(rival, jugador, ventaja.ventajaRival);
+        int cantidad = ataque - jugador.reduccionDanoAbsoluta;
+        
+        return (int)(cantidad * 0.3m);
+    }
+
+    private bool condicionDanoExtra()
+    {
+        bool condicion = new CondicionInicioCombate().condicionHabilidad(jugador, rival);
+        return condicion; 
     }
 }
