@@ -408,15 +408,19 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Fort. Def/Res")
         {
-            _habilidad = new Habilidad(
-                new List<IEfecto> { new DefUp(6), new ResUp(6) },
-                new List<ICondicion> { new NoHayCondicion() },
-                _jugador, _rival); 
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> {new AtkUp(-2)}, 
-                new List<ICondicion> { new NoHayCondicion()}, 
-                _jugador, 
-                _rival);
+            var habilidades = new List<Habilidad>
+            {
+                new Habilidad(
+                    new List<IEfecto> { new DefUp(6), new ResUp(6) },
+                    new List<ICondicion> { new NoHayCondicion() },
+                    _jugador, _rival), 
+                new Habilidad (
+                    new List<IEfecto> {new AtkUp(-2)}, 
+                    new List<ICondicion> { new NoHayCondicion()}, 
+                    _jugador, 
+                    _rival)
+            };
+            _habilidad = new HabilidadCompuesta(habilidades);
             
         }
         else if (_nombre_habilidad == "Life and Death")
@@ -547,17 +551,20 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Belief in Love")
         {
-            _habilidad = new Habilidad (
-                new List<IEfecto> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
-                new List<ICondicion> { new CondicionNoInicia()}, 
-                _jugador, 
-                _rival);
-            
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
-                new List<ICondicion> { new CondicionFullVidaRival(), new CondicionInicioCombate()}, 
-                _jugador, 
-                _rival);
+            var habilidades = new List<Habilidad>
+            {
+                new Habilidad (
+                    new List<IEfecto> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
+                    new List<ICondicion> { new CondicionNoInicia()}, 
+                    _jugador, 
+                    _rival), 
+                new Habilidad (
+                    new List<IEfecto> {new RivalAtkUp(-5), new RivalDefUp(-5) }, 
+                    new List<ICondicion> { new CondicionFullVidaRival(), new CondicionInicioCombate()}, 
+                    _jugador, 
+                    _rival) 
+            };
+            _habilidad = new HabilidadCompuesta(habilidades);
             
         }
         

@@ -6,8 +6,6 @@ public abstract class FabricaHabilidad
     protected Personaje _jugador;
     protected Personaje _rival;
     protected Habilidad _habilidad;
-    protected Habilidad _habilidadSegundaCondicion;
-    protected Habilidad _habilidadTerceraCondicion;
 
     public FabricaHabilidad(string nombreHabilidad, Personaje jugador, Personaje rival)
     {
@@ -18,7 +16,7 @@ public abstract class FabricaHabilidad
 
     public AplicadorEfectoHabilidad crearAplicador()
     {
-        return new AplicadorEfectoHabilidad(_habilidad, _habilidadSegundaCondicion, _habilidadTerceraCondicion);
+        return new AplicadorEfectoHabilidad(_habilidad);
     }
 
     public abstract void crearHabilidad();

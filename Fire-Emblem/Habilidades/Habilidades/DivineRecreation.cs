@@ -18,11 +18,7 @@ public class DivineRecreation : Habilidad
         }
 
 
-        rival.dataHabilidadStats.postEfecto["Atk"] += -4; 
-        foreach (var i in rival.dataHabilidadStats.postEfecto)
-        {
-            rival.dataHabilidadStats.postEfecto.Add(i.Key, i.Value);
-        }
+       modificarPostEfecto();
         
         new ReduccionDanoPorcentualPrimerAtaque(0.3m).efecto(jugador, rival);
 
@@ -59,5 +55,14 @@ public class DivineRecreation : Habilidad
     {
         bool condicion = new CondicionInicioCombate().condicionHabilidad(jugador, rival);
         return condicion; 
+    }
+
+    private void modificarPostEfecto()
+    {
+        rival.dataHabilidadStats.postEfecto["Atk"] += -4; 
+        foreach (var i in rival.dataHabilidadStats.postEfecto)
+        {
+            rival.dataHabilidadStats.postEfecto.Add(i.Key, i.Value);
+        }
     }
 }
