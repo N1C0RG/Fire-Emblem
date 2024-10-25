@@ -160,12 +160,7 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Poetic Justice")
         {
-            //TODO: crear una logica separa para la habilidad 
-            int cantidad = (int)(_rival.atk * 0.15); 
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new RivalSpdUp(-4), new EfectoDanoExtra(cantidad)}, 
-                new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
+            _habilidad = new PoeticJustice(new List<IEfecto> { }, new List<ICondicion> {}, _jugador, 
                 _rival);
         }
         else if (_nombre_habilidad == "Dragon's Wrath")
