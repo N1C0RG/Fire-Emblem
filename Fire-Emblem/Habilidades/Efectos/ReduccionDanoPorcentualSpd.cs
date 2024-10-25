@@ -1,3 +1,5 @@
+using Fire_Emblem.Encapsulado;
+
 namespace Fire_Emblem.Habilidades;
 public class ReduccionDanoPorcentualSpd : IEfecto
 {
@@ -12,8 +14,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
     private int CalcularSpd(Personaje jugador)
     {
         int spd = jugador.spd;
-        spd += jugador.dataHabilidadStats.postEfecto.ContainsKey("Spd") 
-            ? jugador.dataHabilidadStats.postEfecto["Spd"] : 0;
+        spd += jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Spd.ToString());
         return spd;
     }
 
@@ -25,8 +26,11 @@ public class ReduccionDanoPorcentualSpd : IEfecto
 
     private void aplicarReduccionDano(Personaje jugador, decimal reduccionDano)
     {
-        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 
-            1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) 
-            * (1 - reduccionDano);
+        decimal reduccion = 1 - (1 - jugador.getDataReduccionExtraStat(
+                NombreDiccionario.reduccionPorcentual.ToString(), "todosAtaques"))
+            * (1 - reduccionDano); 
+        jugador.setDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 
+            "todosAtaques", reduccion);
+            ;
     }
 }

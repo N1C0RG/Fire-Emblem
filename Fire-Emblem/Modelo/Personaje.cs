@@ -195,6 +195,7 @@ public class Personaje
             "penaltyStats" => dataHabilidadStats.penaltyStats.ContainsKey(key) 
                 ? dataHabilidadStats.penaltyStats[key] : 0,
             "netosStats" => dataHabilidadStats.netosStats.ContainsKey(key) ? dataHabilidadStats.netosStats[key] : 0,
+            "postEfecto" => dataHabilidadStats.postEfecto.ContainsKey(key) ? dataHabilidadStats.postEfecto[key] : 0,
         };
     }
     public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string nombreDiccionario)
@@ -255,6 +256,35 @@ public class Personaje
             "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
         };
     }
+    //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+    
+
+    public decimal getDataReduccionExtraStat(string dictionaryName, string key)
+    {
+        return dictionaryName switch
+        {
+            "reduccionPorcentual" =>
+                dataReduccionExtraStats.ReduccionDanoPorcentualDictionary.ContainsKey(key)
+                ? dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] : 0,
+            "danoAdicional" => 
+                dataReduccionExtraStats.DanoAdicionalDictionary.ContainsKey(key)
+                ? dataReduccionExtraStats.DanoAdicionalDictionary[key] : 0,
+        };
+    }
+
+    public void setDataReduccionExtraStat(string dictionaryName, string key, decimal value)
+    {
+        switch (dictionaryName)
+        {
+            case "reduccionPorcentual":
+                dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] = value;
+                break;
+            case "danoAdicional":
+                dataReduccionExtraStats.DanoAdicionalDictionary[key] = (int)value;
+                break;
+        }
+    }
+    
 }
 
 

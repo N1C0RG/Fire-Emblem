@@ -6,5 +6,8 @@ public enum NombreDiccionario
     penaltyStats,
     netosStats,
     bonusNeutralizados, 
-    penaltyNeutralizados
+    penaltyNeutralizados, 
+    postEfecto, 
+    danoAdicional, 
+    reduccionPorcentual, 
 }
