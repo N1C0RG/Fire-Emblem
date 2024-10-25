@@ -1,5 +1,5 @@
 namespace Fire_Emblem.Habilidades;
-
+using Encapsulado; 
 public class ReduccionDanoPorcentualRes : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
@@ -9,10 +9,10 @@ public class ReduccionDanoPorcentualRes : IEfecto
         decimal reduccionDano = calcularReduccionDano(res, resRival);
         aplicarReduccionDano(jugador, reduccionDano);
     }
-    private int calcularRes(Personaje personaje)
+    private int calcularRes(Personaje jugador)
     {
-        int res = personaje.res;
-        res += personaje.dataHabilidadStats.postEfecto.ContainsKey("Res") ? personaje.dataHabilidadStats.postEfecto["Res"] : 0;
+        int res = jugador.res;
+        res += jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Res.ToString());
         return res;
     }
 
@@ -24,8 +24,10 @@ public class ReduccionDanoPorcentualRes : IEfecto
 
     private void aplicarReduccionDano(Personaje jugador, decimal reduccionDano)
     {
-        jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"] = 
-            1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["todosAtaques"]) 
-            * (1 - reduccionDano);
+        decimal reduccion = 1 - (1 - jugador.getDataReduccionExtraStat(
+                NombreDiccionario.reduccionPorcentual.ToString(), "todosAtaques"))
+            * (1 - reduccionDano); 
+        jugador.setDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 
+            "todosAtaques", reduccion);
     }
 }
