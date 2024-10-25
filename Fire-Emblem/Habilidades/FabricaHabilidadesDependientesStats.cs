@@ -177,37 +177,29 @@ public class FabricaHabilidadesDependientesStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Prescience")
         {
-            //TODO: crear una logica separada 
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new RivalAtkUp(-5), new RivalResUp(-5) }, 
-                new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
-                _rival);
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
-                new List<ICondicion> { new CondicionInicioCombate() }, 
-                _jugador, 
-                _rival);
-            _habilidadTerceraCondicion = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
-                new List<ICondicion> { new CondicionDistant(), new CondicionNoInicia() }, 
-                _jugador, 
-                _rival);
+            var habilidades = new List<Habilidad>
+            {
+                new Habilidad (
+                    new List<IEfecto> { new RivalAtkUp(-5), new RivalResUp(-5) }, 
+                    new List<ICondicion> { new NoHayCondicion() }, 
+                    _jugador, 
+                    _rival),
+                new Habilidad (
+                    new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
+                    new List<ICondicion> { new CondicionInicioCombate() }, 
+                    _jugador, 
+                    _rival),
+                new Habilidad (
+                    new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.3m) }, 
+                    new List<ICondicion> { new CondicionDistant(), new CondicionNoInicia() }, 
+                    _jugador, 
+                    _rival)
+            };
+            _habilidad = new HabilidadCompuesta(habilidades);
         }
         else if (_nombre_habilidad == "Extra Chivalry")
         {
-            //TODO: crear una logica separada 
-            _habilidad = new Habilidad (
-                new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5), new RivalDefUp(-5) }, 
-                new List<ICondicion> { new CondicionRivalHP50() }, 
-                _jugador, 
-                _rival);
-            decimal porcentajeHP = Math.Floor((_rival.HP / (decimal)_rival.hpOriginal) * 100);
-            decimal cantidad = (porcentajeHP * 0.5m) / 100m;
-            _habilidadSegundaCondicion = new Habilidad (
-                new List<IEfecto> { new ReduccionDanoPorcentual(cantidad)}, 
-                new List<ICondicion> { new NoHayCondicion() }, 
-                _jugador, 
+            _habilidad = new ExtraChivalry (new List<IEfecto> { }, new List<ICondicion> {}, _jugador, 
                 _rival);
         }
         else if (_nombre_habilidad == "Bushido")
