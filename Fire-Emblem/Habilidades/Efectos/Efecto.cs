@@ -19,7 +19,7 @@ public class Up50Atack : IEfecto
         int bonusAtk = calcularBonusAtk(jugador);
         if (contieneBonus(jugador))
         {
-            jugador.dataHabilidadStats.bonusStats[Stat.Atk.ToString()] += bonusAtk;
+            jugador.sumarDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Atk.ToString(), bonusAtk);
         }
         else
         {

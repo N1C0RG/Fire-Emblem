@@ -186,8 +186,7 @@ public class Personaje
             "netosStats" => dataHabilidadStats.netosStats
         };
     }
-
-
+    
     public void setDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
         switch (nombreDiccionario)
@@ -235,17 +234,24 @@ public class Personaje
             "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
         };
     }
-    
+    public Dictionary<string, T> getDiccionarioReduccionExtraStat<T>(string nombreDiccionario)
+    {
+        return nombreDiccionario switch
+        {
+            "reduccionPorcentual" => dataReduccionExtraStats.ReduccionDanoPorcentualDictionary as Dictionary<string, T>,
+            "penaldanoAdicionaltyStats" => dataReduccionExtraStats.DanoAdicionalDictionary as Dictionary<string, T>,
+        };
+    }
     public decimal getDataReduccionExtraStat(string dictionaryName, string key)
     {
         return dictionaryName switch
         {
             "reduccionPorcentual" =>
                 dataReduccionExtraStats.ReduccionDanoPorcentualDictionary.ContainsKey(key)
-                ? dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] : 0,
+                    ? dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] : 0,
             "danoAdicional" => 
                 dataReduccionExtraStats.DanoAdicionalDictionary.ContainsKey(key)
-                ? dataReduccionExtraStats.DanoAdicionalDictionary[key] : 0,
+                    ? dataReduccionExtraStats.DanoAdicionalDictionary[key] : 0,
         };
     }
 

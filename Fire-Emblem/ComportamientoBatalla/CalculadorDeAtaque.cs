@@ -51,7 +51,8 @@ public class CalculadorDeAtaque
     {
         decimal reduccionTotal = 1;
 
-        foreach (var reduccion in _defensor.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary)
+        foreach (var reduccion 
+                 in _defensor.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary)
         {
             if (reduccion.Key == "primerAtaque" && _atacante.contadorAtaques == 1)
             {
