@@ -114,11 +114,13 @@ public class VistaStatsEfectosHabilidades
 
     private void printDanoExtra(Personaje jugador)
     {
-        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] != 0)
+        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(),
+                Llave.todosAtaques.ToString()) != 0)
         {
             _view.WriteLine($"{jugador.name} realizará +" +
-                            $"{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"]}" +
-                            $" daño extra en cada ataque");
+                            $"{jugador.getDataReduccionExtraStat(
+                                NombreDiccionario.danoAdicional.ToString(), 
+                                Llave.todosAtaques.ToString())} daño extra en cada ataque");
         }
     }
     private void printReduccionDanoPorcentualPrimerAtaque(Personaje jugador)
@@ -147,16 +149,23 @@ public class VistaStatsEfectosHabilidades
     }
     private void printDanoExtraPrimerAtaque(Personaje jugador)
     {
-        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"] != 0)
+        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(),
+                Llave.primerAtaque.ToString()) != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["primerAtaque"]} daño extra en su primer ataque");
+            _view.WriteLine($"{jugador.name} realizará +" +
+                            $"{jugador.getDataReduccionExtraStat(
+                                NombreDiccionario.danoAdicional.ToString(), 
+                                Llave.primerAtaque.ToString())} daño extra en su primer ataque");
         }
     }
     private void printDanoExtraFollowUp(Personaje jugador)
     {
-        if (jugador.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"] != 0)
+        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(), 
+                Llave.followUp.ToString()) != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"]} daño extra en su Follow-Up");
+            _view.WriteLine($"{jugador.name} realizará +{jugador.getDataReduccionExtraStat(
+                NombreDiccionario.danoAdicional.ToString(), 
+                Llave.followUp.ToString())} daño extra en su Follow-Up");
         }
     }
 }
