@@ -149,3 +149,19 @@ public class CondicionRivalHP75 : CondicionGenerica
         return condicion.tieneHP75(rival); 
     }
 }
+
+public class CondicionSpdDanoPorcentual: CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return jugador.spd > rival.spd; 
+    }
+}
+
+public class CondicionResDanoPorcentual: CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return jugador.res > rival.res; 
+    }
+}

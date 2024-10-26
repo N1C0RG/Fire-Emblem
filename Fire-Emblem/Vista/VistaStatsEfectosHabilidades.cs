@@ -175,5 +175,3 @@ public class VistaStatsEfectosHabilidades
         }
     }
 }
-
-//

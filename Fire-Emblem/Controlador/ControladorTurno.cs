@@ -83,6 +83,7 @@ public class ControladorTurno
     private void aplicarHabilidades()
     {
         _personajeJugador.setIniciaTurno(true);
+        
         _personajeJugador.resetearContenedoresDeStats();
         _personajeRival.resetearContenedoresDeStats();
 
@@ -91,10 +92,6 @@ public class ControladorTurno
         
         _personajeJugador.dataHabilidadStats.calcularNetosStats();
         _personajeRival.dataHabilidadStats.calcularNetosStats();
-        
-        //TODO: cambiar esto 
-        _personajeJugador.primerCombateInicia = true;
-        _personajeRival.primeraVexDefiende = true; 
         
         _personajeJugador.setIniciaTurno(false);
     }
@@ -116,5 +113,8 @@ public class ControladorTurno
         
         _personajeJugador.dataHabilidadStats.resetearPostEfecto();
         _personajeRival.dataHabilidadStats.resetearPostEfecto();
+        
+        _personajeJugador.primerCombateInicia = true;
+        _personajeRival.primeraVexDefiende = true; 
     }
 }
