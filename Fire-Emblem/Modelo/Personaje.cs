@@ -242,16 +242,16 @@ public class Personaje
             "penaldanoAdicionaltyStats" => dataReduccionExtraStats.DanoAdicionalDictionary as Dictionary<string, T>,
         };
     }
-    public decimal getDataReduccionExtraStat(string dictionaryName, string key)
+    public T getDataReduccionExtraStat<T>(string dictionaryName, string key)
     {
         return dictionaryName switch
         {
-            "reduccionPorcentual" =>
-                dataReduccionExtraStats.ReduccionDanoPorcentualDictionary.ContainsKey(key)
-                    ? dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] : 0,
-            "danoAdicional" => 
-                dataReduccionExtraStats.DanoAdicionalDictionary.ContainsKey(key)
-                    ? dataReduccionExtraStats.DanoAdicionalDictionary[key] : 0,
+            "reduccionPorcentual" => dataReduccionExtraStats.ReduccionDanoPorcentualDictionary.ContainsKey(key)
+                ? (T)Convert.ChangeType(dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key], typeof(T))
+                : default,
+            "danoAdicional" => dataReduccionExtraStats.DanoAdicionalDictionary.ContainsKey(key)
+                ? (T)Convert.ChangeType(dataReduccionExtraStats.DanoAdicionalDictionary[key], typeof(T))
+                : default,
         };
     }
 

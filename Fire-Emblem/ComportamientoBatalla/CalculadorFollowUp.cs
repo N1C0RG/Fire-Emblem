@@ -1,5 +1,6 @@
 using Fire_Emblem_View;
 using Fire_Emblem.Encapsulado;
+using Fire_Emblem.EnumVariables;
 
 namespace Fire_Emblem;
 
@@ -13,11 +14,17 @@ public class CalculadorFollowUp : CalculadorDeAtaque
         var ataque = _ataque + atacante.getAtaqueFollow();
         
         int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa + 
-                          _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["todosAtaques"] 
-                          + _atacante.dataReduccionExtraStats.DanoAdicionalDictionary["followUp"];
+                          _atacante.getDataReduccionExtraStat<int>(
+                              NombreDiccionario.danoAdicional.ToString(),
+                              Llave.todosAtaques.ToString()) 
+                          + _atacante.getDataReduccionExtraStat<int>(
+                              NombreDiccionario.danoAdicional.ToString(), 
+                              Llave.followUp.ToString()) ;
         
         var reduccionTotal = _reduccionTotal * 
-                             (1 - defensor.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary["followUp"]);
+                             (1 - defensor.getDataReduccionExtraStat<decimal>(
+                                 NombreDiccionario.reduccionPorcentual.ToString(), 
+                                 Llave.followUp.ToString()));
 
         return (int)(ataqueFinal * reduccionTotal) + _defensor.reduccionDanoAbsoluta;
     }

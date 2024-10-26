@@ -26,7 +26,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
 
     private void aplicarReduccionDano(Personaje jugador, decimal reduccionDano)
     {
-        decimal reduccion = 1 - (1 - jugador.getDataReduccionExtraStat(
+        decimal reduccion = 1 - (1 - jugador.getDataReduccionExtraStat<decimal>(
                 NombreDiccionario.reduccionPorcentual.ToString(), "todosAtaques"))
             * (1 - reduccionDano); 
         jugador.setDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 

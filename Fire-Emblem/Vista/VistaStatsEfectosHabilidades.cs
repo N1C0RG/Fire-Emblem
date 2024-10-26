@@ -95,11 +95,11 @@ public class VistaStatsEfectosHabilidades
 
     private void printReduccionDanoPorcentual(Personaje jugador)
     {
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(),
+        if (jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(),
                 Llave.todosAtaques.ToString()) > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un " +
-                            $"{Math.Truncate(jugador.getDataReduccionExtraStat(
+                            $"{Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
                                 NombreDiccionario.reduccionPorcentual.ToString(),
                                 Llave.todosAtaques.ToString()) * 100)}%");
         }
@@ -114,11 +114,11 @@ public class VistaStatsEfectosHabilidades
 
     private void printDanoExtra(Personaje jugador)
     {
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(),
+        if (jugador.getDataReduccionExtraStat<int>(NombreDiccionario.danoAdicional.ToString(),
                 Llave.todosAtaques.ToString()) != 0)
         {
             _view.WriteLine($"{jugador.name} realizará +" +
-                            $"{jugador.getDataReduccionExtraStat(
+                            $"{jugador.getDataReduccionExtraStat<int>(
                                 NombreDiccionario.danoAdicional.ToString(), 
                                 Llave.todosAtaques.ToString())} daño extra en cada ataque");
         }
@@ -126,11 +126,11 @@ public class VistaStatsEfectosHabilidades
     private void printReduccionDanoPorcentualPrimerAtaque(Personaje jugador)
     {
         
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(),
+        if (jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(),
                 Llave.primerAtaque.ToString()) > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un " +
-                            $"{Math.Truncate(jugador.getDataReduccionExtraStat(
+                            $"{Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
                                 NombreDiccionario.reduccionPorcentual.ToString(),
                                 Llave.primerAtaque.ToString()) * 100)}%");
         }
@@ -138,32 +138,32 @@ public class VistaStatsEfectosHabilidades
     private void printReduccionDanoPorcentualFollowUp(Personaje jugador)
     {
 
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 
+        if (jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(), 
                 Llave.followUp.ToString()) > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un" +
-                            $" {Math.Truncate(jugador.getDataReduccionExtraStat(
+                            $" {Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
                                 NombreDiccionario.reduccionPorcentual.ToString(), 
                                 Llave.followUp.ToString()) * 100)}%");
         }
     }
     private void printDanoExtraPrimerAtaque(Personaje jugador)
     {
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(),
+        if (jugador.getDataReduccionExtraStat<int>(NombreDiccionario.danoAdicional.ToString(),
                 Llave.primerAtaque.ToString()) != 0)
         {
             _view.WriteLine($"{jugador.name} realizará +" +
-                            $"{jugador.getDataReduccionExtraStat(
+                            $"{jugador.getDataReduccionExtraStat<int>(
                                 NombreDiccionario.danoAdicional.ToString(), 
                                 Llave.primerAtaque.ToString())} daño extra en su primer ataque");
         }
     }
     private void printDanoExtraFollowUp(Personaje jugador)
     {
-        if (jugador.getDataReduccionExtraStat(NombreDiccionario.danoAdicional.ToString(), 
+        if (jugador.getDataReduccionExtraStat<int>(NombreDiccionario.danoAdicional.ToString(), 
                 Llave.followUp.ToString()) != 0)
         {
-            _view.WriteLine($"{jugador.name} realizará +{jugador.getDataReduccionExtraStat(
+            _view.WriteLine($"{jugador.name} realizará +{jugador.getDataReduccionExtraStat<int>(
                 NombreDiccionario.danoAdicional.ToString(), 
                 Llave.followUp.ToString())} daño extra en su Follow-Up");
         }
