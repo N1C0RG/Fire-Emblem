@@ -3,11 +3,10 @@ using Fire_Emblem.Encapsulado;
 using Fire_Emblem.Habilidades;
 namespace Fire_Emblem;
 
-public class Batalla //TODO: batalla hace muchas cosas sin razon alguna 
+public class Batalla 
 {
     public Personaje jugador;
     public Personaje rival;
-    private View _view;
     public Player equipoJugador;
     public Player equipoRival;
     public Ventaja _ventaja;
@@ -28,11 +27,10 @@ public class Batalla //TODO: batalla hace muchas cosas sin razon alguna
         get { return _ataqueRival; }
         private set { _ataqueRival = value < 0 ? 0 : value; }
     }
-    public Batalla(Personaje jugador, Personaje rival, View view, Player equipoJugador, Player equipoRival)
+    public Batalla(Personaje jugador, Personaje rival, Player equipoJugador, Player equipoRival)
     {
         this.jugador = jugador;
         this.rival = rival;
-        _view = view;
         this.equipoJugador = equipoJugador;
         this.equipoRival = equipoRival;
         _ventaja = new Ventaja();

@@ -13,7 +13,7 @@ public class Ventaja
 
     public void calcularVentaja(Personaje jugador, Personaje rival)
     {
-        if (jugador.getArma() == Armas.Sword.ToString() && rival.getArma() == Armas.Axe.ToString() || //TODO: solamente usar el enum para las armas 
+        if (jugador.getArma() == Armas.Sword.ToString() && rival.getArma() == Armas.Axe.ToString() || 
             jugador.getArma() == Armas.Lance.ToString() && rival.getArma() == Armas.Sword.ToString() ||
             jugador.getArma() == Armas.Axe.ToString() && rival.getArma() == Armas.Lance.ToString())
         {

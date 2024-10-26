@@ -69,7 +69,7 @@ public class CondicionDistant : CondicionGenerica
         return condicion.ataqueDistant(rival); 
     }
 }
-public class CondicionFirstAtk : ICondicion//TODO: arreglar esto 
+public class CondicionFirstAtk : ICondicion //TODO: arreglar esta logica  
 {
     public bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
@@ -92,7 +92,7 @@ public class CondicionRivalEsHombre: CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
-        return condicion.rivalEsHombre(rival); 
+        return condicion.esHombre(rival); 
     }
 }
 
@@ -112,11 +112,40 @@ public class HpMas25 : CondicionGenerica
     }
 }
 
-
 public class CondicionHpUp : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
     {
         return condicion.tieneHpUp(jugador);
+    }
+}
+
+public class CondicionFullVidaJugador : CondicionGenerica 
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return condicion.tieneFullVida(jugador); 
+    }
+}
+
+public class CondicionFullVidaRival : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return condicion.tieneFullVida(rival); 
+    }
+}
+public class CondicionRivalHP50 : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.getHpOriginal()) * 0.5m); 
+    }
+}
+public class CondicionRivalHP75 : CondicionGenerica
+{
+    public override bool condicionHabilidad(Personaje jugador, Personaje rival)
+    {
+        return condicion.tieneHP75(rival); 
     }
 }

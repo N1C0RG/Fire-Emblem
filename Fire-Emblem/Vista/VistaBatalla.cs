@@ -16,11 +16,13 @@ public class VistaBatalla
     {
         if (ventajaJugador == 1.2m)
         {
-            _view.WriteLine($"{jugador.getNombre()} ({jugador.getArma()}) tiene ventaja con respecto a {rival.getNombre()} ({rival.getArma()})");
+            _view.WriteLine($"{jugador.getNombre()} ({jugador.getArma()}) tiene ventaja con respecto a " +
+                            $"{rival.getNombre()} ({rival.getArma()})");
         }
         else if (ventajaJugador == 0.8m)
         {
-            _view.WriteLine($"{rival.getNombre()} ({rival.getArma()}) tiene ventaja con respecto a {jugador.getNombre()} ({jugador.getArma()})");
+            _view.WriteLine($"{rival.getNombre()} ({rival.getArma()}) tiene ventaja con respecto a" +
+                            $" {jugador.getNombre()} ({jugador.getArma()})");
         }
         else
         {
@@ -35,14 +37,18 @@ public class VistaBatalla
 
     public void MostrarFollowUp(DataFollowUp dataFollowUp, Personaje jugador, Personaje rival)
     {
-        //TODO: arreglar esto con lo de la parte de manejo follow 
-        if (dataFollowUp.velocidadFollowJugador >= dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
+
+        if (dataFollowUp.velocidadFollowJugador >= 
+            dataFollowUp.velocidadFollowRival + dataFollowUp.velocidadAdicionalFollowUp)
         {
-            _view.WriteLine($"{jugador.getNombre()} ataca a {rival.getNombre()} con {dataFollowUp.AtkFollowJugador} de daño");
+            _view.WriteLine($"{jugador.getNombre()} ataca a {rival.getNombre()} " +
+                            $"con {dataFollowUp.AtkFollowJugador} de daño");
         }
-        else if (dataFollowUp.velocidadFollowJugador + dataFollowUp.velocidadAdicionalFollowUp <= dataFollowUp.velocidadFollowRival)
+        else if (dataFollowUp.velocidadFollowJugador + dataFollowUp.velocidadAdicionalFollowUp
+                 <= dataFollowUp.velocidadFollowRival)
         {
-            _view.WriteLine($"{rival.getNombre()} ataca a {jugador.getNombre()} con {dataFollowUp.AtkFollowRival} de daño");
+            _view.WriteLine($"{rival.getNombre()} ataca a {jugador.getNombre()} " +
+                            $"con {dataFollowUp.AtkFollowRival} de daño");
         }
         else
         {

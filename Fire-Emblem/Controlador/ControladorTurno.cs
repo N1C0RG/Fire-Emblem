@@ -18,7 +18,7 @@ public class ControladorTurno
     public ControladorTurno(View view, Player jugadorPlayer, Player rivalPlayer) 
     {
         _view = view; 
-        _vistaJuego = new VistaJuego(view); //TODO: no se si crear el objeto o pasarlo como parametro
+        _vistaJuego = new VistaJuego(view); 
         _jugadorPlayer = jugadorPlayer;
         _rivalPlayer = rivalPlayer;
         _turno = 1; 
@@ -74,7 +74,7 @@ public class ControladorTurno
 
     private void inicializarBatalla(Player jugadorActual, Player rival)
     {
-        _batalla = new Batalla(_personajeJugador, _personajeRival, _view, jugadorActual, rival);
+        _batalla = new Batalla(_personajeJugador, _personajeRival, jugadorActual, rival);
         var vistaBatalla = new VistaBatalla(_view);
         _controladorBatalla = new ControladorBatalla(_batalla, vistaBatalla);
         _controladorBatalla.iniciarBatalla();

@@ -2,9 +2,9 @@ namespace Fire_Emblem.Encapsulado;
 
 public class CondicionesHabilidadEncapsuladas
 {
-    public bool tieneRivalHP75(Personaje rival)
+    public bool tieneHP75(Personaje jugador)
     {
-        bool condicion = rival.HP >= (int)Math.Floor(Convert.ToDecimal(rival.getHpOriginal()) * 0.75m); 
+        bool condicion = jugador.HP >= (int)Math.Floor(Convert.ToDecimal(jugador.getHpOriginal()) * 0.75m); 
         return condicion;
     }
     public bool tieneRivalHPvsJugadorHP(Personaje jugador, Personaje rival)
@@ -24,9 +24,9 @@ public class CondicionesHabilidadEncapsuladas
         return condicion; 
     }
 
-    public bool tieneFullVidaRival(Personaje rival)
+    public bool tieneFullVida(Personaje jugador)
     {
-        bool condicion = rival.HP == rival.getHpOriginal();
+        bool condicion = jugador.HP == jugador.getHpOriginal();
         return condicion; 
     }
     public bool inicioCombate(Personaje jugador)
@@ -35,14 +35,14 @@ public class CondicionesHabilidadEncapsuladas
         return condicion; 
     }
 
-    public bool ataqueClose(Personaje rival)
+    public bool ataqueClose(Personaje jugador)
     {
-        bool condicion = rival.getArma() != Armas.Magic.ToString() && rival.getArma() != Armas.Bow.ToString();
+        bool condicion = jugador.getArma() != Armas.Magic.ToString() && jugador.getArma() != Armas.Bow.ToString();
         return condicion; 
     }
-    public bool ataqueDistant(Personaje rival)
+    public bool ataqueDistant(Personaje jugador)
     {
-        bool condicion = rival.getArma() == Armas.Magic.ToString() || rival.getArma() == Armas.Bow.ToString();
+        bool condicion = jugador.getArma() == Armas.Magic.ToString() || jugador.getArma() == Armas.Bow.ToString();
         return condicion; 
     }
     public bool esRivalPrevio(Personaje jugador, Personaje rival)
@@ -51,9 +51,9 @@ public class CondicionesHabilidadEncapsuladas
         return condicion; 
     }
 
-    public bool rivalEsHombre(Personaje rival)
+    public bool esHombre(Personaje jugador)
     {
-        bool condicion = rival.getGenero() == "Male";
+        bool condicion = jugador.getGenero() == "Male";
         return condicion; 
     }
 
@@ -85,4 +85,5 @@ public class CondicionesHabilidadEncapsuladas
         bool condicion = jugador.habilidadHpUp; 
         return condicion; 
     }
+    
 }

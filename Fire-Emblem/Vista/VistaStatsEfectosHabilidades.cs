@@ -16,25 +16,33 @@ public class VistaStatsEfectosHabilidades
     {
         printFollowUpAtk(jugador);
         printFollowUpAtk(rival);
+        
         printJugadorBonus(jugador);
         printJugadorPenalty(jugador);
         printBonusPenaltyNeutralizados(jugador);
+        
         printDanoExtra(jugador);
         printDanoExtraPrimerAtaque(jugador);
         printDanoExtraFollowUp(jugador);
+        
         printReduccionDanoPorcentual(jugador); 
         printReduccionDanoPorcentualPrimerAtaque(jugador); 
         printReduccionDanoPorcentualFollowUp(jugador);
+        
         printReduccionDanoAbsoluto(jugador);
+        
         printJugadorBonus(rival);
         printJugadorPenalty(rival);
         printBonusPenaltyNeutralizados(rival);
+        
         printDanoExtra(rival);
         printDanoExtraPrimerAtaque(rival);
         printDanoExtraFollowUp(rival);
+        
         printReduccionDanoPorcentual(rival);
         printReduccionDanoPorcentualPrimerAtaque(rival);
         printReduccionDanoPorcentualFollowUp(rival);
+        
         printReduccionDanoAbsoluto(rival);
     }
     private void printJugadorBonus(Personaje jugador)
@@ -44,8 +52,6 @@ public class VistaStatsEfectosHabilidades
         {
             printBonusPenalty(jugador, stat, stat.Value > 0 ? "+" : "");
         }
-
-        
     }
     private void printJugadorPenalty(Personaje jugador)
     {
@@ -169,3 +175,5 @@ public class VistaStatsEfectosHabilidades
         }
     }
 }
+
+//
