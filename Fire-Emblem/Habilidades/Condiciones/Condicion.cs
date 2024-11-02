@@ -69,18 +69,18 @@ public class CondicionDistant : CondicionGenerica
         return condicion.ataqueDistant(rival); 
     }
 }
-public class CondicionFirstAtk : ICondicion //TODO: arreglar esta logica  
-{
-    public bool condicionHabilidad(Personaje jugador, Personaje rival)
-    {
-        if (jugador.getContadorAtaques() == 1)
-        {
-            jugador.addHabilidadPrimerAtaque("Atk");
-            return true; 
-        }
-        return false;
-    }
-}
+// public class CondicionFirstAtk : ICondicion //TODO: arreglar esta logica  
+// {
+//     public bool condicionHabilidad(Personaje jugador, Personaje rival)
+//     {
+//         if (jugador.getContadorAtaques() == 1)
+//         {
+//             jugador.addHabilidadPrimerAtaque("Atk");
+//             return true; 
+//         }
+//         return false;
+//     }
+// }
 public class CondicionRivalPrevio : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)

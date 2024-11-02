@@ -381,9 +381,9 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Ignis")
         {
-            _habilidad = new Habilidad(
-                new List<IEfecto> { new Up50Atack() },
-                new List<ICondicion> { new CondicionFirstAtk() },
+            _habilidad = new Ignis(
+                new List<IEfecto> { },
+                new List<ICondicion> { },
                 _jugador,
                 _rival);
             

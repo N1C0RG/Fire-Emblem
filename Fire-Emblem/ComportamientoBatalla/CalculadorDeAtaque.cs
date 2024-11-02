@@ -20,9 +20,6 @@ public class CalculadorDeAtaque
         _defensor = defensor;
         _ventaja = ventaja;
 
-        _atacante.resetearStatsPorFirstAtack();
-        _defensor.resetearStatsPorFirstAtack();
-
         calcularAtaqueBase();
         calcularDefensa();
         calcularReduccionTotal();
@@ -33,18 +30,30 @@ public class CalculadorDeAtaque
 
     private void calcularAtaqueBase()
     {
-        _ataque = Convert.ToDecimal(_atacante.getAtaque() + 
+        int _primerAtaqueBonus = _atacante.getDataHabilidadStat(NombreDiccionario.primerAtaqueBonus.ToString(),
+            Stat.Atk.ToString());
+        int _primerAtaquePenalty = _atacante.getDataHabilidadStat(NombreDiccionario.primerAtaquePenalty.ToString(),
+            Stat.Atk.ToString());
+        _ataque = Convert.ToDecimal(_atacante.getAtaque() + _primerAtaquePenalty + _primerAtaqueBonus +  
                                     _atacante.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(),
                                         Stat.Atk.ToString()));
     }
     private void calcularDefensa()
     {
         bool esAtaqueMagico = _atacante.getArma() == Armas.Magic.ToString();
+        int _primerAtaqueBonus =  esAtaqueMagico ? _defensor.getDataHabilidadStat
+                (NombreDiccionario.primerAtaqueBonus.ToString(),
+            Stat.Res.ToString()) : _defensor.getDataHabilidadStat(NombreDiccionario.primerAtaqueBonus.ToString(),
+            Stat.Def.ToString());
+        int _primerAtaquePenalty =  esAtaqueMagico ? _defensor.getDataHabilidadStat
+                (NombreDiccionario.primerAtaquePenalty.ToString(),
+            Stat.Res.ToString()) : _defensor.getDataHabilidadStat(NombreDiccionario.primerAtaquePenalty.ToString(),
+            Stat.Def.ToString());
         _defensa = esAtaqueMagico ? 
             _defensor.getResistencia() + _defensor.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(), 
-                Stat.Res.ToString())
+                Stat.Res.ToString()) + _primerAtaqueBonus + _primerAtaquePenalty
             : _defensor.getDefensa() + _defensor.getDataHabilidadStat(NombreDiccionario.netosStats.ToString(),
-                Stat.Def.ToString());
+                Stat.Def.ToString())+ _primerAtaqueBonus + _primerAtaquePenalty;
     }
 
     private void calcularReduccionTotal()

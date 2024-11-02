@@ -18,7 +18,7 @@ public class Personaje
     
     public bool iniciaRound = false;
     public int contadorAtaques = 1;
-    public List<string> habilidadPrimerAtaque = new List<string>();
+    //public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
     public string oponentePrevio = "";
     public bool primerCombateInicia = false;
@@ -44,7 +44,6 @@ public class Personaje
         this.habilidades = habilidades;
         hpOriginal = hp; 
     }
-
     public int HP
     {
         get { return hp;  }
@@ -95,17 +94,14 @@ public class Personaje
     {
         contadorAtaques += 1;
     }
-
     public void setIniciaTurno(bool valor)
     {
         iniciaRound = valor; 
     }
-    
     public int getAtaqueFollow()
     {
         return ataqueFollow; 
     }
-
     public void setContadorAtaques(int cantidad)
     {
         contadorAtaques = cantidad; 
@@ -114,7 +110,6 @@ public class Personaje
     {
         return contadorAtaques; 
     }
-
     public void setOponentePrevio(string oponente)
     {
         oponentePrevio = oponente; 
@@ -123,12 +118,10 @@ public class Personaje
     {
         return oponentePrevio; 
     }
-
     public int getHpOriginal()
     {
         return hpOriginal; 
     }
-    
     public bool getIniciaTurno()
     {
         return iniciaRound; 
@@ -141,131 +134,63 @@ public class Personaje
     {
         dataHabilidadStats.penaltyNeutralizados.Add(stat); 
     }
-    
-    public void addHabilidadPrimerAtaque(string stat)
+    public void calcularPostEfecto()
     {
-        habilidadPrimerAtaque.Add(stat); 
+        dataHabilidadStats.calcularPostEfecto();
     }
-   
-    
+    public void calcularNetosStats()
+    {
+        dataHabilidadStats.calcularNetosStats();
+    }
+    public void ordenarContenedores()
+    {
+        dataHabilidadStats.ordenarContenedores();
+    }
     public void resetearContenedoresDeStats()
     {
         dataHabilidadStats.resetearContenedoresDeStats();
-        habilidadPrimerAtaque.Clear();
         
     }
-    
-    public void resetearStatsPorFirstAtack()
+    public void addDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
-        foreach (var stat in habilidadPrimerAtaque)
-        {
-            if (contadorAtaques == 2)
-            { 
-                dataHabilidadStats.netosStats[stat] = 0; 
-            }
-        }
+        dataHabilidadStats.addDataHabilidadStat(nombreDiccionario, key, value);
     }
-    
     public int getDataHabilidadStat(string nombreDiccionario, string key)
     {
-        return nombreDiccionario switch
-        {
-            "bonusStats" => dataHabilidadStats.bonusStats.ContainsKey(key) ? dataHabilidadStats.bonusStats[key] : 0,
-            "penaltyStats" => dataHabilidadStats.penaltyStats.ContainsKey(key) 
-                ? dataHabilidadStats.penaltyStats[key] : 0,
-            "netosStats" => dataHabilidadStats.netosStats.ContainsKey(key) ? dataHabilidadStats.netosStats[key] : 0,
-            "postEfecto" => dataHabilidadStats.postEfecto.ContainsKey(key) ? dataHabilidadStats.postEfecto[key] : 0,
-        };
+        return dataHabilidadStats.getDataHabilidadStat(nombreDiccionario, key);
     }
     public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string nombreDiccionario)
     {
-        return nombreDiccionario switch
-        {
-            "bonusStats" => dataHabilidadStats.bonusStats,
-            "penaltyStats" => dataHabilidadStats.penaltyStats,
-            "netosStats" => dataHabilidadStats.netosStats
-        };
+        return dataHabilidadStats.getSpecificDyctionaryDataHabilidadStat(nombreDiccionario);
     }
-    
     public void setDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
-        switch (nombreDiccionario)
-        {
-            case "bonusStats":
-                dataHabilidadStats.bonusStats[key] = value;
-                break;
-            case "penaltyStats":
-                dataHabilidadStats.penaltyStats[key] = value;
-                break;
-            case "netosStats":
-                dataHabilidadStats.netosStats[key] = value;
-                break;
-        }
+        dataHabilidadStats.setDataHabilidadStat(nombreDiccionario, key, value);
     }
     public void sumarDataHabilidadStat(string nombreDiccionario, string key, int value)
     {
-        switch (nombreDiccionario)
-        {
-            case "bonusStats":
-                dataHabilidadStats.bonusStats[key] += value;
-                break;
-            case "penaltyStats":
-                dataHabilidadStats.penaltyStats[key] += value;
-                break;
-            case "netosStats":
-                dataHabilidadStats.netosStats[key] += value;
-                break;
-        }
+        dataHabilidadStats.sumarDataHabilidadStat(nombreDiccionario, key, value);
     }
     public bool contieneStatNeutralizado(string nombreDiccionario, string key)
     {
-        return nombreDiccionario switch
-        {
-            "bonusNeutralizados" => dataHabilidadStats.bonusNeutralizados.Contains(key),
-            "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados.Contains(key),
-            _ => false
-        };
+        return dataHabilidadStats.contieneStatNeutralizado(nombreDiccionario, key); 
     }
     public List<string> getSpecificArrayDataHabilidadStat(string nombreDiccionario)
     {
-        return nombreDiccionario switch
-        {
-            "bonusNeutralizados" => dataHabilidadStats.bonusNeutralizados,
-            "penaltyNeutralizados" => dataHabilidadStats.penaltyNeutralizados,
-        };
+        return dataHabilidadStats.getSpecificArrayDataHabilidadStat(nombreDiccionario); 
     }
     public Dictionary<string, T> getDiccionarioReduccionExtraStat<T>(string nombreDiccionario)
     {
-        return nombreDiccionario switch
-        {
-            "reduccionPorcentual" => dataReduccionExtraStats.ReduccionDanoPorcentualDictionary as Dictionary<string, T>,
-            "penaldanoAdicionaltyStats" => dataReduccionExtraStats.DanoAdicionalDictionary as Dictionary<string, T>,
-        };
+        return dataReduccionExtraStats.getDiccionarioReduccionExtraStat<T>(nombreDiccionario);
     }
-    public T getDataReduccionExtraStat<T>(string dictionaryName, string key)
+    public T getDataReduccionExtraStat<T>(string nombreDiccionario, string key)
     {
-        return dictionaryName switch
-        {
-            "reduccionPorcentual" => dataReduccionExtraStats.ReduccionDanoPorcentualDictionary.ContainsKey(key)
-                ? (T)Convert.ChangeType(dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key], typeof(T))
-                : default,
-            "danoAdicional" => dataReduccionExtraStats.DanoAdicionalDictionary.ContainsKey(key)
-                ? (T)Convert.ChangeType(dataReduccionExtraStats.DanoAdicionalDictionary[key], typeof(T))
-                : default,
-        };
+        return dataReduccionExtraStats.getDataReduccionExtraStat<T>(nombreDiccionario, key);
     }
 
     public void setDataReduccionExtraStat(string dictionaryName, string key, decimal value)
     {
-        switch (dictionaryName)
-        {
-            case "reduccionPorcentual":
-                dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[key] = value;
-                break;
-            case "danoAdicional":
-                dataReduccionExtraStats.DanoAdicionalDictionary[key] = (int)value;
-                break;
-        }
+        dataReduccionExtraStats.setDataReduccionExtraStat(dictionaryName, key, value);
     }
     
 }

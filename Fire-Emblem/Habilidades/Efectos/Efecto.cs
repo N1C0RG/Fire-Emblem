@@ -12,32 +12,32 @@ public class AplicarCancelacionPenalty : IEfecto
         jugador.addPenaltyNeutralizados(Stat.Res.ToString());
     }
 }
-public class Up50Atack : IEfecto
-{
-    public void efecto(Personaje jugador, Personaje rival)
-    {
-        int bonusAtk = calcularBonusAtk(jugador);
-        if (contieneBonus(jugador))
-        {
-            jugador.sumarDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Atk.ToString(), bonusAtk);
-        }
-        else
-        {
-            jugador.dataHabilidadStats.bonusStats.Add(Stat.Atk.ToString(), bonusAtk);
-        }
-    }
-
-    private int calcularBonusAtk(Personaje jugador)
-    {
-        return (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
-    }
-
-    private bool contieneBonus(Personaje jugador)
-    {
-        bool condicion = jugador.dataHabilidadStats.bonusStats.ContainsKey(Stat.Atk.ToString());
-        return condicion; 
-    }
-}
+// public class Up50Atack : IEfecto
+// {
+//     public void efecto(Personaje jugador, Personaje rival)
+//     {
+//         int bonusAtk = calcularBonusAtk(jugador);
+//         if (contieneBonus(jugador))
+//         {
+//             jugador.sumarDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Atk.ToString(), bonusAtk);
+//         }
+//         else
+//         {
+//             jugador.dataHabilidadStats.bonusStats.Add(Stat.Atk.ToString(), bonusAtk);
+//         }
+//     }
+//
+//     private int calcularBonusAtk(Personaje jugador)
+//     {
+//         return (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
+//     }
+//
+//     private bool contieneBonus(Personaje jugador)
+//     {
+//         bool condicion = jugador.dataHabilidadStats.bonusStats.ContainsKey(Stat.Atk.ToString());
+//         return condicion; 
+//     }
+// }
 
 public class Sandstorm : IEfecto
 {

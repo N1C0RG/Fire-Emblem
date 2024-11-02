@@ -18,7 +18,11 @@ public class VistaStatsEfectosHabilidades
         printFollowUpAtk(rival);
         
         printJugadorBonus(jugador);
+        primerAtaqueBonus(jugador);
+        
         printJugadorPenalty(jugador);
+        primerAtaquePenalty(jugador);
+        
         printBonusPenaltyNeutralizados(jugador);
         
         printDanoExtra(jugador);
@@ -32,7 +36,11 @@ public class VistaStatsEfectosHabilidades
         printReduccionDanoAbsoluto(jugador);
         
         printJugadorBonus(rival);
+        primerAtaqueBonus(rival);
+        
         printJugadorPenalty(rival);
+        primerAtaquePenalty(rival);
+        
         printBonusPenaltyNeutralizados(rival);
         
         printDanoExtra(rival);
@@ -67,11 +75,31 @@ public class VistaStatsEfectosHabilidades
 
     private void printBonusPenalty(Personaje jugador, KeyValuePair<string, int> stat, string sign)
     {
-        var mensaje = (jugador.getContadorAtaques() == 1 && jugador.habilidadPrimerAtaque.Contains(stat.Key))
-            ? $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value} en su primer ataque"
-            : $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value}";
+        // foreach (var habilidad in jugador.habilidadPrimerAtaque)
+        // {
+        //     _view.WriteLine($"{habilidad}");
+        // }
+
+        var mensaje = $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value}";
 
         _view.WriteLine(mensaje);
+    }
+
+    private void primerAtaqueBonus(Personaje jugador)
+    {
+        foreach (var i in jugador.getSpecificDyctionaryDataHabilidadStat(
+                     NombreDiccionario.primerAtaqueBonus.ToString()))
+        {
+            _view.WriteLine($"{jugador.name} obtiene {i.Key}+{i.Value} en su primer ataque");
+        }
+    }
+    private void primerAtaquePenalty(Personaje jugador)
+    {
+        foreach (var i in jugador.getSpecificDyctionaryDataHabilidadStat(
+                     NombreDiccionario.primerAtaquePenalty.ToString()))
+        {
+            _view.WriteLine($"{jugador.name} obtiene {i.Key}{i.Value} en su primer ataque");
+        }
     }
     
     private void printBonusPenaltyNeutralizados(Personaje jugador)

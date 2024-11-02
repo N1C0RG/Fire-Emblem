@@ -16,7 +16,7 @@ public class MoonTwinWing : Habilidad
             new RivalSpdUp(-5).efecto(jugador, rival);
             
         }
-        rival.dataHabilidadStats.calcularPostEfecto();
+        rival.calcularPostEfecto();
         
         if (condicionReduccionDanoPorcentual())
         {

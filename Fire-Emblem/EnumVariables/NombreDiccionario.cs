@@ -10,4 +10,6 @@ public enum NombreDiccionario
     postEfecto, 
     danoAdicional, 
     reduccionPorcentual, 
+    primerAtaqueBonus, 
+    primerAtaquePenalty, 
 }

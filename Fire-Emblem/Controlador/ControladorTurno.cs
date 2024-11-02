@@ -90,8 +90,8 @@ public class ControladorTurno
         var controladorHabilidades = new ControladorHabilidades(_personajeJugador, _personajeRival, _view);
         controladorHabilidades.aplicarTodo();
         
-        _personajeJugador.dataHabilidadStats.calcularNetosStats();
-        _personajeRival.dataHabilidadStats.calcularNetosStats();
+        _personajeJugador.calcularNetosStats();
+        _personajeRival.calcularNetosStats();
         
         _personajeJugador.setIniciaTurno(false);
     }

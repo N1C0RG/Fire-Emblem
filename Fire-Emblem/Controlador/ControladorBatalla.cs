@@ -46,6 +46,13 @@ public class ControladorBatalla
         _vistaBatalla.mostrarAtaque(_dataBatalla.rival, _dataBatalla.jugador, _batalla.AtaqueRival);
         _batalla.definirAtaque();
         
+        //todo: cambiar esto 
+        
+        _dataBatalla.jugador.dataHabilidadStats.primerAtaquePenalty.Clear();
+        _dataBatalla.jugador.dataHabilidadStats.primerAtaqueBonus.Clear();
+        _dataBatalla.rival.dataHabilidadStats.primerAtaquePenalty.Clear();
+        _dataBatalla.rival.dataHabilidadStats.primerAtaqueBonus.Clear();
+        
         if (_dataBatalla.jugador.getHp() == 0)
         {
             finRonda();

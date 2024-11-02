@@ -17,8 +17,8 @@ public class ManejadorAplicadorHabilidad
         aplicarHabilidadesIndependientes(_jugador, _rival);
         aplicarHabilidadesIndependientes(_rival, _jugador);
 
-        _jugador.dataHabilidadStats.calcularPostEfecto();
-        _rival.dataHabilidadStats.calcularPostEfecto();
+        _jugador.calcularPostEfecto();
+        _rival.calcularPostEfecto();
 
         aplicarHabilidadesDependientes(_jugador, _rival);
         aplicarHabilidadesDependientes(_rival, _jugador);
