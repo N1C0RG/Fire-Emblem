@@ -18,8 +18,10 @@ public class NeutralizadorEfectos
     {
         neutralizarBonusPenalty(_jugador);
         neutralizarFollowBonusPenalty(_jugador);
+        neutralizarPrimerAtaque(_jugador);
         neutralizarBonusPenalty(_rival);
         neutralizarFollowBonusPenalty(_rival);
+        neutralizarPrimerAtaque(_rival);
     }
     private void neutralizarBonusPenalty(Personaje jugador)
     {
@@ -31,6 +33,19 @@ public class NeutralizadorEfectos
         foreach (var stat in jugador.getSpecificArrayDataHabilidadStat(penaltyNeutralizados))
         {
             jugador.setDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), stat, 0);
+        }
+    }
+
+    private void neutralizarPrimerAtaque(Personaje jugador)
+    {
+        foreach (var stat in
+                 jugador.getSpecificArrayDataHabilidadStat(bonusNeutralizados))
+        {
+            jugador.setDataHabilidadStat(NombreDiccionario.primerAtaqueBonus.ToString(), stat, 0);
+        }
+        foreach (var stat in jugador.getSpecificArrayDataHabilidadStat(penaltyNeutralizados))
+        {
+            jugador.setDataHabilidadStat(NombreDiccionario.primerAtaquePenalty.ToString(), stat, 0);
         }
     }
     private void neutralizarFollowBonusPenalty(Personaje jugador)

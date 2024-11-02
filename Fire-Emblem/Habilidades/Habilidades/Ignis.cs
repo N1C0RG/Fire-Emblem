@@ -10,13 +10,12 @@ public class Ignis : Habilidad
     }
     public override void aplicarHabilidad()
     {
-        
-        rival.addDataHabilidadStat(
+        jugador.addDataHabilidadStat(
             NombreDiccionario.primerAtaqueBonus.ToString(), Stat.Atk.ToString(), calcularAtk()); 
     }
     private int calcularAtk()
     {
-        return (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 1.5m);
+        return (int)Math.Floor(Convert.ToDecimal(jugador.atk) * 0.5m);
     }
     
 }
