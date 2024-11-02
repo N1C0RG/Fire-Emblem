@@ -6,10 +6,12 @@ public class DataHabilidadStats
     public Dictionary<string, int> bonusStats { get; private set; } = new Dictionary<string, int>();
     public Dictionary<string, int> penaltyStats { get; private set; } = new Dictionary<string, int>();
     public Dictionary<string, int> netosStats { get; private set; } = new Dictionary<string, int>();
-    
     public Dictionary<string, int> primerAtaqueBonus { get; private set; } = new Dictionary<string, int>();
-    
     public Dictionary<string, int> primerAtaquePenalty { get; private set; } = new Dictionary<string, int>();
+    
+    public Dictionary<string, int> followBonus { get; private set; } = new Dictionary<string, int>();
+    
+    public Dictionary<string, int> followPenalty { get; private set; } = new Dictionary<string, int>();
     public List<string> bonusNeutralizados { get; private set; } = new List<string>();
     public List<string> penaltyNeutralizados { get; private set; } = new List<string>();
     
@@ -98,6 +100,8 @@ public class DataHabilidadStats
         penaltyNeutralizados.Clear();
         primerAtaqueBonus.Clear();
         primerAtaquePenalty.Clear();
+        followBonus.Clear();
+        followPenalty.Clear();
     }
     public int getDataHabilidadStat(string nombreDiccionario, string key)
     {
@@ -110,6 +114,8 @@ public class DataHabilidadStats
             "postEfecto" => postEfecto.ContainsKey(key) ? postEfecto[key] : 0,
             "primerAtaqueBonus" =>  primerAtaqueBonus.ContainsKey(key) ? primerAtaqueBonus[key] : 0,
             "primerAtaquePenalty" =>  primerAtaquePenalty.ContainsKey(key) ? primerAtaquePenalty[key] : 0,
+            "followBonus" => followBonus.ContainsKey(key) ? followBonus[key] : 0,
+            "followPenalty" => followPenalty.ContainsKey(key) ? followPenalty[key] : 0,
         };
     }
     public Dictionary<string, int> getSpecificDyctionaryDataHabilidadStat(string nombreDiccionario)
@@ -121,6 +127,8 @@ public class DataHabilidadStats
             "netosStats" => netosStats, 
             "primerAtaqueBonus" => primerAtaqueBonus,
             "primerAtaquePenalty" => primerAtaquePenalty,
+            "followBonus" => followBonus,
+            "followPenalty" => followPenalty,
         };
     }
     
@@ -143,6 +151,12 @@ public class DataHabilidadStats
             case "primerAtaquePenalty":
                 primerAtaquePenalty[key] = value;
                 break;
+            case "followBonus":
+                followBonus[key] = value;
+                break;
+            case "followPenalty":
+                followPenalty[key] = value;
+                break; 
         }
     }
     public void addDataHabilidadStat(string nombreDiccionario, string key, int value)
@@ -164,6 +178,12 @@ public class DataHabilidadStats
             case "primerAtaquePenalty":
                 primerAtaquePenalty.Add(key, value);
                 break;
+            case "followBonus":
+                followBonus.Add(key, value);
+                break; 
+            case "followPenalty":
+                followPenalty.Add(key, value);
+                break;
         }
     }
     public void sumarDataHabilidadStat(string nombreDiccionario, string key, int value)
@@ -184,6 +204,12 @@ public class DataHabilidadStats
                 break;
             case "primerAtaquePenalty":
                 primerAtaquePenalty[key] += value;
+                break;
+            case "followBonus":
+                followBonus[key] += value;
+                break;
+            case "followPenalty":
+                followPenalty[key] += value;
                 break;
         }
     }

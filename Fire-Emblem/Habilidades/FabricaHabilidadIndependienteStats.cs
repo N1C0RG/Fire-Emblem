@@ -390,9 +390,9 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Sandstorm")
         {
-            _habilidad = new Habilidad(
-                new List<IEfecto> { new Sandstorm() },
-                new List<ICondicion> { new NoHayCondicion() },
+            _habilidad = new Sandstorm(
+                new List<IEfecto> { },
+                new List<ICondicion> { },
                 _jugador,
                 _rival);
             

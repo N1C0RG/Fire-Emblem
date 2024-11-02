@@ -1,5 +1,6 @@
 using Fire_Emblem.Encapsulado;
 using Fire_Emblem.EnumVariables;
+using Fire_Emblem.Habilidades;
 
 namespace Fire_Emblem.Vista;
 using Fire_Emblem_View;
@@ -14,14 +15,13 @@ public class VistaStatsEfectosHabilidades
     }
     public void printTodoBonusPenaltyNeutralizaciones(Personaje jugador, Personaje rival)
     {
-        printFollowUpAtk(jugador);
-        printFollowUpAtk(rival);
-        
         printJugadorBonus(jugador);
         primerAtaqueBonus(jugador);
+        printFollowUpBonus(jugador);
         
         printJugadorPenalty(jugador);
         primerAtaquePenalty(jugador);
+        printFollowUpPenalty(jugador);
         
         printBonusPenaltyNeutralizados(jugador);
         
@@ -37,9 +37,11 @@ public class VistaStatsEfectosHabilidades
         
         printJugadorBonus(rival);
         primerAtaqueBonus(rival);
+        printFollowUpBonus(rival);
         
         printJugadorPenalty(rival);
         primerAtaquePenalty(rival);
+        printFollowUpPenalty(rival);
         
         printBonusPenaltyNeutralizados(rival);
         
@@ -75,11 +77,6 @@ public class VistaStatsEfectosHabilidades
 
     private void printBonusPenalty(Personaje jugador, KeyValuePair<string, int> stat, string sign)
     {
-        // foreach (var habilidad in jugador.habilidadPrimerAtaque)
-        // {
-        //     _view.WriteLine($"{habilidad}");
-        // }
-
         var mensaje = $"{jugador.name} obtiene {stat.Key}{sign}{stat.Value}";
 
         _view.WriteLine(mensaje);
@@ -118,12 +115,27 @@ public class VistaStatsEfectosHabilidades
             _view.WriteLine($"Los penalty de {penalty} de {jugador.name} fueron neutralizados");
         }
     }
-    private void printFollowUpAtk(Personaje jugador)
+    private void printFollowUpPenalty(Personaje jugador)
     {
-        if (jugador.getAtaqueFollow() != 0)
+        foreach (var i in jugador.getSpecificDyctionaryDataHabilidadStat(
+                     NombreDiccionario.followPenalty.ToString()))
         {
-            var sign = jugador.getAtaqueFollow() > 0 ? "+" : "";
-            _view.WriteLine($"{jugador.name} obtiene Atk{sign}{jugador.getAtaqueFollow()} en su Follow-Up");
+            if (i.Value != 0)
+            { 
+                _view.WriteLine($"{jugador.name} obtiene {i.Key}{i.Value} en su Follow-Up");
+            }
+
+        }
+    }
+    private void printFollowUpBonus(Personaje jugador)
+    {
+        foreach (var i in jugador.getSpecificDyctionaryDataHabilidadStat(
+                     NombreDiccionario.followBonus.ToString()))
+        {
+            if (i.Value != 0)
+            { 
+                _view.WriteLine($"{jugador.name} obtiene {i.Key}+{i.Value} en su Follow-Up");
+            }
         }
     }
 

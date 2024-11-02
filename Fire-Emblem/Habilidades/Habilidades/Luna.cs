@@ -10,9 +10,6 @@ public class Luna: Habilidad
     }
     public override void aplicarHabilidad()
     {
-        // new RivalDefUp(-calcularDef()).efecto(jugador, rival);
-        // new RivalResUp(-calcularRes()).efecto(jugador, rival);
-        
         rival.addDataHabilidadStat(
             NombreDiccionario.primerAtaquePenalty.ToString(), Stat.Def.ToString(), -calcularDef()); 
         rival.addDataHabilidadStat(

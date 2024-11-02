@@ -39,18 +39,18 @@ public class AplicarCancelacionPenalty : IEfecto
 //     }
 // }
 
-public class Sandstorm : IEfecto
-{
-    public void efecto(Personaje jugador, Personaje rival)
-    {
-        jugador.ataqueFollow = calcularAtaqueFollow(jugador);
-    }
-
-    private int calcularAtaqueFollow(Personaje jugador)
-    {
-        return (int)Math.Floor(Convert.ToDecimal(jugador.def) * 1.5m) - jugador.atk;
-    }
-}
+// public class Sandstorm : IEfecto
+// {
+//     public void efecto(Personaje jugador, Personaje rival)
+//     {
+//         jugador.ataqueFollow = calcularAtaqueFollow(jugador);
+//     }
+//
+//     private int calcularAtaqueFollow(Personaje jugador)
+//     {
+//         return (int)Math.Floor(Convert.ToDecimal(jugador.def) * 1.5m) - jugador.atk;
+//     }
+// }
 public class HpUp : IEfecto
 {
     public  void efecto(Personaje jugador, Personaje rival) 

@@ -50,15 +50,14 @@ public class NeutralizadorEfectos
     }
     private void neutralizarFollowBonusPenalty(Personaje jugador)
     {
-        if (jugador.getAtaqueFollow() > 0
-            && jugador.contieneStatNeutralizado(bonusNeutralizados,Stat.Atk.ToString()))
+        foreach (var stat in
+                 jugador.getSpecificArrayDataHabilidadStat(bonusNeutralizados))
         {
-            jugador.ataqueFollow = 0;
+            jugador.setDataHabilidadStat(NombreDiccionario.followBonus.ToString(), stat, 0);
         }
-        if (jugador.getAtaqueFollow() < 0 
-            && jugador.contieneStatNeutralizado(penaltyNeutralizados,Stat.Atk.ToString()))
+        foreach (var stat in jugador.getSpecificArrayDataHabilidadStat(penaltyNeutralizados))
         {
-            jugador.ataqueFollow = 0;
+            jugador.setDataHabilidadStat(NombreDiccionario.followPenalty.ToString(), stat, 0);
         }
     }
 }

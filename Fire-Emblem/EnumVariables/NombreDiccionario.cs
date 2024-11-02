@@ -12,4 +12,6 @@ public enum NombreDiccionario
     reduccionPorcentual, 
     primerAtaqueBonus, 
     primerAtaquePenalty, 
+    followBonus, 
+    followPenalty, 
 }

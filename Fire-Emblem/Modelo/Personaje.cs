@@ -18,7 +18,6 @@ public class Personaje
     
     public bool iniciaRound = false;
     public int contadorAtaques = 1;
-    //public List<string> habilidadPrimerAtaque = new List<string>();
     public int ataqueFollow = 0;
     public string oponentePrevio = "";
     public bool primerCombateInicia = false;
