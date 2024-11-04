@@ -1,5 +1,5 @@
 using Fire_Emblem.Encapsulado;
-
+using static Fire_Emblem.Habilidades.Prioridad; 
 namespace Fire_Emblem.Habilidades;
 
 public abstract class AplicarCancelacionBonus : IEfecto
@@ -12,6 +12,10 @@ public abstract class AplicarCancelacionBonus : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         rival.dataHabilidadStats.bonusNeutralizados.Add(StatKey);
+    }
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.neutralizacionBonus;
     }
 }
 

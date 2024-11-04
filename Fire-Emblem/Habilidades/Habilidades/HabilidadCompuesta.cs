@@ -2,7 +2,7 @@ namespace Fire_Emblem.Habilidades;
 
 public class HabilidadCompuesta: Habilidad
 {
-    private readonly List<Habilidad> _habilidades;
+    public  List<Habilidad> _habilidades;
 
     public HabilidadCompuesta(List<Habilidad> habilidades)
         : base(new List<IEfecto>(), new List<ICondicion>(), null, null)

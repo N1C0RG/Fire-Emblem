@@ -33,4 +33,9 @@ public class ReduccionDanoPorcentualSpd : IEfecto
             "todosAtaques", reduccion);
             ;
     }
+
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.reduccionPorcentual; 
+    }
 }

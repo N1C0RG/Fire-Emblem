@@ -13,6 +13,10 @@ public abstract class AplicarCancelacionBonusJugador : IEfecto
     {
         jugador.dataHabilidadStats.bonusNeutralizados.Add(StatKey);
     }
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.neutralizacionBonus;
+    }
 }
 public class AplicarCancelacionDefJugador : AplicarCancelacionBonusJugador
 {

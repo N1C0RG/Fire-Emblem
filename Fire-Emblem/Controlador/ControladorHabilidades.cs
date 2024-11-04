@@ -17,7 +17,7 @@ namespace Fire_Emblem.Controlador
             _rival = rival;
             _vista = new VistaStatsEfectosHabilidades(view);
             _neutralizadorEfectos = new NeutralizadorEfectos(jugador, rival);
-            _aplicadorHabilidades = new ManejadorAplicadorHabilidad(jugador, rival);
+            _aplicadorHabilidades = new ManejadorAplicadorHabilidad(jugador, rival, view);
         }
 
         public void aplicarTodo()

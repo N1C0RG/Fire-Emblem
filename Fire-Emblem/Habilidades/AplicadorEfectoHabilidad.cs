@@ -2,7 +2,7 @@ namespace Fire_Emblem.Habilidades;
 
 public class AplicadorEfectoHabilidad
 {
-    private Habilidad _habilidad;
+    public Habilidad _habilidad; //TODO: cambie esto a publico 
 
     public AplicadorEfectoHabilidad(Habilidad habilidad)
     {

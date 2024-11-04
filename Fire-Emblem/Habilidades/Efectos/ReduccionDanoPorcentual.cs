@@ -16,6 +16,10 @@ public abstract class ReduccionDanoPorcentualBase : IEfecto
         jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[tipoAtaque] = 
             1 - (1 - jugador.dataReduccionExtraStats.ReduccionDanoPorcentualDictionary[tipoAtaque]) * (1 - cantidad);
     }
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.reduccionPorcentual; 
+    }
 }
 
 public class ReduccionDanoPorcentual : ReduccionDanoPorcentualBase

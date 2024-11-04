@@ -30,4 +30,9 @@ public class ReduccionDanoPorcentualRes : IEfecto
         jugador.setDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 
             "todosAtaques", reduccion);
     }
+
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.reduccionPorcentual; 
+    }
 }

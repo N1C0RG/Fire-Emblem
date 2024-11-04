@@ -25,6 +25,17 @@ public abstract class EfectoStatJugador : IEfecto
             stats.Add(StatKey, Cantidad);
         }
     }
+    public Prioridad getPrioridad()
+    {
+        if (Cantidad > 0)
+        {
+            return Prioridad.bonus;
+        }
+        else
+        {
+            return Prioridad.penalty;
+        }
+    }
 }
 
 public class AtkUp : EfectoStatJugador
@@ -42,4 +53,116 @@ public class DefUp : EfectoStatJugador
 public class ResUp : EfectoStatJugador
 {
     public ResUp(int cantidad) : base(Stat.Res.ToString(), cantidad) { }
+}
+
+public class EfectoStatPrimerAtaque : IEfecto //TODO: arreglar toda esta clase 
+{
+    private string StatKey;
+    private int Cantidad; 
+    public EfectoStatPrimerAtaque(string statKey, int cantidad)
+    {
+        StatKey = statKey;
+        this.Cantidad = cantidad;
+    }
+
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        var stats = Cantidad > 0 ? jugador.getSpecificDyctionaryDataHabilidadStat(
+            NombreDiccionario.primerAtaqueBonus.ToString()) : 
+            jugador.getSpecificDyctionaryDataHabilidadStat(NombreDiccionario.primerAtaquePenalty.ToString());
+
+        if (stats.ContainsKey(StatKey))//TODO: arreglar esto 
+        {
+            stats[StatKey] += Cantidad;
+        }
+        else
+        {
+            stats.Add(StatKey, Cantidad);
+        }
+    }
+    public Prioridad getPrioridad()
+    {
+        if (Cantidad > 0)
+        {
+            return Prioridad.bonus;
+        }
+        else
+        {
+            return Prioridad.penalty;
+        }
+    }
+}
+public class EfectoStatFollowUp : IEfecto //TODO: arreglar toda esta clase 
+{
+    private string StatKey;
+    private int Cantidad; 
+    public EfectoStatFollowUp(string statKey, int cantidad)
+    {
+        StatKey = statKey;
+        this.Cantidad = cantidad;
+    }
+
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        var stats = Cantidad > 0 ? jugador.getSpecificDyctionaryDataHabilidadStat(
+                NombreDiccionario.followBonus.ToString()) : 
+            jugador.getSpecificDyctionaryDataHabilidadStat(NombreDiccionario.followPenalty.ToString());
+
+        if (stats.ContainsKey(StatKey))//TODO: arreglar esto 
+        {
+            stats[StatKey] += Cantidad;
+        }
+        else
+        {
+            stats.Add(StatKey, Cantidad);
+        }
+    }
+    public Prioridad getPrioridad()
+    {
+        if (Cantidad > 0)
+        {
+            return Prioridad.bonus;
+        }
+        else
+        {
+            return Prioridad.penalty;
+        }
+    }
+}
+public class EfectoStatPrimerAtaqueRival : IEfecto //TODO: arreglar toda esta clase 
+{
+    private string StatKey;
+    private int Cantidad; 
+    public EfectoStatPrimerAtaqueRival(string statKey, int cantidad)
+    {
+        StatKey = statKey;
+        this.Cantidad = cantidad;
+    }
+
+    public void efecto(Personaje jugador, Personaje rival)
+    {
+        var stats = Cantidad > 0 ? rival.getSpecificDyctionaryDataHabilidadStat(
+                NombreDiccionario.primerAtaqueBonus.ToString()) : 
+            rival.getSpecificDyctionaryDataHabilidadStat(NombreDiccionario.primerAtaquePenalty.ToString());
+
+        if (stats.ContainsKey(StatKey))//TODO: arreglar esto 
+        {
+            stats[StatKey] += Cantidad;
+        }
+        else
+        {
+            stats.Add(StatKey, Cantidad);
+        }
+    }
+    public Prioridad getPrioridad()
+    {
+        if (Cantidad > 0)
+        {
+            return Prioridad.bonus;
+        }
+        else
+        {
+            return Prioridad.penalty;
+        }
+    }
 }

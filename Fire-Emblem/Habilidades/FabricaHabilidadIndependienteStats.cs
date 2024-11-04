@@ -408,20 +408,11 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Fort. Def/Res")
         {
-            var habilidades = new List<Habilidad>
-            {
-                new Habilidad(
-                    new List<IEfecto> { new DefUp(6), new ResUp(6) },
-                    new List<ICondicion> { new NoHayCondicion() },
-                    _jugador, _rival), 
-                new Habilidad (
-                    new List<IEfecto> {new AtkUp(-2)}, 
-                    new List<ICondicion> { new NoHayCondicion()}, 
-                    _jugador, 
-                    _rival)
-            };
-            _habilidad = new HabilidadCompuesta(habilidades);
-            
+            _habilidad = new Habilidad(
+                new List<IEfecto> { new DefUp(6), new ResUp(6), new AtkUp(-2) },
+                new List<ICondicion> { new NoHayCondicion() },
+                _jugador, _rival); 
+
         }
         else if (_nombre_habilidad == "Life and Death")
         {

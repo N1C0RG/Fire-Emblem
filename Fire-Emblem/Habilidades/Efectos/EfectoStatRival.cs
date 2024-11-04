@@ -24,6 +24,17 @@ public abstract class EfectoStatRival : IEfecto
             stats.Add(StatKey, Cantidad);
         }
     }
+    public Prioridad getPrioridad()
+    {
+        if (Cantidad > 0)
+        {
+            return Prioridad.bonus;
+        }
+        else
+        {
+            return Prioridad.penalty;
+        }
+    }
 }
 
 public class RivalAtkUp : EfectoStatRival

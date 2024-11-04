@@ -15,6 +15,11 @@ public abstract class EfectoDanoExtraBase : IEfecto
     {
         jugador.dataReduccionExtraStats.DanoAdicionalDictionary[tipoAtaque] += cantidad;
     }
+
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.danoExtra; 
+    }
 }
 
 public class EfectoDanoExtra : EfectoDanoExtraBase

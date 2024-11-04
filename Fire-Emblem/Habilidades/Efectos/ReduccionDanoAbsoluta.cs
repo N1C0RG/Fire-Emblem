@@ -11,4 +11,9 @@ public class ReduccionDanoAbsoluta : IEfecto
     {
         jugador.reduccionDanoAbsoluta += cantidad;
     }
+
+    public Prioridad getPrioridad()
+    {
+        return Prioridad.reduccionAbsoluta; 
+    }
 }
