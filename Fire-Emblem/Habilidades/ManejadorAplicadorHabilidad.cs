@@ -1,4 +1,6 @@
 using Fire_Emblem_View;
+using Fire_Emblem.EnumVariables;
+
 namespace Fire_Emblem.Habilidades;
 
 public class ManejadorAplicadorHabilidad
@@ -59,7 +61,7 @@ public class ManejadorAplicadorHabilidad
 
         // Aplicar los efectos en orden de prioridad
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 1; i < 8; i++)
         {
             foreach (var efecto in efectosOrdenadosJygadro)
             {

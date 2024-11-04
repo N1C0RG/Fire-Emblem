@@ -5,6 +5,7 @@ public class GuardBearing : Habilidad
     public GuardBearing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfectos();
     }
     public override void aplicarHabilidad()
     {
@@ -21,6 +22,22 @@ public class GuardBearing : Habilidad
             new ReduccionDanoPorcentual(0.3m).efecto(jugador, rival); 
         }
     }
+
+    private void agregarEfectos()
+    {
+        var e = new RivalSpdUp(-4);
+        var e2 = new RivalDefUp(-4);
+        efecto.Add(e);
+        efecto.Add(e2);
+        if (condicionHabilidad())
+        {
+            efecto.Add(new ReduccionDanoPorcentual(0.6m));
+        }
+        else
+        {
+            efecto.Add(new ReduccionDanoPorcentual(0.3m)); 
+        }
+    } 
 
     private bool condicionHabilidad()
     {
