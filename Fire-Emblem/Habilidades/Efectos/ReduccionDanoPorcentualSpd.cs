@@ -5,6 +5,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
 {
     public void efecto(Personaje jugador, Personaje rival)
     {
+        rival.calcularPostEfecto();
         int spd = CalcularSpd(jugador);
         int speedRival = CalcularSpd(rival);
         decimal reduccionDano = calcularReduccionDano(spd, speedRival);

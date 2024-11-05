@@ -9,6 +9,7 @@ public class DragonsWrath : Habilidad
     public DragonsWrath(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfectos();
     }
     public override void aplicarHabilidad()
     {
@@ -17,7 +18,17 @@ public class DragonsWrath : Habilidad
         
         if (ataqueJugador > resistenciaRival)
         {
-            new EfectoDanoExtraPrimerAtaque(calcularDanoExtra()).efecto(jugador, rival);
+            new EfectoDanoExtraPrimerAtaque(calcularDanoExtra(), () => -1).efecto(jugador, rival);
+        }
+    }
+    public void agregarEfectos()
+    {
+        calcularAtaqueResitencia(); 
+        efecto.Add(new ReduccionDanoPorcentualPrimerAtaque(0.25m));
+        
+        if (ataqueJugador > resistenciaRival)
+        {
+            efecto.Add(new EfectoDanoExtraPrimerAtaque(calcularDanoExtra(), () => -1));
         }
     }
     private int calcularDanoExtra()

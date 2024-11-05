@@ -1,4 +1,5 @@
 using Fire_Emblem_View;
+using Fire_Emblem.Encapsulado;
 using Fire_Emblem.EnumVariables;
 
 namespace Fire_Emblem.Habilidades;
@@ -29,21 +30,6 @@ public class ManejadorAplicadorHabilidad
         aplicarHabilidadesDependientes(_jugador, _rival);
         aplicarHabilidadesDependientes(_rival, _jugador);
     }
-
-    // private void aplicarHabilidadesIndependientes(Personaje jugador, Personaje rival)
-    // {
-    //     foreach (var habilidad in jugador.habilidades)
-    //     {
-    //         var fabricaHabilidad = new FabricaHabilidadIndependienteStats(habilidad, jugador, rival);
-    //         try
-    //         {
-    //             fabricaHabilidad.crearHabilidad();
-    //             var aplicadorHabilidad = fabricaHabilidad.crearAplicador();
-    //             aplicadorHabilidad.aplicarHabilidad();
-    //         }
-    //         catch { }
-    //     }
-    // }
     public void aplicarHabilidadesIndependientes(Personaje jugador, Personaje rival)
     {
 
@@ -77,17 +63,6 @@ public class ManejadorAplicadorHabilidad
                     efecto.efecto(_rival, _jugador);
                 }
             }
-            
-            // if (i < efectosOrdenadosJygadro.Count)
-            // {
-            //     var efectoJugador = efectosOrdenadosJygadro[i];
-            //     efectoJugador.efecto(_jugador, _rival);
-            // }
-            // if (i < efectosOrdenadosRivalo.Count)
-            // {
-            //     var efectoRival = efectosOrdenadosRivalo[i];
-            //     efectoRival.efecto(_rival, _jugador);
-            // }
         }
     }
     private void recopilarEfectos(Personaje personaje, Personaje rival, string tipoJugador)
@@ -122,7 +97,6 @@ public class ManejadorAplicadorHabilidad
                                 si = false;
                             }
                         }
-
                         if (si)
                         {
                             foreach (var efecto in h.efecto)
@@ -139,7 +113,6 @@ public class ManejadorAplicadorHabilidad
                         }
                     }
                 }
-                
                 if (cumple)
                 {
                     {

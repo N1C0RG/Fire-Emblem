@@ -12,6 +12,7 @@ public abstract class AplicarCancelacionBonus : IEfecto
     public void efecto(Personaje jugador, Personaje rival)
     {
         rival.dataHabilidadStats.bonusNeutralizados.Add(StatKey);
+        //rival.setDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), StatKey, 0);
     }
     public Prioridad getPrioridad()
     {

@@ -26,11 +26,11 @@ public class DivineRecreation : Habilidad
         
         if (condicionDanoExtra())
         {
-            new EfectoDanoExtraFollowUp(danoExtra).efecto(jugador, rival);
+            new EfectoDanoExtraFollowUp(danoExtra, () => -1).efecto(jugador, rival);
         }
         else
         {
-            new EfectoDanoExtraPrimerAtaque(danoExtra).efecto(jugador, rival);
+            new EfectoDanoExtraPrimerAtaque(danoExtra, () => -1).efecto(jugador, rival);
         }
     }
 

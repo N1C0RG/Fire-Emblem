@@ -7,11 +7,18 @@ public class PoeticJustice : Habilidad
     public PoeticJustice(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfecto();
     }
     public override void aplicarHabilidad()
     {
         new RivalSpdUp(-4).efecto(jugador, rival);
-        new EfectoDanoExtra(calcularDanoExtra()).efecto(jugador, rival);
+        new EfectoDanoExtra(calcularDanoExtra(), ( ) => -1).efecto(jugador, rival);
+        
+    }
+    public void agregarEfecto()
+    {
+        efecto.Add(new RivalSpdUp(-4));
+        efecto.Add(new EfectoDanoExtra(calcularDanoExtra(), ( ) => -1));
         
     }
     private int calcularDanoExtra()

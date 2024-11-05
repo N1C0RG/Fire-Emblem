@@ -7,6 +7,7 @@ public class MoonTwinWing : Habilidad
     public MoonTwinWing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfectos();
     }
     public override void aplicarHabilidad()
     {
@@ -23,6 +24,22 @@ public class MoonTwinWing : Habilidad
             new ReduccionDanoPorcentualSpd().efecto(jugador, rival);
         }
     }
+    public void agregarEfectos()
+    {
+        if (condicinoEfectosStat())
+        {
+            efecto.Add(new RivalAtkUp(-5));
+            efecto.Add(new RivalSpdUp(-5));
+            
+        }
+        rival.calcularPostEfecto();
+        
+        if (condicionReduccionDanoPorcentual())
+        {
+            efecto.Add(new ReduccionDanoPorcentualSpd());
+        }
+    }
+
 
     private bool condicinoEfectosStat()
     {

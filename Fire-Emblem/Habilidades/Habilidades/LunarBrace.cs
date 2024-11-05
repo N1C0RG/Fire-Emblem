@@ -7,12 +7,13 @@ public class LunarBrace : Habilidad
     public LunarBrace(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfecto();
     }
-    public override void aplicarHabilidad()
+    public void agregarEfecto()
     {
         if (cumpleCondiciones())
         {
-            new EfectoDanoExtra(calcularDanoExtra()).efecto(jugador, rival);
+            efecto.Add(new EfectoDanoExtra(calcularDanoExtra(), actualizarDanoExtra));
         }
     }
     private int calcularDanoExtra()
@@ -20,6 +21,11 @@ public class LunarBrace : Habilidad
         int def = rival.dataHabilidadStats.postEfecto.ContainsKey(Stat.Def.ToString()) ? rival.def + rival.dataHabilidadStats.postEfecto[Stat.Def.ToString()] : rival.def; 
 
         return (int)(def * 0.3m); 
+    }
+    private int actualizarDanoExtra()
+    {
+        int def = rival.def + rival.getDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Def.ToString()) + rival.getDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), Stat.Def.ToString());
+        return (int)(def * 0.3m);
     }
     private bool cumpleCondiciones()
     {

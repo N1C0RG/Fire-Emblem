@@ -10,6 +10,7 @@ public class AplicarCancelacionPenalty : IEfecto
         jugador.addPenaltyNeutralizados(Stat.Spd.ToString());
         jugador.addPenaltyNeutralizados(Stat.Def.ToString());
         jugador.addPenaltyNeutralizados(Stat.Res.ToString());
+        //jugador.dataHabilidadStats.penaltyStats.Clear();
     }
     public Prioridad getPrioridad()
     {
