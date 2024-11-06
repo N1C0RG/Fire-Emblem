@@ -138,18 +138,6 @@ public class VistaStatsEfectosHabilidades
             }
         }
     }
-
-    private void printReduccionDanoPorcentual(Personaje jugador)
-    {
-        if (jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(),
-                Llave.todosAtaques.ToString()) > 0)
-        {
-            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un " +
-                            $"{Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
-                                NombreDiccionario.reduccionPorcentual.ToString(),
-                                Llave.todosAtaques.ToString()) * 100)}%");
-        }
-    }
     private void printReduccionDanoAbsoluto(Personaje jugador)
         {
             if (jugador.reduccionDanoAbsoluta != 0)
@@ -169,6 +157,17 @@ public class VistaStatsEfectosHabilidades
                                 Llave.todosAtaques.ToString())} daño extra en cada ataque");
         }
     }
+    private void printReduccionDanoPorcentual(Personaje jugador)
+    {
+        if (jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(),
+                Llave.todosAtaques.ToString()) > 0)
+        {
+            _view.WriteLine($"{jugador.name} reducirá el daño de los ataques del rival en un " +
+                            $"{Math.Round(jugador.getDataReduccionExtraStat<decimal>(
+                                NombreDiccionario.reduccionPorcentual.ToString(),
+                                Llave.todosAtaques.ToString()) * 100)}%");
+        }
+    }
     private void printReduccionDanoPorcentualPrimerAtaque(Personaje jugador)
     {
         
@@ -176,7 +175,7 @@ public class VistaStatsEfectosHabilidades
                 Llave.primerAtaque.ToString()) > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del primer ataque del rival en un " +
-                            $"{Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
+                            $"{Math.Round(jugador.getDataReduccionExtraStat<decimal>(
                                 NombreDiccionario.reduccionPorcentual.ToString(),
                                 Llave.primerAtaque.ToString()) * 100)}%");
         }
@@ -188,7 +187,7 @@ public class VistaStatsEfectosHabilidades
                 Llave.followUp.ToString()) > 0)
         {
             _view.WriteLine($"{jugador.name} reducirá el daño del Follow-Up del rival en un" +
-                            $" {Math.Truncate(jugador.getDataReduccionExtraStat<decimal>(
+                            $" {Math.Round(jugador.getDataReduccionExtraStat<decimal>(
                                 NombreDiccionario.reduccionPorcentual.ToString(), 
                                 Llave.followUp.ToString()) * 100)}%");
         }

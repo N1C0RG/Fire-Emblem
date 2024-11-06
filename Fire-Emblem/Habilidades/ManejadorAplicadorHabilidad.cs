@@ -55,6 +55,7 @@ public class ManejadorAplicadorHabilidad
                 {
                     efecto.efecto(_jugador, _rival);
                 }
+                
             }
             foreach (var efecto in efectosOrdenadosRivalo)
             {

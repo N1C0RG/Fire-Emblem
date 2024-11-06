@@ -8,6 +8,7 @@ public class ExtraChivalry: Habilidad
     public ExtraChivalry(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
         : base(efecto, condicion, jugador, rival)
     {
+        agregarEfecto();
     }
     public override void aplicarHabilidad()
     {
@@ -19,10 +20,35 @@ public class ExtraChivalry: Habilidad
         }
         new ReduccionDanoPorcentual(calcularDano()).efecto(jugador, rival);
     }
+    public void agregarEfecto()
+    {
+        if (new CondicionRivalHP50().condicionHabilidad(jugador, rival))
+        {
+            efecto.Add(new RivalAtkUp(-5));
+            efecto.Add(new RivalSpdUp(-5));
+            efecto.Add(new RivalDefUp(-5));
+        }
+
+        if ((calcularDano()) != 0)
+        {
+            efecto.Add(new ReduccionDanoPorcentual((calcularDano())));
+        }
+        
+    }
 
     private decimal calcularDano()
     {
-        decimal porcentajeHP = Math.Floor((rival.HP / (decimal)rival.hpOriginal) * 100);
-        return (porcentajeHP * 0.5m) / 100m;
+        // decimal porcentajeHP = Math.Floor((rival.HP / (decimal)rival.hpOriginal) * 100);
+        // if (rival.name == "Celica")
+        // {
+        //     return 0; 
+        // }
+        // return porcentajeHP / 2;// Calcular el porcentaje de daño del rival
+        int porcentajeDano = (int)Math.Floor((rival.HP / (decimal)rival.hpOriginal) * 100);
+
+        // Dividir el porcentaje de daño por la mitad
+        int danoMitad = porcentajeDano / 2;
+
+        return danoMitad * 0.01m;
     }
 }

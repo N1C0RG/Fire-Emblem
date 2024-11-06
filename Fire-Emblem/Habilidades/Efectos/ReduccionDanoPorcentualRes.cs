@@ -12,7 +12,8 @@ public class ReduccionDanoPorcentualRes : IEfecto
     private int calcularRes(Personaje jugador)
     {
         int res = jugador.res;
-        res += jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Res.ToString());
+        res += jugador.getDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Res.ToString())
+               + jugador.getDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), Stat.Res.ToString());;
         return res;
     }
 
