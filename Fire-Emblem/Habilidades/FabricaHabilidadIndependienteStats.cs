@@ -375,7 +375,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                     _jugador,
                     _rival)
             };
-            _habilidad = new HabilidadCompuesta(habilidades);
+            _habilidad = new HabilidadCompuesta(habilidades, _jugador, _rival);
             
             
         }
@@ -555,7 +555,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                     _jugador, 
                     _rival) 
             };
-            _habilidad = new HabilidadCompuesta(habilidades);
+            _habilidad = new HabilidadCompuesta(habilidades, _jugador, _rival);
             
         }
         
@@ -948,7 +948,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Dragon's Wrath")
         {
-            _habilidad = new DragonsWrath (new List<IEfecto> { }, new List<ICondicion> { }, _jugador, 
+            _habilidad = new DragonsWrath ( _jugador, 
                 _rival);
         }
         else if (_nombre_habilidad == "Prescience")
@@ -971,7 +971,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                     _jugador, 
                     _rival)
             };
-            _habilidad = new HabilidadCompuesta(habilidades);
+            _habilidad = new HabilidadCompuesta(habilidades, _jugador, _rival);
         }
         else if (_nombre_habilidad == "Extra Chivalry")
         {
@@ -993,7 +993,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
                     _jugador,
                     _rival)
             };
-            _habilidad = new HabilidadCompuesta(habilidades);
+            _habilidad = new HabilidadCompuesta(habilidades, _jugador, _rival);
         }
         else if (_nombre_habilidad == "Divine Recreation")
         {

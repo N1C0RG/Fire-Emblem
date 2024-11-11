@@ -30,7 +30,7 @@ public class CondicionRivalHPvsJugadorHP : CondicionGenerica
 public class CondicionInicioCombate : CondicionGenerica
 {
     public override bool condicionHabilidad(Personaje jugador, Personaje rival)
-    {
+    { 
         return condicion.inicioCombate(jugador); 
     }
 }

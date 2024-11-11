@@ -1,13 +1,55 @@
+// using Fire_Emblem.Encapsulado;
+//
+// namespace Fire_Emblem.Habilidades;
+//
+// public class DragonsWrath : Habilidad
+// {
+//     private int ataqueJugador;
+//     private int resistenciaRival; 
+//     public DragonsWrath(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
+//         : base(efecto, condicion, jugador, rival)
+//     {
+//         agregarEfectos();
+//     }
+//     public override void aplicarHabilidad()
+//     {
+//         calcularAtaqueResitencia(); 
+//         new ReduccionDanoPorcentualPrimerAtaque(0.25m).efecto(jugador, rival);
+//         
+//         if (ataqueJugador > resistenciaRival)
+//         {
+//             new EfectoDanoExtraPrimerAtaque(calcularDanoExtra(), () => -1).efecto(jugador, rival);
+//         }
+//     }
+//     public void agregarEfectos()
+//     {
+//         calcularAtaqueResitencia(); 
+//         efecto.Add(new ReduccionDanoPorcentualPrimerAtaque(0.25m));
+//         efecto.Add(new EfectoDragonsWrath(0, "primerAtaque"));
+//     }
+//     private int calcularDanoExtra()
+//     {
+//         return (int)((ataqueJugador - resistenciaRival)/4);
+//     }
+//     private void calcularAtaqueResitencia()
+//     {
+//         ataqueJugador = jugador.atk + jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+//             Stat.Atk.ToString()); 
+//         resistenciaRival = rival.res + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+//             Stat.Res.ToString());
+//     }
+//}
+
 using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem.Habilidades;
 
-public class DragonsWrath : Habilidad
+public class DragonsWrath : HabilidadCompuesta
 {
     private int ataqueJugador;
     private int resistenciaRival; 
-    public DragonsWrath(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
-        : base(efecto, condicion, jugador, rival)
+    public DragonsWrath(Personaje jugador, Personaje rival)
+        : base(new List<Habilidad>(), jugador, rival)
     {
         agregarEfectos();
     }
@@ -23,16 +65,25 @@ public class DragonsWrath : Habilidad
     }
     public void agregarEfectos()
     {
-        calcularAtaqueResitencia(); 
-        efecto.Add(new ReduccionDanoPorcentualPrimerAtaque(0.25m));
-        
-        if (ataqueJugador > resistenciaRival)
+       
+        var habilidades = new List<Habilidad>()
         {
-            efecto.Add(new EfectoDanoExtraPrimerAtaque(calcularDanoExtra(), () => -1));
-        }
+            new Habilidad(
+                new List<IEfecto> { new ReduccionDanoPorcentualPrimerAtaque(0.25m) },
+                new List<ICondicion> { new NoHayCondicion() },
+                _jugador,
+                _rival),
+            new Habilidad(
+                new List<IEfecto> { new EfectoDanoExtraPrimerAtaque(calcularDanoExtra(), calcularDanoExtra) },
+                new List<ICondicion> { new CondicionDiferenciaStats(Stat.Atk, Stat.Res) },
+                _jugador,
+                _rival)
+        }; 
+        _habilidades = habilidades;
     }
     private int calcularDanoExtra()
     {
+        calcularAtaqueResitencia();
         return (ataqueJugador - resistenciaRival)/4;
     }
     private void calcularAtaqueResitencia()
@@ -43,3 +94,4 @@ public class DragonsWrath : Habilidad
             Stat.Res.ToString());
     }
 }
+

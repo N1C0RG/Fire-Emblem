@@ -1,7 +1,7 @@
 using Fire_Emblem.Habilidades;
 
 namespace Fire_Emblem;
-
+using Encapsulado; 
 public class Personaje
 {
     public string name;
@@ -61,6 +61,21 @@ public class Personaje
     public string[] getHabilidades()
     {
         return habilidades; 
+    }
+    public int getStat(Stat stat)
+    {
+        switch (stat)
+        {
+            case Stat.Atk:
+                return atk;
+            case Stat.Spd:
+                return spd;
+            case Stat.Def:
+                return def;
+            case Stat.Res:
+                return res;
+        }
+        return 0;
     }
     public void recivirDano(int cantidad)
     {

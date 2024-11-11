@@ -8,8 +8,8 @@ public class ManejadorAplicadorHabilidad
 {
     private Personaje _jugador;
     private Personaje _rival;
-    private List<IEfecto> _efectosPrioritariosJugador = new List<IEfecto>();
-    private List<IEfecto> _efectosPrioritariosRival = new List<IEfecto>();
+    private List<(IEfecto efectos, List<ICondicion> condiciones)> _efectosPrioritariosJugador = new List<(IEfecto efectos, List<ICondicion> condiciones)>();
+    private List<(IEfecto efectos, List<ICondicion> condiciones)> _efectosPrioritariosRival = new List<(IEfecto efectos, List<ICondicion> condiciones)>();
     private View view;
     private Dictionary<string, int> bonus = new Dictionary<string, int>(); 
     private Dictionary<string, int> bonusPrimer = new Dictionary<string, int>(); 
@@ -57,38 +57,61 @@ public class ManejadorAplicadorHabilidad
         recopilarEfectos(_rival, _jugador, "rival");
 
         // Ordenar los efectos globalmente por prioridad
-        var efectosOrdenadosJygadro = _efectosPrioritariosJugador
-            .OrderByDescending(e => e.getPrioridad())
-            .ToList();
-        var efectosOrdenadosRivalo = _efectosPrioritariosRival
-            .OrderByDescending(e => e.getPrioridad())
-            .ToList();
+        // var efectosOrdenadosJygadro = _efectosPrioritariosJugador
+        //     .OrderByDescending(e => e.getPrioridad())
+        //     .ToList();
+        // var efectosOrdenadosRivalo = _efectosPrioritariosRival
+        //     .OrderByDescending(e => e.getPrioridad())
+        //     .ToList();
 
         // Aplicar los efectos en orden de prioridad
 
         for (int i = 1; i < 8; i++)
         {
-            foreach (var efecto in efectosOrdenadosJygadro)
+            foreach (var efecto in _efectosPrioritariosJugador)
             {
-                if ((int)efecto.getPrioridad() == i)
+                if ((int)efecto.Item1.getPrioridad() == i)
                 {
-                    efecto.efecto(_jugador, _rival);
+                    bool cumple = true;
+                    foreach (var condicion in efecto.condiciones)
+                    {
+                        if (!condicion.condicionHabilidad(jugador, rival))
+                        {
+                            cumple = false;
+                        }
+                    }
+                    if (cumple) {efecto.Item1.efecto(_jugador, _rival);}
                 }
                 
             }
-            foreach (var efecto in efectosOrdenadosRivalo)
+            foreach (var efecto in _efectosPrioritariosRival)
             {
-                if ((int)efecto.getPrioridad() == i)
+                if ((int)efecto.Item1.getPrioridad() == i)
                 {
-                    efecto.efecto(_rival, _jugador);
+                    bool cumple = true;
+                    foreach (var condicion in efecto.condiciones)
+                    {
+                        if (!condicion.condicionHabilidad(rival, jugador))
+                        {
+                            cumple = false;
+                        }
+                    }
+                    if (cumple) {efecto.Item1.efecto(_rival, _jugador);}
                 }
             }
             _jugador.calcularPostEfecto();//calculo el post efecto al final de cada prioridad
             _rival.calcularPostEfecto();
             // view.WriteLine($"post efecto {_rival.name} spd { _rival.res + _rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
             //     Stat.Res.ToString())}");
-            // view.WriteLine($"post efecto {_jugador.name} spd {_jugador.atk - _jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            // view.WriteLine($"post efecto {_jugador.name} spd {_jugador.atk + _jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
             //     Stat.Atk.ToString())}");
+            // if (_rival.res + _rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            //         Stat.Res.ToString()) < _jugador.atk + _jugador.getDataHabilidadStat(
+            //         NombreDiccionario.postEfecto.ToString(),
+            //         Stat.Atk.ToString()))
+            // {
+            //     view.WriteLine("cumple condicion");
+            // }
         }
     }
     private void recopilarEfectos(Personaje personaje, Personaje rival, string tipoJugador)
@@ -103,37 +126,37 @@ public class ManejadorAplicadorHabilidad
                 var habilidadAplicador = fabricaHabilidad.crearAplicador();
 
                 bool cumple = true;
-                foreach (var condicion in habilidadAplicador._habilidad.condicion)
-                {
-                    if (!condicion.condicionHabilidad(personaje, rival))
-                    {
-                        cumple = false;
-                    }
-                }
+                // foreach (var condicion in habilidadAplicador._habilidad.condicion)
+                // {
+                //     if (!condicion.condicionHabilidad(personaje, rival))
+                //     {
+                //         cumple = false;
+                //     }
+                // }
 
                 if (habilidadAplicador._habilidad is HabilidadCompuesta habilidadCompuesta)
                 {
                     foreach (var h in habilidadCompuesta._habilidades)
                     {
                         bool si = true; 
-                        foreach (var condicion in h.condicion)
-                        {
-                            if (!condicion.condicionHabilidad(personaje, rival))
-                            {
-                                si = false;
-                            }
-                        }
+                        // foreach (var condicion in h.condicion)
+                        // {
+                        //     if (!condicion.condicionHabilidad(personaje, rival))
+                        //     {
+                        //         si = false;
+                        //     }
+                        // }
                         if (si)
                         {
                             foreach (var efecto in h.efecto)
                             {
                                 if (tipoJugador == "jugador")
                                 {
-                                    _efectosPrioritariosJugador.Add(efecto);
+                                    _efectosPrioritariosJugador.Add((efecto,h.condicion));
                                 }
                                 else
                                 {
-                                    _efectosPrioritariosRival.Add(efecto);
+                                    _efectosPrioritariosRival.Add((efecto,h.condicion));
                                 }
                             }
                         }
@@ -146,11 +169,12 @@ public class ManejadorAplicadorHabilidad
                         {
                             if (tipoJugador == "jugador")
                             {
-                                _efectosPrioritariosJugador.Add(efecto);
+                                _efectosPrioritariosJugador.Add((efecto,habilidadAplicador._habilidad.condicion));
+                               
                             }
                             else
                             {
-                                _efectosPrioritariosRival.Add(efecto);
+                                _efectosPrioritariosRival.Add((efecto,habilidadAplicador._habilidad.condicion));
                             }
                         }
                     }
