@@ -27,6 +27,8 @@ public class DataHabilidadStats
     }
     public void calcularPostEfecto()
     {
+        postEfecto = 
+            new Dictionary<string, int>{ {"Atk", 0}, {"Spd", 0}, {"Def", 0}, {"Res", 0}  };
 
         foreach (var bonus in bonusStats)
         {

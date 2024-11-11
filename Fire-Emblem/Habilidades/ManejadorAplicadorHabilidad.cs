@@ -10,7 +10,26 @@ public class ManejadorAplicadorHabilidad
     private Personaje _rival;
     private List<IEfecto> _efectosPrioritariosJugador = new List<IEfecto>();
     private List<IEfecto> _efectosPrioritariosRival = new List<IEfecto>();
-    private View view; 
+    private View view;
+    private Dictionary<string, int> bonus = new Dictionary<string, int>(); 
+    private Dictionary<string, int> bonusPrimer = new Dictionary<string, int>(); 
+    private Dictionary<string, int> bonusFollow = new Dictionary<string, int>(); 
+    private Dictionary<string, int> penalty = new Dictionary<string, int>(); 
+    private Dictionary<string, int> penaltyPrimer = new Dictionary<string, int>(); 
+    private Dictionary<string, int> penaltyFollow = new Dictionary<string, int>(); 
+    private Dictionary<string, int> bonusNeutra = new Dictionary<string, int>(); 
+    private Dictionary<string, int> penaltyNeutra = new Dictionary<string, int>(); 
+    private int extra = 0; 
+    private int extraPrimer = 0; 
+    private int extraFollow = 0; 
+    private decimal reduccion = 0; 
+    private decimal reduccionPrimer = 0; 
+    private decimal reduccionFollow = 0;
+    private int reduccionAbsoluta = 0;
+    
+
+    
+
 
     public ManejadorAplicadorHabilidad(Personaje jugador, Personaje rival, View view)
     {
@@ -64,6 +83,12 @@ public class ManejadorAplicadorHabilidad
                     efecto.efecto(_rival, _jugador);
                 }
             }
+            _jugador.calcularPostEfecto();//calculo el post efecto al final de cada prioridad
+            _rival.calcularPostEfecto();
+            // view.WriteLine($"post efecto {_rival.name} spd { _rival.res + _rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            //     Stat.Res.ToString())}");
+            // view.WriteLine($"post efecto {_jugador.name} spd {_jugador.atk - _jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),
+            //     Stat.Atk.ToString())}");
         }
     }
     private void recopilarEfectos(Personaje personaje, Personaje rival, string tipoJugador)

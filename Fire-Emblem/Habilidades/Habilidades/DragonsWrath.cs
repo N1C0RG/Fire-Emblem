@@ -33,7 +33,7 @@ public class DragonsWrath : Habilidad
     }
     private int calcularDanoExtra()
     {
-        return (int)((ataqueJugador - resistenciaRival)/4);
+        return (ataqueJugador - resistenciaRival)/4;
     }
     private void calcularAtaqueResitencia()
     {

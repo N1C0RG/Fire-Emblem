@@ -15,8 +15,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
     private int CalcularSpd(Personaje jugador)
     {
         int spd = jugador.spd;
-        spd += jugador.getDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Spd.ToString()) 
-               + jugador.getDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), Stat.Spd.ToString());
+        spd += jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Spd.ToString());
         return spd;
     }
 
