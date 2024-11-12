@@ -43,3 +43,4 @@ public class EfectoDanoExtraFollowUp : EfectoDanoExtraBase
     public EfectoDanoExtraFollowUp(int cantidad, UpdateDamageDelegate updateDamage) 
         : base(cantidad, "followUp", updateDamage) { }
 }
+

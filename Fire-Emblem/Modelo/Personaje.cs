@@ -23,7 +23,8 @@ public class Personaje
     public bool primerCombateInicia = false;
     public bool primeraVexDefiende = false; 
     public int reduccionDanoAbsoluta = 0; 
-    public bool habilidadHpUp = true; 
+    public bool habilidadHpUp = true;
+    //public int divineDamage = 0; 
     
     public DataHabilidadStats dataHabilidadStats = new DataHabilidadStats();
     public DataReduccionExtraStats dataReduccionExtraStats = new DataReduccionExtraStats(); 

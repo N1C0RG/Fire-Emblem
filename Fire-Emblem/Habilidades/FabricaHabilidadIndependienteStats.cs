@@ -997,8 +997,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Divine Recreation")
         {
-            _habilidad = _habilidad = new DivineRecreation(new List<IEfecto> {}, new List<ICondicion> {}, 
-                _jugador, _rival);
+            _habilidad = _habilidad = new DivineRecreation(_jugador, _rival);
         }
         else if (_nombre_habilidad == "Moon-Twin Wing")
         {
