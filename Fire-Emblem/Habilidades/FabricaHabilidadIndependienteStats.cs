@@ -1,4 +1,5 @@
 using Fire_Emblem_View;
+using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem.Habilidades;
 
@@ -755,7 +756,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoAbsoluta(-2), new EfectoDanoExtra(2, ( ) => -1) }, 
-                new List<ICondicion> { new CondicionInicioCombate(), new CondicionFullVidaJugador() }, 
+                new List<ICondicion> { new CondicionInicioCombate(), new CondicionFullVidaRival() }, 
                 _jugador, 
                 _rival);
         }
@@ -802,7 +803,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         {
             _habilidad = new Habilidad (
                 new List<IEfecto> { new ReduccionDanoPorcentualRes()}, 
-                new List<ICondicion> { new CondicionResDanoPorcentual() }, 
+                new List<ICondicion> { new CondicionDiferenciaStats(Stat.Res, Stat.Res) }, 
                 _jugador, 
                 _rival);
         }

@@ -101,10 +101,10 @@ public class ManejadorAplicadorHabilidad
                 }
                 
             }
-            Console.WriteLine($"post efecto {_rival.name} spd { _rival.getDataReduccionExtraStat<decimal>(NombreDiccionario.danoAdicional.ToString(),
-                Llave.primerAtaque.ToString())}");
-            Console.WriteLine($"post efecto {_jugador.name} spd { _jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.danoAdicional.ToString(),
-                Llave.primerAtaque.ToString())}");
+            // Console.WriteLine($"post efecto {_rival.name} spd { _rival.getDataReduccionExtraStat<decimal>(NombreDiccionario.danoAdicional.ToString(),
+            //     Llave.primerAtaque.ToString())}");
+            // Console.WriteLine($"post efecto {_jugador.name} spd { _jugador.getDataReduccionExtraStat<decimal>(NombreDiccionario.danoAdicional.ToString(),
+            //     Llave.primerAtaque.ToString())}");
             _jugador.calcularPostEfecto();//calculo el post efecto al final de cada prioridad
             _rival.calcularPostEfecto();
             // view.WriteLine($"post efecto {_rival.name} spd { _rival.res + _rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(),

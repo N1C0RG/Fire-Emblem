@@ -38,15 +38,8 @@ public class ExtraChivalry: Habilidad
 
     private decimal calcularDano()
     {
-        // decimal porcentajeHP = Math.Floor((rival.HP / (decimal)rival.hpOriginal) * 100);
-        // if (rival.name == "Celica")
-        // {
-        //     return 0; 
-        // }
-        // return porcentajeHP / 2;// Calcular el porcentaje de daño del rival
         int porcentajeDano = (int)Math.Floor((rival.HP / (decimal)rival.hpOriginal) * 100);
-
-        // Dividir el porcentaje de daño por la mitad
+        
         int danoMitad = porcentajeDano / 2;
 
         return danoMitad * 0.01m;
