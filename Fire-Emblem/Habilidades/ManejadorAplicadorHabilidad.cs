@@ -66,7 +66,7 @@ public class ManejadorAplicadorHabilidad
 
         // Aplicar los efectos en orden de prioridad
 
-        for (int i = 1; i < 8; i++)
+        for (int i = 1; i < 9; i++)
         {
             foreach (var efecto in _efectosPrioritariosRival)
             {

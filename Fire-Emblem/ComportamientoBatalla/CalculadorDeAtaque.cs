@@ -89,8 +89,8 @@ public class CalculadorDeAtaque
         ataqueFinal = (int)(ataqueFinal * _reduccionTotal) + _defensor.reduccionDanoAbsoluta;
         // Console.WriteLine($"{_atacante.name} ataque final {ataqueFinal}");
         // Console.WriteLine($"{_defensor.name} ataque final {_reduccionTotal}");
-        Console.WriteLine($"la reduccion total de {_defensor.name} : {_reduccionTotal}");
-        Console.WriteLine($"el ataque total de {_atacante.name} : {ataqueFinal}");
+        //Console.WriteLine($"la reduccion total de {_defensor.name} : {_reduccionTotal}");
+        //Console.WriteLine($"el ataque total de {_atacante.name} : {ataqueFinal}");
         return ataqueFinal < 0 ? 0 : ataqueFinal;
         
     }

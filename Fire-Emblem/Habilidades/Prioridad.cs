@@ -9,4 +9,5 @@ public enum Prioridad
     danoExtra = 7,
     neutralizacionBonus = 3,
     neutralizacionPenalty = 4,
+    divineRecreation = 8, 
 }

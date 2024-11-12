@@ -114,7 +114,7 @@ public class DivineRecreation : HabilidadCompuesta
          //Console.WriteLine($"cantidad de ataque {cantidad}");
          //Console.WriteLine($"el ataque final {ataque}");
          //Console.WriteLine($" reduccion {rival.name} {rival.getDataReduccionExtraStat<decimal>(NombreDiccionario.reduccionPorcentual.ToString(), Llave.primerAtaque.ToString())}");
-         Console.WriteLine($"{ataque} - {cantidad} = {ataque - cantidad}");
+         //Console.WriteLine($"{ataque} - {cantidad} = {ataque - cantidad}");
          return (int)(cantidad  - ataque);
      }
 
@@ -124,9 +124,9 @@ public class DivineRecreation : HabilidadCompuesta
          
          if (new CondicionInicioCombate().condicionHabilidad(jugador, rival))
          {
-             return new EfectoDanoExtraFollowUp(0, calcularDano);
+             return new DivineFollow(0, calcularDano);
          }
-         return new EfectoDanoExtraPrimerAtaque(0, calcularDano);
+         return new DivinePrimerAtaque(0, calcularDano);
     }
 
 }
