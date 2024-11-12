@@ -18,7 +18,7 @@ public class PoeticJustice : Habilidad
     public void agregarEfecto()
     {
         efecto.Add(new RivalSpdUp(-4));
-        efecto.Add(new EfectoDanoExtra(calcularDanoExtra(), ( ) => -1));
+        efecto.Add(new EfectoDanoExtra(calcularDanoExtra(), calcularDanoExtra));
         
     }
     private int calcularDanoExtra()

@@ -24,7 +24,7 @@ public class LunarBrace : Habilidad
     }
     private int actualizarDanoExtra()
     {
-        int def = rival.def + rival.getDataHabilidadStat(NombreDiccionario.bonusStats.ToString(), Stat.Def.ToString()) + rival.getDataHabilidadStat(NombreDiccionario.penaltyStats.ToString(), Stat.Def.ToString());
+        int def = rival.def + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Def.ToString()); 
         return (int)(def * 0.3m);
     }
     private bool cumpleCondiciones()

@@ -22,6 +22,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
     private decimal calcularReduccionDano(int spd, int speedRival)
     {
         decimal reduccionDano = ((spd - speedRival) * 4) / 100m;
+        reduccionDano = reduccionDano < 0 ? 0 : reduccionDano;
         return reduccionDano > 0.4m ? 0.4m : reduccionDano;
     }
 
@@ -32,7 +33,7 @@ public class ReduccionDanoPorcentualSpd : IEfecto
             * (1 - reduccionDano); 
         jugador.setDataReduccionExtraStat(NombreDiccionario.reduccionPorcentual.ToString(), 
             "todosAtaques", reduccion);
-            ;
+        
     }
 
     public Prioridad getPrioridad()

@@ -1002,7 +1002,7 @@ public class FabricaHabilidadIndependienteStats : FabricaHabilidad
         }
         else if (_nombre_habilidad == "Moon-Twin Wing")
         {
-            _habilidad = new MoonTwinWing(new List<IEfecto> {}, new List<ICondicion> {}, _jugador,
+            _habilidad = new MoonTwinWing( _jugador,
                 _rival);
         }
     }

@@ -16,13 +16,14 @@ public class CalculadorFollowUp : CalculadorDeAtaque
             Stat.Atk.ToString()) + atacante.getDataHabilidadStat(NombreDiccionario.followPenalty.ToString(), 
             Stat.Atk.ToString());
         
-        int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa + 
-                          _atacante.getDataReduccionExtraStat<int>(
-                              NombreDiccionario.danoAdicional.ToString(),
-                              Llave.todosAtaques.ToString()) 
-                          + _atacante.getDataReduccionExtraStat<int>(
-                              NombreDiccionario.danoAdicional.ToString(), 
-                              Llave.followUp.ToString()) ;
+        int ataqueFinal = (int)Math.Floor(ataque * _ventaja) - _defensa < 0 ? 0 : 
+            (int)Math.Floor(ataque * _ventaja) - _defensa;
+        ataqueFinal += _atacante.getDataReduccionExtraStat<int>(
+                            NombreDiccionario.danoAdicional.ToString(),
+                            Llave.todosAtaques.ToString()) 
+                        + _atacante.getDataReduccionExtraStat<int>(
+                            NombreDiccionario.danoAdicional.ToString(), 
+                            Llave.followUp.ToString()) ;
         
         var reduccionTotal = _reduccionTotal * 
                              (1 - defensor.getDataReduccionExtraStat<decimal>(

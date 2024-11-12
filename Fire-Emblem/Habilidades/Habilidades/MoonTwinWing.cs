@@ -2,58 +2,42 @@ using Fire_Emblem.Encapsulado;
 
 namespace Fire_Emblem.Habilidades;
 
-public class MoonTwinWing : Habilidad
+public class MoonTwinWing : HabilidadCompuesta
 {
-    public MoonTwinWing(List<IEfecto> efecto, List<ICondicion> condicion, Personaje jugador, Personaje rival)
-        : base(efecto, condicion, jugador, rival)
+    private int ataqueJugador;
+    private int resistenciaRival; 
+    public MoonTwinWing(Personaje jugador, Personaje rival)
+        : base(new List<Habilidad>(), jugador, rival)
     {
         agregarEfectos();
     }
     public override void aplicarHabilidad()
     {
-        if (condicinoEfectosStat())
-        {
-            new RivalAtkUp(-5).efecto(jugador, rival);
-            new RivalSpdUp(-5).efecto(jugador, rival);
-            
-        }
-        rival.calcularPostEfecto();
+
+        new ReduccionDanoPorcentualPrimerAtaque(0.25m).efecto(jugador, rival);
         
-        if (condicionReduccionDanoPorcentual())
+        if (ataqueJugador > resistenciaRival)
         {
-            new ReduccionDanoPorcentualSpd().efecto(jugador, rival);
         }
     }
     public void agregarEfectos()
     {
-        if (condicinoEfectosStat())
+       
+        var habilidades = new List<Habilidad>()
         {
-            efecto.Add(new RivalAtkUp(-5));
-            efecto.Add(new RivalSpdUp(-5));
-            
-        }
-        rival.calcularPostEfecto();
-        
-        if (condicionReduccionDanoPorcentual())
-        {
-            efecto.Add(new ReduccionDanoPorcentualSpd());
-        }
+            new Habilidad(
+                new List<IEfecto> { new RivalAtkUp(-5), new RivalSpdUp(-5) },
+                new List<ICondicion> { new HpMas25() },
+                _jugador,
+                _rival),
+            new Habilidad(
+                new List<IEfecto> { new ReduccionDanoPorcentualSpd() },
+                new List<ICondicion> { new CondicionDiferenciaStats(Stat.Spd, Stat.Spd), new HpMas25() },
+                _jugador,
+                _rival)
+        }; 
+        _habilidades = habilidades;
     }
 
-
-    private bool condicinoEfectosStat()
-    {
-        bool condicio = new HpMas25().condicionHabilidad(jugador, rival);
-        return condicio; 
-    }
-
-    private bool condicionReduccionDanoPorcentual()
-    {
-        bool condicion = (jugador.spd +
-                          jugador.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), Stat.Spd.ToString())
-                          > rival.spd + rival.getDataHabilidadStat(NombreDiccionario.postEfecto.ToString(), 
-                              Stat.Spd.ToString()))
-                         && new HpMas25().condicionHabilidad(jugador, rival); 
-        return condicion; 
-    }
 }
+
