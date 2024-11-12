@@ -19,6 +19,7 @@ public class ReduccionDanoPorcentualRes : IEfecto
     private decimal calcularReduccionDano(int res, int resRival)
     {
         decimal reduccionDano = ((res - resRival) * 4) / 100m;
+        reduccionDano = reduccionDano < 0 ? 0 : reduccionDano;
         return reduccionDano > 0.4m ? 0.4m : reduccionDano;
     }
 
